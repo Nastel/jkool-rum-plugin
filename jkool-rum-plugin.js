@@ -12,6 +12,7 @@
     	{
         window.addEventListener('load', function() {
           var timings = window.performance.timing;
+          var token = "775d182c-fb54-4eb1-be58-1153ce2d7865";
           var myJSONData = "";
           var path;
           var url = window.location.href;
@@ -33,6 +34,8 @@
           var fetchStart;
           var domainLookupStart;
           var domainLookupEnd;
+          var connectStart;
+          var connectEnd;
           var activityId = createGuid();
           for (var timing in timings) 
           {
@@ -42,9 +45,13 @@
             	 redirectStart = timings[timing] 
               else if (timing == "redirectEnd") 
              	 redirectEnd = timings[timing] 
+              else if (timing == "connectStart") 
+             	 connectStart = timings[timing] 
+              else if (timing == "connectEnd") 
+              	 connectEnd = timings[timing] 
               else if (timing == "domainLookupStart") 
             	  domainLookupStart = timings[timing] 
-               else if (timing == "domainLookupEnd") 
+              else if (timing == "domainLookupEnd") 
             	   domainLookupEnd = timings[timing] 
               else if (timing == "unloadEventEnd")
             	  unloadEventEnd = timings[timing] ;
@@ -83,7 +90,7 @@
 	                 	url: 'http://localhost:6580/JESL/'.concat(path),
 	                 	data: myJSONData,
 	                     dataType: 'text',
-	                		headers:{'token':'775d182c-fb54-4eb1-be58-1153ce2d7865'},
+	                		headers:{'token':token},
 	             		  });   
     		}
     		 
@@ -106,7 +113,7 @@
 	                 	url: 'http://localhost:6580/JESL/'.concat(path),
 	                 	data: myJSONData,
 	                     dataType: 'text',
-	                		headers:{'token':'775d182c-fb54-4eb1-be58-1153ce2d7865'},
+	                		headers:{'token':token},
 	             		  });   
 	     		 
 	     		 // DNS Lookup
@@ -132,8 +139,37 @@
 		                 	url: 'http://localhost:6580/JESL/'.concat(path),
 		                 	data: myJSONData,
 		                     dataType: 'text',
-		                		headers:{'token':'775d182c-fb54-4eb1-be58-1153ce2d7865'},
+		                		headers:{'token':token},
 		             		  });   
+		     		 
+		     		 
+		     		 // TCP
+		     		  myJSONData = '{"tracking-id":"'
+			            	.concat(createGuid())
+			            	.concat('","start-time-usec":')
+			             	.concat(connectStart)
+			             	.concat('000,"end-time-used":')
+			             	.concat(connectEnd)
+			             	.concat('000,"elapsed-time":')
+			             	.concat(Number(connectEnd) - Number(connectStart))
+			             	.concat(',"operation":"TCP","source-fqn":"')
+			             	.concat(sourceFqn)
+			             	.concat('","resource":"')
+			             	.concat(url)
+			             	.concat('","parent-id":"')
+			             	.concat(activityId)
+			             	.concat('"}');		
+			               path = 'event';
+			               alert(myJSONData);
+			     		 $.ajax({
+			                 	type: 'POST',
+			                 	url: 'http://localhost:6580/JESL/'.concat(path),
+			                 	data: myJSONData,
+			                     dataType: 'text',
+			                		headers:{'token':token},
+			             		  });   		 
+		     		 
+		     		 
      		 // Navigation Activity
              myJSONData = '{"tracking-id":"'
             	.concat(activityId)
@@ -155,7 +191,7 @@
                  	url: 'http://localhost:6580/JESL/'.concat(path),
                  	data: myJSONData,
                      dataType: 'text',
-                		headers:{'token':'775d182c-fb54-4eb1-be58-1153ce2d7865'},
+                		headers:{'token':token},
              		  });   
           
 
