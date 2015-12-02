@@ -2,10 +2,11 @@
          ('timing' in window.performance)     &
          ('navigation' in window.performance)
     )  
-    {
-          //window.addEventListener('load', function() {
+    	{
+      	
+        window.addEventListener('load', function() {
           var timings = window.performance.timing;
-          var myJSONData = "hello";
+          var myJSONData = "";
           var path;
           var url = window.location.href;
           //var appl = url.substring(url.indexOf(":"), url.length);
@@ -23,27 +24,28 @@
           var domainLookupEnd;
           var connectStart;
           var unloadEnd;
-          
-          for (var timing in timings) 
+         
+              for (var timing in timings) 
           {
               if (timing == "navigationStart") 
             	 navigationStart = timings[timing]  
               else if (timing == "redirectStart") 
             	 redirectStart = timings[timing] 
               else if (timing == "unloadEventEnd")
-            	  unloadEnd = timings[timing] ;
+            	  unloadEventEnd = timings[timing] ;
               else 
               {
             	  //
               }
+              
           }
-              myJSONData = '{"status":"END","start-time-usec":'
+       myJSONData = '{"status":"END","start-time-usec":'
             	.concat(navigationStart)
             	.concat('"end-time-used:"')
-            	.concat(unloadEnd)
+            	.concat(unloadEventEnd)
             	.concat(',"elapsed-time":')
-            	//.concat(Number(navigationEnd) - Number(navigationEnd))
-            	.concat('","operation":"navigationStart","source_fqn":"APPL=')
+            	.concat(Number(unloadEventEnd) - Number(navigationStart))
+            	.concat('","operation":"navigation","source_fqn":"APPL=')
             	.concat(appl)
             	.concat('#SERVER=')
             	.concat(server)
@@ -55,9 +57,8 @@
             	.concat(loc)
             	.concat('"}');		
               path = 'activity';
-              alert (navigationEnd);
               alert(myJSONData);
-    		/* $.ajax({
+    		 $.ajax({
                 	type: 'POST',
                 	url: 'http://localhost:6580/JESL/'.concat(path),
                 	data: myJSONData,
@@ -66,7 +67,7 @@
             		  });   
           
 
-	      var perfEntries = window.performance.getEntriesByType("mark");
+	   /*   var perfEntries = window.performance.getEntriesByType("mark");
           for (var i = 0; i < perfEntries.length; i++)
           {
         	  var myJSONData = '{"tracking-id":"51191015-1783-4f63-b91e-7e17e8e33333","status":"END","time-usec":"1444679553236000","operation":"Performance","source_fqn":"APPL=WebOrders#SERVER=WebServer100#NETADDR=11.0.0.2#DATACENTER=DC1#GEOADDR=New York, NY"}';		
@@ -86,9 +87,9 @@
         			    202: function() {
           			      alert( "Request accepted.")}}
             		  });   
-          }
+          }*/
 
-    })*/
+    })
     }
 
 
