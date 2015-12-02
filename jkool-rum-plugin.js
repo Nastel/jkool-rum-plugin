@@ -1,4 +1,11 @@
-    if ( ('performance' in window)            &
+    function createGuid()
+    {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
+    });}
+
+	if ( ('performance' in window)            &
          ('timing' in window.performance)     &
          ('navigation' in window.performance)
     )  
@@ -24,6 +31,9 @@
           var connectStart;
           var unloadEventEnd;
           var fetchStart;
+          var domainLookupStart;
+          var domainLookupEnd;
+          var activityId = createGuid();
           for (var timing in timings) 
           {
               if (timing == "navigationStart") 
@@ -32,6 +42,10 @@
             	 redirectStart = timings[timing] 
               else if (timing == "redirectEnd") 
              	 redirectEnd = timings[timing] 
+              else if (timing == "domainLookupStart") 
+            	  domainLookupStart = timings[timing] 
+               else if (timing == "domainLookupEnd") 
+            	   domainLookupEnd = timings[timing] 
               else if (timing == "unloadEventEnd")
             	  unloadEventEnd = timings[timing] ;
               else if (timing == "fetchStart")
@@ -43,9 +57,13 @@
               
           }
 
+          
+          // Redirect
     		 if (redirectStart > 0)
     		{
-	             myJSONData = '{"tracking-id":"51191015-1783-4f63-b91e-7e17e8e88888","start-time-usec":'
+	             myJSONData = '{"tracking-id":"'
+	            	.concat(createGuid())
+	            	.concat('","start-time-usec":')
 	             	.concat(redirectStart)
 	             	.concat('000,"end-time-used":')
 	             	.concat(redirectEnd)
@@ -55,8 +73,8 @@
 	             	.concat(sourceFqn)
 	             	.concat('","resource":"')
 	             	.concat(url)
-	             	//.concat('","parent-id":"')
-	             	//.concat('51191015-1783-4f63-b91e-7e17e8e00000')
+	             	.concat('","parent-id":"')
+	             	.concat(activityId)
 	             	.concat('"}');		
 	               path = 'event';
 	               alert(myJSONData);
@@ -69,14 +87,17 @@
 	             		  });   
     		}
     		 
-    		 myJSONData = '{"tracking-id":"51191015-1783-4f63-b91e-7e17e8e12346","start-time-usec":'
+    		 // App Cache
+    		 myJSONData = '{"tracking-id":"'
+    			    .concat(createGuid())
+    			    .concat('","start-time-usec":')
 	             	.concat(fetchStart)
 	             	.concat('000,"operation":"appCache","source-fqn":"')
 	             	.concat(sourceFqn)
 	             	.concat('","resource":"')
 	             	.concat(url)
-	             	//.concat('","parent-id":"')
-	             	//.concat('51191015-1783-4f63-b91e-7e17e8e00000')
+	             	.concat('","parent-id":"')
+	             	.concat(activityId)
 	             	.concat('"}');		
 	               path = 'event';
 	               alert(myJSONData);
@@ -87,8 +108,36 @@
 	                     dataType: 'text',
 	                		headers:{'token':'775d182c-fb54-4eb1-be58-1153ce2d7865'},
 	             		  });   
-     		 
-             myJSONData = '{"tracking-id":"51191015-1783-4f63-b91e-7e17e8e99999","status":"END","start-time-usec":'
+	     		 
+	     		 // DNS Lookup
+	     		  myJSONData = '{"tracking-id":"'
+		            	.concat(createGuid())
+		            	.concat('","start-time-usec":')
+		             	.concat(domainLookupStart)
+		             	.concat('000,"end-time-used":')
+		             	.concat(domainLookupEnd)
+		             	.concat('000,"elapsed-time":')
+		             	.concat(Number(domainLookupEnd) - Number(domainLookupStart))
+		             	.concat(',"operation":"DNS","source-fqn":"')
+		             	.concat(sourceFqn)
+		             	.concat('","resource":"')
+		             	.concat(url)
+		             	.concat('","parent-id":"')
+		             	.concat(activityId)
+		             	.concat('"}');		
+		               path = 'event';
+		               alert(myJSONData);
+		     		 $.ajax({
+		                 	type: 'POST',
+		                 	url: 'http://localhost:6580/JESL/'.concat(path),
+		                 	data: myJSONData,
+		                     dataType: 'text',
+		                		headers:{'token':'775d182c-fb54-4eb1-be58-1153ce2d7865'},
+		             		  });   
+     		 // Navigation Activity
+             myJSONData = '{"tracking-id":"'
+            	.concat(activityId)
+            	.concat('","status":"END","start-time-usec":')
              	.concat(navigationStart)
              	.concat('000,"end-time-used":')
              	.concat(unloadEventEnd)
