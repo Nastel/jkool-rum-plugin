@@ -3,7 +3,6 @@
          ('navigation' in window.performance)
     )  
     	{
-      	
         window.addEventListener('load', function() {
           var timings = window.performance.timing;
           var myJSONData = "";
@@ -16,6 +15,7 @@
           //var address = url.substring(url.indexOf("http:\\"), url.indexOf(":"));
           var address = "myAddress";
           var dataCenter = "myDataCenter";
+          var sourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server).concat('#NETADDR=').concat(address).concat('#DATACENTER=').concat(dataCenter).concat('#GEOADDR=').concat(loc);
           var navigationStart;
           var redirectStart;
           var redirectEnd;
@@ -24,8 +24,7 @@
           var domainLookupEnd;
           var connectStart;
           var unloadEnd;
-         
-              for (var timing in timings) 
+          for (var timing in timings) 
           {
               if (timing == "navigationStart") 
             	 navigationStart = timings[timing]  
@@ -39,22 +38,14 @@
               }
               
           }
-       myJSONData = '{"status":"END","start-time-usec":'
+          myJSONData = '{"tracking-id":"51191015-1783-4f63-b91e-7e17e8e33333","status":"END","start-time-usec":'
             	.concat(navigationStart)
-            	.concat('"end-time-used:"')
+            	.concat('000,"end-time-used":')
             	.concat(unloadEventEnd)
-            	.concat(',"elapsed-time":')
+            	.concat('000,"elapsed-time":')
             	.concat(Number(unloadEventEnd) - Number(navigationStart))
-            	.concat('","operation":"navigation","source_fqn":"APPL=')
-            	.concat(appl)
-            	.concat('#SERVER=')
-            	.concat(server)
-            	.concat('#NETADDR=')
-            	.concat(address)
-            	.concat('#DATACENTER=')
-            	.concat(dataCenter)
-            	.concat('#GEOADDR=')
-            	.concat(loc)
+            	.concat(',"operation":"navigation","source-fqn":"')
+            	.concat(sourceFqn)
             	.concat('"}');		
               path = 'activity';
               alert(myJSONData);
