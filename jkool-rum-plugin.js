@@ -33,18 +33,30 @@ function myIP() {
 if (('performance' in window) & ('timing' in window.performance)
 		& ('navigation' in window.performance)) {
 
+	// User fills in these variables.
 	var token = "775d182c-fb54-4eb1-be58-1153ce2d7865";
+	var appl = "myAppl";
+	var server = "myServer";
+	var dataCenter = "myDataCenter";
+	
+	
+	// System computed variables
 	var myJSONData = "";
 	var path;
 	var url = window.location.href;
-	var appl = "myAppl";
-	var server = "myServer";
 	var loc = myIP();
 	var address = url.substring(0, (url.indexOf("?") > 0) ? url.indexOf("?") : url.length);
-	var dataCenter = "myDataCenter";
 	var sourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
 			.concat('#NETADDR=').concat(address).concat('#DATACENTER=').concat(
 					dataCenter).concat('#GEOADDR=').concat(loc);
+	var platform = navigator.platform; // property on activity
+	var userAgent = navigator.userAgent; // property on activity
+	var queryString = url.substring((url.indexOf("?") > 0) ? url.indexOf("?") : url.length, (url.indexOf("?") > 0) ? url.length : 0); // property on activity
+	var properties = '"properties": [{"name": "queryString","type": "string","value":"'.concat(queryString).concat('"},{"name": "platform","type": "string","value":"').concat(platform).concat('"},{"name": "userAgent","type": "string","value": "').concat(userAgent).concat('"}]');
+	alert(properties);
+	//var corrId = "{".concat(<%session.getId();%>).concat(",").concat(<%request.getId()%>).concat("}");
+	
+	// Start/End times
 	var navigationStart;
 	var redirectStart;
 	var redirectEnd;
@@ -71,18 +83,14 @@ if (('performance' in window) & ('timing' in window.performance)
 	var loadEventEnd;
 	var unloadEventStart;
 	var unloadEventEnd;
-	var platform = navigator.platform; // property on activity
-	var userAgent = navigator.userAgent; // property on activity
-	var queryString = url.substring((url.indexOf("?") > 0) ? url.indexOf("?") : url.length, (url.indexOf("?") > 0) ? url.length : 0); // property on activity
-	var properties = '"properties": [{"name": "queryString","type": "string","value":"'.concat(queryString).concat('"},{"name": "platform","type": "string","value":"').concat(platform).concat('"},{"name": "userAgent","type": "string","value": "').concat(userAgent).concat('"}]');
-	alert(properties);
-	//var corrId = "{".concat(<%session.getId();%>).concat(",").concat(<%request.getId()%>).concat("}");
+
 
 
 	
 	window.addEventListener('load', function() {
 		var timings = window.performance.timing;
 
+		// Obtain start/end times
 		for ( var timing in timings) {
 			if (timing == "navigationStart")
 				navigationStart = timings[timing]
