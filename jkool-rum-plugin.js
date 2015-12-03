@@ -5,50 +5,53 @@ function createGuid() {
 	});
 }
 
+
 if (('performance' in window) & ('timing' in window.performance)
 		& ('navigation' in window.performance)) {
+
+	var token = "775d182c-fb54-4eb1-be58-1153ce2d7865";
+	var myJSONData = "";
+	var path;
+	var url = window.location.href;
+	var appl = "myAppl";
+	var server = "myServer";
+	var loc = "myLoc";
+	// var address = url.substring(url.indexOf("http:\\"),
+	// url.indexOf(":"));
+	var address = "myAddress";
+	var dataCenter = "myDataCenter";
+	var sourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
+			.concat('#NETADDR=').concat(address).concat('#DATACENTER=').concat(
+					dataCenter).concat('#GEOADDR=').concat(loc);
+	var navigationStart;
+	var redirectStart;
+	var redirectEnd;
+	var fetchStart;
+	var domainLookupStart;
+	var domainLookupEnd;
+	var connectStart;
+	var unloadEventEnd;
+	var fetchStart;
+	var domainLookupStart;
+	var domainLookupEnd;
+	var connectStart;
+	var connectEnd;
+	var requestStart;
+	var responseStart;
+	var responseEnd;
+	var activityId = createGuid();
+	var domLoading;
+	var domInteractive;
+	var domContentLoadedEventStart;
+	var domContentLoadedEventEnd;
+	var domComplete;
+	var loadEventStart;
+	var loadEventEnd;
+	var unloadEventStart;
+	var unloadEventEnd;
+
 	window.addEventListener('load', function() {
 		var timings = window.performance.timing;
-		var token = "775d182c-fb54-4eb1-be58-1153ce2d7865";
-		var myJSONData = "";
-		var path;
-		var url = window.location.href;
-		var appl = "myAppl";
-		var server = "myServer";
-		var loc = "myLoc";
-		// var address = url.substring(url.indexOf("http:\\"),
-		// url.indexOf(":"));
-		var address = "myAddress";
-		var dataCenter = "myDataCenter";
-		var sourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
-				.concat('#NETADDR=').concat(address).concat('#DATACENTER=')
-				.concat(dataCenter).concat('#GEOADDR=').concat(loc);
-		var navigationStart;
-		var redirectStart;
-		var redirectEnd;
-		var fetchStart;
-		var domainLookupStart;
-		var domainLookupEnd;
-		var connectStart;
-		var unloadEventEnd;
-		var fetchStart;
-		var domainLookupStart;
-		var domainLookupEnd;
-		var connectStart;
-		var connectEnd;
-		var requestStart;
-		var responseStart;
-		var responseEnd;
-		var activityId = createGuid();
-		var domLoading;
-		var domInteractive;
-		var domContentLoadedEventStart;
-		var domContentLoadedEventEnd;
-		var domComplete;
-		var loadEventStart;
-		var loadEventEnd;
-		var unloadEventStart;
-		var unloadEventEnd;
 
 		for ( var timing in timings) {
 			if (timing == "navigationStart")
@@ -306,6 +309,8 @@ if (('performance' in window) & ('timing' in window.performance)
 		});
 
 		var perfEntries = window.performance.getEntriesByType("mark");
+		alert("in mark");
+		alert(perfEntries);
 		for (var i = 0; i < perfEntries.length; i++) {
 			alert(perfEntries[i].entryName);
 			// var myJSONData =
@@ -330,5 +335,59 @@ if (('performance' in window) & ('timing' in window.performance)
 			// });
 		}
 
-	})
+	}
+
+	)
+
+	// onLoad (To prevent zero from being reported, need to put it in a timeout
+	// function)
+	setTimeout(function() {
+
+		var timings = window.performance.timing;
+		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+				'","start-time-usec":').concat(timings["loadEventStart"])
+				.concat('000,"end-time-used":').concat(timings["loadEventEnd"])
+				.concat('000,"elapsed-time":').concat(
+						Number(timings["loadEventEnd"])
+								- Number(timings["loadEventStart"])).concat(
+						',"operation":"onLoad","source-fqn":"').concat(
+						sourceFqn).concat('","resource":"').concat(url).concat(
+						'","parent-id":"').concat(activityId).concat('"}');
+		path = 'event';
+		alert(myJSONData);
+		$.ajax({
+			type : 'POST',
+			url : 'http://localhost:6580/JESL/'.concat(path),
+			data : myJSONData,
+			dataType : 'text',
+			headers : {
+				'token' : token
+			},
+		});
+		var perfEntries = window.performance.getEntriesByType("mark");
+
+		for (var i = 0; i < perfEntries.length; i++) {
+			myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+					'","start-time-usec":').concat(timings["loadEventStart"])
+					.concat('000,"end-time-used":').concat(
+							timings["loadEventEnd"]).concat(
+							'000,"elapsed-time":').concat(
+							Number(timings["loadEventEnd"])
+									- Number(timings["loadEventStart"]))
+					.concat(',"operation":"mark","source-fqn":"').concat(
+							sourceFqn).concat('","resource":"').concat(url)
+					.concat('","parent-id":"').concat(activityId).concat('"}');
+			path = 'event';
+			alert(myJSONData);
+			$.ajax({
+				type : 'POST',
+				url : 'http://localhost:6580/JESL/'.concat(path),
+				data : myJSONData,
+				dataType : 'text',
+				headers : {
+					'token' : token
+				},
+			});
+		}
+	}, 3000);
 }
