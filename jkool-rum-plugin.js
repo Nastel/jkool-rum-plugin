@@ -11,8 +11,6 @@ function createGuid() {
 	});
 }
 
-
-
 function myIP() {
     if (window.XMLHttpRequest) xmlhttp = new XMLHttpRequest();
     else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
@@ -38,8 +36,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	var appl = "myAppl";
 	var server = "myServer";
 	var dataCenter = "myDataCenter";
-	
-	
+		
 	// System computed variables
 	var myJSONData = "";
 	var path;
@@ -53,7 +50,6 @@ if (('performance' in window) & ('timing' in window.performance)
 	var userAgent = navigator.userAgent; // property on activity
 	var queryString = url.substring((url.indexOf("?") > 0) ? url.indexOf("?") : url.length, (url.indexOf("?") > 0) ? url.length : 0); // property on activity
 	var properties = '"properties": [{"name": "queryString","type": "string","value":"'.concat(queryString).concat('"},{"name": "platform","type": "string","value":"').concat(platform).concat('"},{"name": "userAgent","type": "string","value": "').concat(userAgent).concat('"}]');
-	alert(properties);
 	//var corrId = "{".concat(<%session.getId();%>).concat(",").concat(<%request.getId()%>).concat("}");
 	
 	// Start/End times
