@@ -1,3 +1,9 @@
+//<%@ page session="true"%>
+//<%@ page import="java.util.Map, java.util.List, javax.servlet.http.HttpSession, javax.servlet.http.HttpServletRequest"%>
+
+//navigator.geolocation.getCurrentPosition(function(position) {alert(position)});
+
+
 function createGuid() {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 		var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -34,9 +40,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	var appl = "myAppl";
 	var server = "myServer";
 	var loc = myIP();
-	// var address = url.substring(url.indexOf("http:\\"),
-	// url.indexOf(":"));
-	var address = "myAddress";
+	var address = url.substring(0, (url.indexOf("?") > 0) ? url.indexOf("?") : url.length);
 	var dataCenter = "myDataCenter";
 	var sourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
 			.concat('#NETADDR=').concat(address).concat('#DATACENTER=').concat(
@@ -67,7 +71,13 @@ if (('performance' in window) & ('timing' in window.performance)
 	var loadEventEnd;
 	var unloadEventStart;
 	var unloadEventEnd;
+	var platform = navigator.platform; // property
+	var userAgent = navigator.userAgent; // property
+	var queryString = url.substring((url.indexOf("?") > 0) ? url.indexOf("?") : url.length, (url.indexOf("?") > 0) ? url.length : 0); // property
+	//var corrId = "{".concat(<%session.getId();%>).concat(",").concat(<%request.getId()%>).concat("}");
 
+
+	
 	window.addEventListener('load', function() {
 		var timings = window.performance.timing;
 
@@ -131,7 +141,7 @@ if (('performance' in window) & ('timing' in window.performance)
 					.concat('","resource":"').concat(url).concat(
 							'","parent-id":"').concat(activityId).concat('"}');
 			path = 'event';
-			alert(myJSONData);
+			//alert(myJSONData);
 			$.ajax({
 				type : 'POST',
 				url : 'http://localhost:6580/JESL/'.concat(path),
@@ -150,7 +160,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -171,7 +181,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				'","resource":"').concat(url).concat('","parent-id":"').concat(
 				activityId).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -192,7 +202,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				'","resource":"').concat(url).concat('","parent-id":"').concat(
 				activityId).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -210,7 +220,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -231,7 +241,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -252,7 +262,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -273,7 +283,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -294,7 +304,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -315,7 +325,7 @@ if (('performance' in window) & ('timing' in window.performance)
 						sourceFqn).concat('","resource":"').concat(url).concat(
 						'"}');
 		path = 'activity';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -345,7 +355,7 @@ if (('performance' in window) & ('timing' in window.performance)
 						sourceFqn).concat('","resource":"').concat(url).concat(
 						'","parent-id":"').concat(activityId).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -369,7 +379,7 @@ if (('performance' in window) & ('timing' in window.performance)
 							sourceFqn).concat('","resource":"').concat(url)
 					.concat('","parent-id":"').concat(activityId).concat('"}');
 			path = 'event';
-			alert(myJSONData);
+			//alert(myJSONData);
 			$.ajax({
 				type : 'POST',
 				url : 'http://localhost:6580/JESL/'.concat(path),
