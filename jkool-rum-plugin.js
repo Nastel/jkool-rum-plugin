@@ -188,7 +188,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		// Request
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(requestStart).concat(
-				',"operation":"request","source-fqn":"').concat(sourceFqn)
+				'000,"operation":"request","source-fqn":"').concat(sourceFqn)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
 		path = 'event';
