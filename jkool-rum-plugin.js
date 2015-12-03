@@ -71,9 +71,11 @@ if (('performance' in window) & ('timing' in window.performance)
 	var loadEventEnd;
 	var unloadEventStart;
 	var unloadEventEnd;
-	var platform = navigator.platform; // property
-	var userAgent = navigator.userAgent; // property
-	var queryString = url.substring((url.indexOf("?") > 0) ? url.indexOf("?") : url.length, (url.indexOf("?") > 0) ? url.length : 0); // property
+	var platform = navigator.platform; // property on activity
+	var userAgent = navigator.userAgent; // property on activity
+	var queryString = url.substring((url.indexOf("?") > 0) ? url.indexOf("?") : url.length, (url.indexOf("?") > 0) ? url.length : 0); // property on activity
+	var properties = '"properties": [{"name": "queryString","type": "string","value":"'.concat(queryString).concat('"},{"name": "platform","type": "string","value":"').concat(platform).concat('"},{"name": "userAgent","type": "string","value": "').concat(userAgent).concat('"}]');
+	alert(properties);
 	//var corrId = "{".concat(<%session.getId();%>).concat(",").concat(<%request.getId()%>).concat("}");
 
 
@@ -322,8 +324,7 @@ if (('performance' in window) & ('timing' in window.performance)
 						'000,"elapsed-time":').concat(
 						Number(unloadEventEnd) - Number(navigationStart))
 				.concat(',"operation":"navigation","source-fqn":"').concat(
-						sourceFqn).concat('","resource":"').concat(url).concat(
-						'"}');
+						sourceFqn).concat('","resource":"').concat(url).concat('",').concat(properties).concat('}');
 		path = 'activity';
 		//alert(myJSONData);
 		$.ajax({
