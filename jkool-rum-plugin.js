@@ -208,7 +208,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				'","start-time-usec":').concat(responseStart).concat(
 				'000,"end-time-used":').concat(responseEnd).concat(
 				'000,"elapsed-time":').concat(
-				Number(connectEnd) - Number(connectStart)).concat(
+				Number(responseEnd) - Number(responseStart)).concat(
 				',"operation":"response","source-fqn":"').concat(sourceFqn)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
@@ -229,7 +229,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				'","start-time-usec":').concat(domLoading).concat(
 				'000,"end-time-used":').concat(domComplete).concat(
 				'000,"elapsed-time":').concat(
-				Number(connectEnd) - Number(connectStart)).concat(
+				Number(domComplete) - Number(domLoading)).concat(
 				',"operation":"processing","source-fqn":"').concat(sourceFqn)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
@@ -250,7 +250,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				'","start-time-usec":').concat(loadEventStart).concat(
 				'000,"end-time-used":').concat(loadEventEnd).concat(
 				'000,"elapsed-time":').concat(
-				Number(connectEnd) - Number(connectStart)).concat(
+				Number(loadEventEnd) - Number(loadEventStart)).concat(
 				',"operation":"onLoad","source-fqn":"').concat(sourceFqn)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
@@ -271,7 +271,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				'","start-time-usec":').concat(unloadEventStart).concat(
 				'000,"end-time-used":').concat(unloadEventEnd).concat(
 				'000,"elapsed-time":').concat(
-				Number(connectEnd) - Number(connectStart)).concat(
+				Number(unloadEventEnd) - Number(unloadEventStart)).concat(
 				',"operation":"unLoad","source-fqn":"').concat(sourceFqn)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
