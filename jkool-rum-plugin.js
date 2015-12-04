@@ -50,6 +50,8 @@ if (('performance' in window) & ('timing' in window.performance)
 	var userAgent = navigator.userAgent; // property on activity
 	var queryString = url.substring((url.indexOf("?") > 0) ? url.indexOf("?") : url.length, (url.indexOf("?") > 0) ? url.length : 0); // property on activity
 	var properties = '"properties": [{"name": "queryString","type": "string","value":"'.concat(queryString).concat('"},{"name": "platform","type": "string","value":"').concat(platform).concat('"},{"name": "userAgent","type": "string","value": "').concat(userAgent).concat('"}]');
+	var d = new Date();
+	var now = d.getTime();
 	//var corrId = "{".concat(<%session.getId();%>).concat(",").concat(<%request.getId()%>).concat("}");
 	
 	// Start/End times
@@ -397,3 +399,30 @@ if (('performance' in window) & ('timing' in window.performance)
 		}
 	}, 3000);
 }
+
+ window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
+	
+    if (errorMsg.indexOf('Script error.') > -1) {
+        return;
+    }
+    else
+    {
+		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+		'","start-time-usec":').concat(now).concat(
+		'000').concat(
+		',"operation":"javascriptError","source-fqn":"').concat(sourceFqn)
+		.concat('","resource":"').concat(url).concat('","exception":"').concat(errorMsg).concat(
+				'","parent-id":"').concat(activityId).concat('"}');
+		path = 'event';
+		alert(myJSONData);
+		$.ajax({
+			type : 'POST',
+			url : 'http://localhost:6580/JESL/'.concat(path),
+			data : myJSONData,
+			dataType : 'text',
+			headers : {
+				'token' : token
+			},
+		});
+    }
+   }
