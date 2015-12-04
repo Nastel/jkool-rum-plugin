@@ -1,6 +1,3 @@
-//<%@ page session="true"%>
-//<%@ page import="java.util.Map, java.util.List, javax.servlet.http.HttpSession, javax.servlet.http.HttpServletRequest"%>
-
 //navigator.geolocation.getCurrentPosition(function(position) {alert(position)});
 
 
@@ -52,7 +49,6 @@ if (('performance' in window) & ('timing' in window.performance)
 	var properties = '"properties": [{"name": "queryString","type": "string","value":"'.concat(queryString).concat('"},{"name": "platform","type": "string","value":"').concat(platform).concat('"},{"name": "userAgent","type": "string","value": "').concat(userAgent).concat('"}]');
 	var d = new Date();
 	var now = d.getTime();
-	//var corrId = "{".concat(<%session.getId();%>).concat(",").concat(<%request.getId()%>).concat("}");
 	
 	// Start/End times
 	var navigationStart;
@@ -330,9 +326,9 @@ if (('performance' in window) & ('timing' in window.performance)
 						'000,"elapsed-time":').concat(
 						Number(unloadEventEnd) - Number(navigationStart))
 				.concat(',"operation":"navigation","source-fqn":"').concat(
-						sourceFqn).concat('","resource":"').concat(url).concat('",').concat(properties).concat('}');
+						sourceFqn).concat('","resource":"').concat(url).concat('","corrid":"').concat(document.getElementById('corrid').value).concat('",').concat(properties).concat('}');
 		path = 'activity';
-		//alert(myJSONData);
+		alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -414,7 +410,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		.concat('","resource":"').concat(url).concat('","exception":"').concat(errorMsg).concat(
 				'","parent-id":"').concat(activityId).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),

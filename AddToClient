@@ -1,0 +1,2 @@
+ <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
+<input type="hidden" name="corrid" id="corrid" value="<%=session.getId()%>"/>
