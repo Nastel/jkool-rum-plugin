@@ -1,2 +1,8 @@
+ Import - java.util.UUID
+ 
  <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
-<input type="hidden" name="corrid" id="corrid" value="<%=session.getId()%>"/>
+ <%
+ 	String id = UUID.randomUUID().toString;
+ 	//session.setAttribute("JK_CORR_ID", id);
+ %>
+<input type="hidden" name="corrid" id="corrid" value="<%=id%>"/>
