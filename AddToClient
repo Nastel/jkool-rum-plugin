@@ -1,6 +1,6 @@
  Import - java.util.UUID
  
- <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
+<script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
 if (session.getAttribute("JK_CORR_ID") == null)
 {
      	session.setAttribute("JK_CORR_ID", id);
@@ -12,3 +12,8 @@ else
 }
 
 <input type="hidden" name="corrid" id="corrid" value="<%=id%>"/>
+
+To mark Ajax, do the following ...
+performance.mark("start<descriptive name>");  
+<javascript code being marked>
+performance.mark("end<descriptive name>");  
