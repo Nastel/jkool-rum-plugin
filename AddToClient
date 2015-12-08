@@ -1,8 +1,14 @@
  Import - java.util.UUID
  
  <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
- <%
- 	String id = UUID.randomUUID().toString();
- 	//session.setAttribute("JK_CORR_ID", id);
- %>
+if (session.getAttribute("JK_CORR_ID") == null)
+{
+     	session.setAttribute("JK_CORR_ID", id);
+      id = UUID.randomUUID().toString();
+}
+else
+{
+    id = (String)session.getAttribute("JK_CORR_ID");
+}
+
 <input type="hidden" name="corrid" id="corrid" value="<%=id%>"/>

@@ -138,9 +138,8 @@ if (('performance' in window) & ('timing' in window.performance)
 		if (redirectStart > 0) {
 			myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 					'","start-time-usec":').concat(redirectStart).concat(
-					'000,"end-time-used":').concat(redirectEnd).concat(
-					'000,"elapsed-time":').concat(
-					Number(redirectEnd) - Number(redirectStart)).concat(
+					'000,"end-time-usec":').concat(redirectEnd).concat(
+					'000').concat(
 					',"operation":"redirect","source-fqn":"').concat(sourceFqn)
 					.concat('","resource":"').concat(url).concat(
 							'","parent-id":"').concat(activityId).concat('"}');
@@ -178,9 +177,8 @@ if (('performance' in window) & ('timing' in window.performance)
 		// DNS Lookup
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(domainLookupStart).concat(
-				'000,"end-time-used":').concat(domainLookupEnd).concat(
-				'000,"elapsed-time":').concat(
-				Number(domainLookupEnd) - Number(domainLookupStart)).concat(
+				'000,"end-time-usec":').concat(domainLookupEnd).concat(
+				'000').concat(
 				',"operation":"DNS","source-fqn":"').concat(sourceFqn).concat(
 				'","resource":"').concat(url).concat('","parent-id":"').concat(
 				activityId).concat('"}');
@@ -199,9 +197,8 @@ if (('performance' in window) & ('timing' in window.performance)
 		// TCP
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(connectStart).concat(
-				'000,"end-time-used":').concat(connectEnd).concat(
-				'000,"elapsed-time":').concat(
-				Number(connectEnd) - Number(connectStart)).concat(
+				'000,"end-time-usec":').concat(connectEnd).concat(
+				'000').concat(
 				',"operation":"TCP","source-fqn":"').concat(sourceFqn).concat(
 				'","resource":"').concat(url).concat('","parent-id":"').concat(
 				activityId).concat('"}');
@@ -238,9 +235,8 @@ if (('performance' in window) & ('timing' in window.performance)
 		// Response
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(responseStart).concat(
-				'000,"end-time-used":').concat(responseEnd).concat(
-				'000,"elapsed-time":').concat(
-				Number(responseEnd) - Number(responseStart)).concat(
+				'000,"end-time-usec":').concat(responseEnd).concat(
+				'000').concat(
 				',"operation":"response","source-fqn":"').concat(sourceFqn)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
@@ -259,9 +255,8 @@ if (('performance' in window) & ('timing' in window.performance)
 		// Processing
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(domLoading).concat(
-				'000,"end-time-used":').concat(domComplete).concat(
-				'000,"elapsed-time":').concat(
-				Number(domComplete) - Number(domLoading)).concat(
+				'000,"end-time-usec":').concat(domComplete).concat(
+				'000').concat(
 				',"operation":"processing","source-fqn":"').concat(sourceFqn)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
@@ -280,9 +275,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		// onLoad
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(loadEventStart).concat(
-				'000,"end-time-used":').concat(loadEventEnd).concat(
-				'000,"elapsed-time":').concat(
-				Number(loadEventEnd) - Number(loadEventStart)).concat(
+				'000').concat(
 				',"operation":"onLoad","source-fqn":"').concat(sourceFqn)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
@@ -301,9 +294,8 @@ if (('performance' in window) & ('timing' in window.performance)
 		// unLoad
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(unloadEventStart).concat(
-				'000,"end-time-used":').concat(unloadEventEnd).concat(
-				'000,"elapsed-time":').concat(
-				Number(unloadEventEnd) - Number(unloadEventStart)).concat(
+				'000,"end-time-usec":').concat(unloadEventEnd).concat(
+				'000').concat(
 				',"operation":"unLoad","source-fqn":"').concat(sourceFqn)
 				.concat('","resource":"').concat(url).concat('","parent-id":"')
 				.concat(activityId).concat('"}');
@@ -322,13 +314,11 @@ if (('performance' in window) & ('timing' in window.performance)
 		// Navigation Activity
 		myJSONData = '{"tracking-id":"'.concat(activityId).concat(
 				'","status":"END","start-time-usec":').concat(navigationStart)
-				.concat('000,"end-time-used":').concat(unloadEventEnd).concat(
-						'000,"elapsed-time":').concat(
-						Number(unloadEventEnd) - Number(navigationStart))
-				.concat(',"operation":"navigation","source-fqn":"').concat(
+				.concat('000,"end-time-usec":').concat(unloadEventEnd).concat(
+						'000').concat(',"operation":"navigation","source-fqn":"').concat(
 						sourceFqn).concat('","resource":"').concat(url).concat('","corrid":"').concat(document.getElementById('corrid').value).concat('",').concat(properties).concat('}');
 		path = 'activity';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -350,10 +340,8 @@ if (('performance' in window) & ('timing' in window.performance)
 		var timings = window.performance.timing;
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(timings["loadEventStart"])
-				.concat('000,"end-time-used":').concat(timings["loadEventEnd"])
-				.concat('000,"elapsed-time":').concat(
-						Number(timings["loadEventEnd"])
-								- Number(timings["loadEventStart"])).concat(
+				.concat('000,"end-time-usec":').concat(timings["loadEventEnd"])
+				.concat('000').concat(
 						',"operation":"onLoad","source-fqn":"').concat(
 						sourceFqn).concat('","resource":"').concat(url).concat(
 						'","parent-id":"').concat(activityId).concat('"}');
@@ -373,12 +361,8 @@ if (('performance' in window) & ('timing' in window.performance)
 		for (var i = 0; i < perfEntries.length; i++) {
 			myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 					'","start-time-usec":').concat(timings["loadEventStart"])
-					.concat('000,"end-time-used":').concat(
-							timings["loadEventEnd"]).concat(
-							'000,"elapsed-time":').concat(
-							Number(timings["loadEventEnd"])
-									- Number(timings["loadEventStart"]))
-					.concat(',"operation":"mark","source-fqn":"').concat(
+					.concat('000').concat(
+							'000').concat(',"operation":"mark","source-fqn":"').concat(
 							sourceFqn).concat('","resource":"').concat(url)
 					.concat('","parent-id":"').concat(activityId).concat('"}');
 			path = 'event';
