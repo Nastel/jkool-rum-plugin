@@ -3,8 +3,8 @@
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
 if (session.getAttribute("JK_CORR_ID") == null)
 {
+		id = UUID.randomUUID().toString();
      	session.setAttribute("JK_CORR_ID", id);
-      id = UUID.randomUUID().toString();
 }
 else
 {
