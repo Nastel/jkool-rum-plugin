@@ -354,7 +354,8 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat('000').concat(
 						',"operation":"onLoad","source-fqn":"').concat(
 						sourceFqn).concat('","resource":"').concat(url).concat(
-						'","parent-id":"').concat(activityId).concat('"}');
+						'","parent-id":"').concat(activityId).concat(
+						'","user":"').concat(userName).concat('"}');
 		path = 'event';
 		alert(myJSONData);
 		$.ajax({
@@ -371,10 +372,10 @@ if (('performance' in window) & ('timing' in window.performance)
 		for (var i = 0; i < perfEntries.length; i++) {
 			myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 					'","start-time-usec":').concat(timings["loadEventStart"])
-					.concat('000').concat(
-							'000').concat(',"operation":"mark","source-fqn":"').concat(
+					.concat('000').concat(',"operation":"mark","source-fqn":"').concat(
 							sourceFqn).concat('","resource":"').concat(url)
-					.concat('","parent-id":"').concat(activityId).concat('"}');
+					.concat('","parent-id":"').concat(activityId).concat(
+					'","user":"').concat(userName).concat('"}');
 			path = 'event';
 			alert(myJSONData);
 			$.ajax({
