@@ -45,7 +45,7 @@ if (('performance' in window) & ('timing' in window.performance)
 					dataCenter).concat('#GEOADDR=').concat(loc);
 	var platform = navigator.platform; // property on activity
 	var userAgent = navigator.userAgent; // property on activity
-	var queryString = url.substring((url.indexOf("?") > 0) ? url.indexOf("?") : url.length, (url.indexOf("?") > 0) ? url.length : 0); // property on activity
+	var queryString = url.substring((url.indexOf("?") > 0) ? url.indexOf("?") : 0, (url.indexOf("?") > 0) ? url.length : 0); // property on activity
 	var properties = '"properties": [{"name": "queryString","type": "string","value":"'.concat(queryString).concat('"},{"name": "platform","type": "string","value":"').concat(platform).concat('"},{"name": "userAgent","type": "string","value": "').concat(userAgent).concat('"}]');
 	var d = new Date();
 	var now = d.getTime();
