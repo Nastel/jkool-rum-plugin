@@ -349,7 +349,7 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		var timings = window.performance.timing;
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-				'","start-time-usec":').concat(timings["loadEventStart"])
+				'","start-time-usec":"').concat(timings["loadEventStart"])
 				.concat('000,"end-time-usec":').concat(timings["loadEventEnd"])
 				.concat('000').concat(
 						',"operation":"onLoad","source-fqn":"').concat(
@@ -371,9 +371,7 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		for (var i = 0; i < perfEntries.length; i++) {
 			myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-					'","start-time-usec":').concat(timings["loadEventStart"])
-					.concat('000').concat(',"operation":"mark","source-fqn":"').concat(
-							sourceFqn).concat('","resource":"').concat(url)
+					'","start-time-usec":').concat(timings["loadEventStart"]).concat('000').concat(',"operation":"' + perfEntries[i].name + '","source-fqn":"').concat(sourceFqn).concat('","resource":"').concat(url)
 					.concat('","parent-id":"').concat(activityId).concat(
 					'","user":"').concat(userName).concat('"}');
 			path = 'event';
@@ -388,7 +386,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				},
 			});
 		}
-	}, 3000);
+	}, 0);
 }
 
  window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
