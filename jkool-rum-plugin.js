@@ -359,7 +359,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		path = 'event';
 		//alert(myJSONData);
 		$.ajax({
-			type : 'POST',
+			type : 'POST',     
 			url : 'http://localhost:6580/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
@@ -371,7 +371,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		
 		for (var i = 0; i < perfEntries.length; i++) {
 			myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-					'","start-time-usec":').concat(Math.round(((navigationStart * .001) + perfEntries[i].startTime) * 1000)).concat('000,"operation":"' + perfEntries[i].name + '","source-fqn":"').concat(sourceFqn).concat('","resource":"').concat(url)
+					'","start-time-usec":').concat(Math.round(((navigationStart * 1000) + perfEntries[i].startTime))).concat(',"operation":"' + perfEntries[i].name + '","source-fqn":"').concat(sourceFqn).concat('","resource":"').concat(url)
 					.concat('","parent-id":"').concat(activityId).concat(
 					'","user":"').concat(userName).concat('"}');
 			path = 'event';
