@@ -348,7 +348,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	setTimeout(function() {
 
 		var timings = window.performance.timing;
-		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+		var myJSONLoadData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":"').concat(timings["loadEventStart"])
 				.concat('000,"end-time-usec":').concat(timings["loadEventEnd"])
 				.concat('000').concat(
@@ -356,12 +356,12 @@ if (('performance' in window) & ('timing' in window.performance)
 						sourceFqn).concat('","resource":"').concat(url).concat(
 						'","parent-id":"').concat(activityId).concat(
 						'","user":"').concat(userName).concat('"}');
-		path = 'event';
+		loadPath = 'event';
 		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',     
-			url : 'http://localhost:6580/JESL/'.concat(path),
-			data : myJSONData,
+			url : 'http://localhost:6580/JESL/'.concat(loadPath),
+			data : myJSONLoadData,
 			dataType : 'text',
 			headers : {
 				'token' : token
@@ -370,22 +370,38 @@ if (('performance' in window) & ('timing' in window.performance)
 		var perfEntries = window.performance.getEntriesByType("mark");
 		
 		for (var i = 0; i < perfEntries.length; i++) {
-			myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-					'","start-time-usec":').concat(Math.round(((navigationStart * 1000) + perfEntries[i].startTime))).concat(',"operation":"' + perfEntries[i].name + '","source-fqn":"').concat(sourceFqn).concat('","resource":"').concat(url)
-					.concat('","parent-id":"').concat(activityId).concat(
-					'","user":"').concat(userName).concat('"}');
-			path = 'event';
-			alert(myJSONData);
-			$.ajax({
-				type : 'POST',
-				url : 'http://localhost:6580/JESL/'.concat(path),
-				data : myJSONData,
-				dataType : 'text',
-				headers : {
-					'token' : token
-				},
-			});
+			
+			var prefix = perfEntries[i].name.substring(0,perfEntries[i].name.indexOf("_"));
+			
+			if (prefix.length > 0 && prefix == "start")
+			{
+				var suffix = perfEntries[i].name.substring(perfEntries[i].name.indexOf("_"),perfEntries[i].name.length);
+				var start = perfEntries[i];
+				var end = window.performance.getEntriesByName('end' + suffix);
+				var measure = window.performance.getEntriesByName('measure' + suffix);			
+				
+				var myJSONAjaxData = '{"tracking-id":"'.concat(createGuid())
+						.concat('","start-time-usec":').concat(Math.round(((timings["navigationStart"] * 1000) + start.startTime)))
+						.concat(',"end-time-usec":').concat(Math.round(((timings["navigationStart"] * 1000) + end[0].startTime)))
+						.concat(',"elapsed-time-usec":').concat(measure[0].duration)
+						.concat(',"operation":"' + suffix + '","source-fqn":"').concat(sourceFqn)
+						.concat('","resource":"').concat(url)
+						.concat('","parent-id":"').concat(activityId)
+						.concat('","user":"').concat(userName).concat('"}');
+				ajaxPath = 'event';
+				alert(myJSONAjaxData);
+				$.ajax({
+					type : 'POST',
+					url : 'http://localhost:6580/JESL/'.concat(ajaxPath),
+					data : myJSONAjaxData,
+					dataType : 'text',
+					headers : {
+						'token' : token
+					},
+				});
+			}
 		}
+
 	}, 0);
 }
 
@@ -396,18 +412,18 @@ if (('performance' in window) & ('timing' in window.performance)
     }
     else
     {
-		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+		var myJSONErrorData = '{"tracking-id":"'.concat(createGuid()).concat(
 		'","start-time-usec":').concat(now).concat(
 		'000').concat(
 		',"operation":"javascriptError","source-fqn":"').concat(sourceFqn)
 		.concat('","resource":"').concat(url).concat('","exception":"').concat(errorMsg).concat(
 				'","parent-id":"').concat(activityId).concat('"}');
-		path = 'event';
+		errorPath = 'event';
 		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
-			url : 'http://localhost:6580/JESL/'.concat(path),
-			data : myJSONData,
+			url : 'http://localhost:6580/JESL/'.concat(errorPath),
+			data : myJSONErrorData,
 			dataType : 'text',
 			headers : {
 				'token' : token
