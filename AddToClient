@@ -14,7 +14,7 @@ else
 <input type="hidden" name="corrid" id="corrid" value="<%=id%>"/>
 
 To mark Ajax, do the following ...
-performance.mark("start<descriptive name>");  
+performance.mark("start_<descriptive name>");  
 <javascript code being marked>
-performance.mark("end<descriptive name>");  
-performance.measure('measure_<descriptive name>', 'start<descriptive name>', 'end<descriptive name>');
+performance.mark("end_<descriptive name>");  
+performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'end_<descriptive name>');
