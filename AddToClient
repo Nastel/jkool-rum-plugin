@@ -17,3 +17,4 @@ To mark Ajax, do the following ...
 performance.mark("start<descriptive name>");  
 <javascript code being marked>
 performance.mark("end<descriptive name>");  
+performance.measure('measure_<descriptive name>', 'start<descriptive name>', 'end<descriptive name>');

@@ -1,4 +1,4 @@
-//navigator.geolocation.getCurrentPosition(function(position) {alert(position)});
+//navigator.geolocation.getCurrentPosition(function(position) {//alert(position)});
 
 
 function createGuid() {
@@ -145,7 +145,7 @@ if (('performance' in window) & ('timing' in window.performance)
 							'","parent-id":"').concat(activityId).concat(
 							'","user":"').concat(userName).concat('"}');
 			path = 'event';
-			alert(myJSONData);
+			//alert(myJSONData);
 			$.ajax({
 				type : 'POST',
 				url : 'http://localhost:6580/JESL/'.concat(path),
@@ -165,7 +165,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -186,7 +186,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -207,7 +207,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -226,7 +226,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -247,7 +247,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -268,7 +268,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -288,7 +288,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -309,7 +309,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -328,7 +328,7 @@ if (('performance' in window) & ('timing' in window.performance)
 						sourceFqn).concat('","resource":"').concat(url).concat('","corrid":"').concat(document.getElementById('corrid').value).concat('",').concat(properties).concat(
 						',"user":"').concat(userName).concat('"}');
 		path = 'activity';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -357,7 +357,7 @@ if (('performance' in window) & ('timing' in window.performance)
 						'","parent-id":"').concat(activityId).concat(
 						'","user":"').concat(userName).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -368,10 +368,10 @@ if (('performance' in window) & ('timing' in window.performance)
 			},
 		});
 		var perfEntries = window.performance.getEntriesByType("mark");
-
+		
 		for (var i = 0; i < perfEntries.length; i++) {
 			myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-					'","start-time-usec":').concat(timings["loadEventStart"]).concat('000').concat(',"operation":"' + perfEntries[i].name + '","source-fqn":"').concat(sourceFqn).concat('","resource":"').concat(url)
+					'","start-time-usec":').concat(Math.round(((navigationStart * .001) + perfEntries[i].startTime) * 1000)).concat('000,"operation":"' + perfEntries[i].name + '","source-fqn":"').concat(sourceFqn).concat('","resource":"').concat(url)
 					.concat('","parent-id":"').concat(activityId).concat(
 					'","user":"').concat(userName).concat('"}');
 			path = 'event';
@@ -403,7 +403,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		.concat('","resource":"').concat(url).concat('","exception":"').concat(errorMsg).concat(
 				'","parent-id":"').concat(activityId).concat('"}');
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
