@@ -1,4 +1,3 @@
-//navigator.geolocation.getCurrentPosition(function(position) {//alert(position)});
 
 
 function createGuid() {
@@ -8,22 +7,9 @@ function createGuid() {
 	});
 }
 
-function myIP() {
-    if (window.XMLHttpRequest) xmlhttp = new XMLHttpRequest();
-    else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 
-    xmlhttp.open("GET","http://api.hostip.info/get_html.php",false);
-    xmlhttp.send();
 
-    hostipInfo = xmlhttp.responseText.split("\n");
 
-    for (i=0; hostipInfo.length >= i; i++) {
-        ipAddress = hostipInfo[i].split(":");
-        if ( ipAddress[0] == "IP" ) return ipAddress[1];
-    }
-
-    return false;
-}
 
 if (('performance' in window) & ('timing' in window.performance)
 		& ('navigation' in window.performance)) {
@@ -33,19 +19,13 @@ if (('performance' in window) & ('timing' in window.performance)
 	var appl = "myAppl";
 	var server = "myServer";
 	var dataCenter = "myDataCenter";
-	var userName = "myUserName";
 		
 	// System computed variables
-	var geoAddress = "New York, NY";
+
 	var myJSONData = "";
 	var path;
 	var url = window.location.href;
-	//var ipAddress = myIP();
-	var ipAddress = "192.168.253.1";
 	var address = url.substring(0, (url.indexOf("?") > 0) ? url.indexOf("?") : url.length);
-	var sourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
-			.concat('#NETADDR=').concat(ipAddress).concat('#DATACENTER=').concat(
-					dataCenter).concat('#GEOADDR=').concat(geoAddress);
 	var platform = navigator.platform; // property on activity
 	var userAgent = navigator.userAgent; // property on activity
 	var queryString = url.substring((url.indexOf("?") > 0) ? url.indexOf("?") : 0, (url.indexOf("?") > 0) ? url.length : 0); // property on activity
@@ -83,6 +63,16 @@ if (('performance' in window) & ('timing' in window.performance)
 
 	window.addEventListener('load', function() {
 		var timings = window.performance.timing;
+
+		var userName = document.getElementById("username").value;
+		var ipAddress = document.getElementById("ipaddress").value;
+		
+		alert (userName);
+		alert(ipAddress);
+		
+		var sourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
+		.concat('#NETADDR=').concat(ipAddress).concat('#DATACENTER=').concat(
+				dataCenter).concat('#GEOADDR=').concat(geoAddress);
 
 		// Obtain start/end times
 		for ( var timing in timings) {
