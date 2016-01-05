@@ -114,7 +114,7 @@
 		String ipAddress = request.getHeader("X-FORWARDED-FOR");  
 		if (ipAddress == null)
 		  ipAddress = request.getRemoteAddr();  
-		String userName=(request.getRemoteUser() == null) ? "unknown-user" : request.getRemoteUser();
+		String userName=(request.getRemoteUser() == null) ? "unknown" : request.getRemoteUser();
                 %>
                 <div class="UserInfoField"><input type="text" name="userInfoID" id="userInfoID"/>
 				<input type="hidden" name="timeZone" id="timeZone"/>

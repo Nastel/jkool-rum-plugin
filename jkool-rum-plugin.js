@@ -1,13 +1,10 @@
 
-
 function createGuid() {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 		var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
 		return v.toString(16);
 	});
 }
-
-
 
 
 
@@ -62,17 +59,16 @@ if (('performance' in window) & ('timing' in window.performance)
 	var unloadEventEnd;
 
 	window.addEventListener('load', function() {
+		//alert("hello1");
 		var timings = window.performance.timing;
-
 		var userName = document.getElementById("username").value;
 		var ipAddress = document.getElementById("ipaddress").value;
-		
-		alert (userName);
-		alert(ipAddress);
-		
+		var geoAddress = "Melville, NY";
 		var sourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
 		.concat('#NETADDR=').concat(ipAddress).concat('#DATACENTER=').concat(
 				dataCenter).concat('#GEOADDR=').concat(geoAddress);
+		
+		//alert("hello2");
 
 		// Obtain start/end times
 		for ( var timing in timings) {
@@ -123,6 +119,7 @@ if (('performance' in window) & ('timing' in window.performance)
 			}
 
 		}
+//alert("hello3");
 
 		// Redirect
 		if (redirectStart > 0) {
@@ -132,7 +129,7 @@ if (('performance' in window) & ('timing' in window.performance)
 					'000').concat(
 					',"operation":"redirect","source-fqn":"').concat(sourceFqn)
 					.concat('","resource":"').concat(url).concat(
-							'","parent-id":"').concat(activityId).concat(
+							'","severity":"SUCCESS","parent-id":"').concat(activityId).concat(
 							'","user":"').concat(userName).concat('"}');
 			path = 'event';
 			//alert(myJSONData);
@@ -151,7 +148,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(fetchStart).concat(
 				'000,"operation":"appCache","source-fqn":"').concat(sourceFqn)
-				.concat('","resource":"').concat(url).concat('","parent-id":"')
+				.concat('","resource":"').concat(url).concat('","severity":"SUCCESS","parent-id":"')
 				.concat(activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
@@ -172,7 +169,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				'000,"end-time-usec":').concat(domainLookupEnd).concat(
 				'000').concat(
 				',"operation":"DNS","source-fqn":"').concat(sourceFqn).concat(
-				'","resource":"').concat(url).concat('","parent-id":"').concat(
+				'","resource":"').concat(url).concat('","severity":"SUCCESS","parent-id":"').concat(
 				activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
@@ -193,7 +190,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				'000,"end-time-usec":').concat(connectEnd).concat(
 				'000').concat(
 				',"operation":"TCP","source-fqn":"').concat(sourceFqn).concat(
-				'","resource":"').concat(url).concat('","parent-id":"').concat(
+				'","resource":"').concat(url).concat('","severity":"SUCCESS","parent-id":"').concat(
 				activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
@@ -212,7 +209,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(requestStart).concat(
 				'000,"operation":"request","source-fqn":"').concat(sourceFqn)
-				.concat('","resource":"').concat(url).concat('","parent-id":"')
+				.concat('","resource":"').concat(url).concat('","severity":"SUCCESS","parent-id":"')
 				.concat(activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
@@ -233,7 +230,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				'000,"end-time-usec":').concat(responseEnd).concat(
 				'000').concat(
 				',"operation":"response","source-fqn":"').concat(sourceFqn)
-				.concat('","resource":"').concat(url).concat('","parent-id":"')
+				.concat('","resource":"').concat(url).concat('","severity":"SUCCESS","parent-id":"')
 				.concat(activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
@@ -254,7 +251,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				'000,"end-time-usec":').concat(domComplete).concat(
 				'000').concat(
 				',"operation":"processing","source-fqn":"').concat(sourceFqn)
-				.concat('","resource":"').concat(url).concat('","parent-id":"')
+				.concat('","resource":"').concat(url).concat('","severity":"SUCCESS","parent-id":"')
 				.concat(activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
@@ -274,7 +271,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				'","start-time-usec":').concat(loadEventStart).concat(
 				'000').concat(
 				',"operation":"onLoad","source-fqn":"').concat(sourceFqn)
-				.concat('","resource":"').concat(url).concat('","parent-id":"')
+				.concat('","resource":"').concat(url).concat('","severity":"SUCCESS","parent-id":"')
 				.concat(activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
@@ -295,7 +292,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				'000,"end-time-usec":').concat(unloadEventEnd).concat(
 				'000').concat(
 				',"operation":"unLoad","source-fqn":"').concat(sourceFqn)
-				.concat('","resource":"').concat(url).concat('","parent-id":"')
+				.concat('","resource":"').concat(url).concat('","severity":"SUCCESS","parent-id":"')
 				.concat(activityId).concat(
 				'","user":"').concat(userName).concat('"}');
 		path = 'event';
@@ -318,7 +315,7 @@ if (('performance' in window) & ('timing' in window.performance)
 						sourceFqn).concat('","resource":"').concat(url).concat('","corrid":"').concat(document.getElementById('corrid').value).concat('",').concat(properties).concat(
 						',"user":"').concat(userName).concat('"}');
 		path = 'activity';
-		//alert(myJSONData);
+		alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -344,7 +341,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat('000').concat(
 						',"operation":"onLoad","source-fqn":"').concat(
 						sourceFqn).concat('","resource":"').concat(url).concat(
-						'","parent-id":"').concat(activityId).concat(
+						'","severity":"SUCCESS","parent-id":"').concat(activityId).concat(
 						'","user":"').concat(userName).concat('"}');
 		loadPath = 'event';
 		//alert(myJSONData);
@@ -376,7 +373,7 @@ if (('performance' in window) & ('timing' in window.performance)
 						.concat(',"elapsed-time-usec":').concat(Math.round(measure[0].duration))
 						.concat(',"operation":"' + suffix + '","source-fqn":"').concat(sourceFqn)
 						.concat('","resource":"').concat(url)
-						.concat('","parent-id":"').concat(activityId)
+						.concat('","severity":"SUCCESS","parent-id":"').concat(activityId)
 						.concat('","user":"').concat(userName).concat('"}');
 				ajaxPath = 'event';
 				alert(myJSONAjaxData);
