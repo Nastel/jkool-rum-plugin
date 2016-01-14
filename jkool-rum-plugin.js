@@ -6,6 +6,69 @@ function createGuid() {
 	});
 }
 
+function get_browser_info(){
+	var nVer = navigator.appVersion;
+	var nAgt = navigator.userAgent;
+	var browserName  = navigator.appName;
+	var fullVersion  = ''+parseFloat(navigator.appVersion); 
+	var majorVersion = parseInt(navigator.appVersion,10);
+	var nameOffset,verOffset,ix;
+
+	// In Opera, the true version is after "Opera" or after "Version"
+	if ((verOffset=nAgt.indexOf("Opera"))!=-1) {
+	 browserName = "Opera";
+	 fullVersion = nAgt.substring(verOffset+6);
+	 if ((verOffset=nAgt.indexOf("Version"))!=-1) 
+	   fullVersion = nAgt.substring(verOffset+8);
+	}
+	// In MSIE, the true version is after "MSIE" in userAgent
+	else if ((verOffset=nAgt.indexOf("MSIE"))!=-1) {
+	 browserName = "Microsoft Internet Explorer";
+	 fullVersion = nAgt.substring(verOffset+5);
+	}
+	// In Chrome, the true version is after "Chrome" 
+	else if ((verOffset=nAgt.indexOf("Chrome"))!=-1) {
+	 browserName = "Chrome";
+	 fullVersion = nAgt.substring(verOffset+7);
+	}
+	// In Safari, the true version is after "Safari" or after "Version" 
+	else if ((verOffset=nAgt.indexOf("Safari"))!=-1) {
+	 browserName = "Safari";
+	 fullVersion = nAgt.substring(verOffset+7);
+	 if ((verOffset=nAgt.indexOf("Version"))!=-1) 
+	   fullVersion = nAgt.substring(verOffset+8);
+	}
+	// In Firefox, the true version is after "Firefox" 
+	else if ((verOffset=nAgt.indexOf("Firefox"))!=-1) {
+	 browserName = "Firefox";
+	 fullVersion = nAgt.substring(verOffset+8);
+	}
+	// In most other browsers, "name/version" is at the end of userAgent 
+	else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) < 
+	          (verOffset=nAgt.lastIndexOf('/')) ) 
+	{
+	 browserName = nAgt.substring(nameOffset,verOffset);
+	 fullVersion = nAgt.substring(verOffset+1);
+	 if (browserName.toLowerCase()==browserName.toUpperCase()) {
+	  browserName = navigator.appName;
+	 }
+	}
+	// trim the fullVersion string at semicolon/space if present
+	if ((ix=fullVersion.indexOf(";"))!=-1)
+	   fullVersion=fullVersion.substring(0,ix);
+	if ((ix=fullVersion.indexOf(" "))!=-1)
+	   fullVersion=fullVersion.substring(0,ix);
+
+	majorVersion = parseInt(''+fullVersion,10);
+	if (isNaN(majorVersion)) {
+	 fullVersion  = ''+parseFloat(navigator.appVersion); 
+	 majorVersion = parseInt(navigator.appVersion,10);
+	}
+
+	return majorVersion;
+	}
+
+
 if (('performance' in window) & ('timing' in window.performance)
 		& ('navigation' in window.performance)) {
 
@@ -17,11 +80,27 @@ if (('performance' in window) & ('timing' in window.performance)
 	
 	// System computed variables
 	var myJSONData = "";
+	var timingProperties = "";
 	var path;
 	var url = window.location.href;
 	var address = url.substring(0, (url.indexOf("?") > 0) ? url.indexOf("?") : url.length);
-	var platform = navigator.platform; // property on activity
-	var userAgent = navigator.userAgent; // property on activity
+	var platform = navigator.platform; 
+	var userAgent = navigator.userAgent; 
+	if (userAgent.indexOf("Chrome/") > 0)
+		userAgent = "Chrome";
+	else if (userAgent.indexOf("Seamonkey/") > 0)
+		userAgent = "Seamonkey";
+	else if (userAgent.indexOf("Firefox/") > 0)
+		userAgent = "Firefox";
+	else if (userAgent.indexOf(";MSIE/" > 0))
+		userAgent = "IE";
+	else if (userAgent.indexOf("Chromium/") > 0)
+		userAgent = "Chromium";
+	else if (userAgent.indexOf("Safari/") > 0)
+		userAgent = "Safari";
+	else if (userAgent.indexOf("Opera/") > 0)
+		userAgent = "Opera";
+	var browserVersion = get_browser_info();
 	var queryString = url.substring((url.indexOf("?") > 0) ? url.indexOf("?") : 0, (url.indexOf("?") > 0) ? url.length : 0); // property on activity
 	var d = new Date();
 	var now = d.getTime();
@@ -32,16 +111,19 @@ if (('performance' in window) & ('timing' in window.performance)
 	var ipAddress = document.getElementById("ipaddress").value;
 	var geoAddress = "Melville";
 	var activityId = createGuid();
+
 	var activityProperties = '"properties": [{"name": "queryString","type": "string","value":"'
 		.concat(queryString).concat('"},{"name": "platform","type": "string","value":"')
-		.concat(platform).concat('"},{"name": "userAgent","type": "string","value": "')
-		.concat(userAgent).concat('"}]');
+		.concat(platform).concat('"},{"name": "browser","type": "string","value": "')
+		.concat(userAgent).concat('"},{"name": "browserVersion","type": "string","value": "')
+		.concat(browserVersion).concat('"},replaceme]');
 	var eventProperties = '","properties": [{"name": "JK_CORR_SID","type": "string","value":"'
 		.concat(sid).concat('"},{"name": "JK_CORR_RID","type": "string","value":"')
 		.concat(rid).concat('"},{"name": "queryString","type": "string","value":"')
 		.concat(queryString).concat('"},{"name": "platform","type": "string","value":"')
-		.concat(platform).concat('"},{"name": "userAgent","type": "string","value": "')
-		.concat(userAgent).concat('"}]');
+		.concat(platform).concat('"},{"name": "browser","type": "string","value": "')
+		.concat(userAgent).concat('"},{"name": "browserVersion","type": "string","value": "')
+		.concat(browserVersion).concat('"},replaceme]');
 	var sourceFqn = "APPL="
 		.concat(appl)
 		.concat('#SERVER=')
@@ -77,10 +159,6 @@ if (('performance' in window) & ('timing' in window.performance)
 	.concat(eventProperties)
 	.concat('}')
 
-	
-	
-	
-	
 	// Start/End times
 	var navigationStart;
 	var redirectStart;
@@ -163,12 +241,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// Redirect
 		if (redirectStart > 0) {
+			timingProperties='{"name": "timingStart","type": "string","value":"redirectStart"},{"name": "timingEnd","type": "string","value":"redirectEnd"}';
 			myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 					'","start-time-usec":').concat(redirectStart).concat(
 					'000,"end-time-usec":').concat(redirectEnd).concat('000')
-					.concat(',"operation":"redirect",').concat(common);
+					.concat(',"operation":"REDIRECT",').concat(common);
+			myJSONData = myJSONData.replace("replaceme", timingProperties);
 			path = 'event';
-			//alert(myJSONData);
+			alert(myJSONData);
 			$.ajax({
 				type : 'POST',
 				url : 'http://localhost:6580/JESL/'.concat(path),
@@ -181,11 +261,13 @@ if (('performance' in window) & ('timing' in window.performance)
 		}
 
 		// App Cache
+		timingProperties='{"name": "timingStart","type": "string","value":"fetchStart"}';
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(fetchStart).concat('000')
-				.concat(',"operation":"appCache",').concat(common);
+				.concat(',"operation":"APPCACHE",').concat(common);
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		//alert(myJSONData);
+		alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -197,6 +279,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		});
 
 		// DNS Lookup
+		timingProperties='{"name": "timingStart","type": "string","value":"domainLookupStart"},{"name": "timingEnd","type": "string","value":"domainLookupEnd"}';
 		myJSONData = '{"tracking-id":"'.concat(createGuid())
 				.concat('","start-time-usec":')	
 				.concat(domainLookupStart)
@@ -205,8 +288,9 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat('000')
 				.concat(',"operation":"DNS",')
 				.concat(common);
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		//alert(myJSONData);
+		alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -218,12 +302,14 @@ if (('performance' in window) & ('timing' in window.performance)
 		});
 
 		// TCP
+		timingProperties='{"name": "timingStart","type": "string","value":"connectStart"},{"name": "timingEnd","type": "string","value":"connectEnd"}';
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(connectStart).concat(
 				'000,"end-time-usec":').concat(connectEnd).concat('000')
 				.concat(',"operation":"TCP",').concat(common);
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		//alert(myJSONData);
+		alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -235,11 +321,13 @@ if (('performance' in window) & ('timing' in window.performance)
 		});
 
 		// Request
+		timingProperties='{"name": "timingStart","type": "string","value":"requestStart"}';
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(requestStart).concat('000')
-				.concat(',"operation":"request",').concat(common);
+				.concat(',"operation":"REQUEST",').concat(common);
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		//alert(myJSONData);
+		alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -251,12 +339,14 @@ if (('performance' in window) & ('timing' in window.performance)
 		});
 
 		// Response
+		timingProperties='{"name": "timingStart","type": "string","value":"responseStart"},{"name": "timingEnd","type": "string","value":"responseEnd"}';
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(responseStart).concat(
 				'000,"end-time-usec":').concat(responseEnd).concat('000')
-				.concat(',"operation":"response",').concat(common);
+				.concat(',"operation":"RESPONSE",').concat(common);
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		//alert(myJSONData);
+		alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -268,12 +358,14 @@ if (('performance' in window) & ('timing' in window.performance)
 		});
 
 		// Processing
+		timingProperties='{"name": "timingStart","type": "string","value":"domLoading"},{"name": "timingEnd","type": "string","value":"domComplete"}';
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(domLoading).concat(
 				'000,"end-time-usec":').concat(domComplete).concat('000')
-				.concat(',"operation":"processing",').concat(common);
+				.concat(',"operation":"PROCESSING",').concat(common);
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		//alert(myJSONData);
+		alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -285,12 +377,14 @@ if (('performance' in window) & ('timing' in window.performance)
 		});
 
 		// unLoad
+		timingProperties='{"name": "timingStart","type": "string","value":"unloadEventStart"},{"name": "timingEnd","type": "string","value":"unloadEventEnd"}';
 		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
 				'","start-time-usec":').concat(unloadEventStart).concat(
 				'000,"end-time-usec":').concat(unloadEventEnd).concat('000')
-				.concat(',"operation":"unload",').concat(common);
+				.concat(',"operation":"UNLOAD",').concat(common);
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		//alert(myJSONData);
+		alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -302,14 +396,16 @@ if (('performance' in window) & ('timing' in window.performance)
 		});
 
 		// Navigation Activity
+		timingProperties='{"name": "timingStart","type": "string","value":"navigationStart"},{"name": "timingEnd","type": "string","value":"unloadEventEnd"}';
 		myJSONData = '{"tracking-id":"'.concat(activityId).concat(
 				'","status":"END","start-time-usec":').concat(navigationStart)
 				.concat('000,"end-time-usec":').concat(unloadEventEnd).concat(
-						'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"navigation","source-fqn":"').concat(
+						'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"NAVIGATION","source-fqn":"').concat(
 						sourceFqn).concat('","resource":"').concat(url).concat('",').concat(activityProperties).concat(
 						',"user":"').concat(userName).concat('"}');
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'activity';
-		//alert(myJSONData);
+		alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -329,16 +425,17 @@ if (('performance' in window) & ('timing' in window.performance)
 	setTimeout(
 			function() {
 				var timings = window.performance.timing;
+				timingProperties='{"name": "timingStart","type": "string","value":"loadEventStart"},{"name": "timingEnd","type": "string","value":"loadEventEnd"}';
 				var myJSONLoadData = '{"tracking-id":"'.concat(createGuid())
 						.concat('","start-time-usec":"').concat(
 								timings["loadEventStart"]).concat(
 								'000,"end-time-usec":').concat(
 								timings["loadEventEnd"]).concat('000').concat(
-								',"operation":"onload",').concat(common)
-
+								',"operation":"ONLOAD",').concat(common);
+				myJSONLoadData = myJSONLoadData.replace("replaceme", timingProperties);
 				loadPath = 'event';
 
-				//alert(myJSONLoadData);
+				alert(myJSONLoadData);
 				$.ajax({
 					type : 'POST',
 					url : 'http://localhost:6580/JESL/'.concat(loadPath),
@@ -360,15 +457,16 @@ if (('performance' in window) & ('timing' in window.performance)
 				var start = perfEntries[i];
 				var end = window.performance.getEntriesByName('end' + suffix);
 				var measure = window.performance.getEntriesByName('measure' + suffix);			
-				
+				timingProperties='{"name": "timingStart","type": "string","value":"markStart"},{"name": "timingEnd","type": "string","value":"markEnd"}';
 				var myJSONAjaxData = '{"tracking-id":"'.concat(createGuid())
 						.concat('","start-time-usec":').concat(Math.round(((timings["navigationStart"] * 1000) + start.startTime)))
 						.concat(',"end-time-usec":').concat(Math.round(((timings["navigationStart"] * 1000) + end[0].startTime)))
 						.concat(',"elapsed-time-usec":').concat(Math.round(measure[0].duration))
 						.concat(',"operation":"' + suffix + '","source-fqn":"').concat(sourceFqn)
 						.concat('",').concat(common);
+				myJSONAjaxData = myJSONAjaxData.replace("replaceme", timingProperties);
 				var ajaxPath = 'event';
-				//alert(myJSONAjaxData);
+				alert(myJSONAjaxData);
 				$.ajax({
 					type : 'POST',
 					url : 'http://localhost:6580/JESL/'.concat(ajaxPath),
@@ -391,11 +489,13 @@ if (('performance' in window) & ('timing' in window.performance)
     }
     else
     {
+		timingProperties='{"name": "timingStart","type": "string","value":"errorTimeStart"}';
 		var myJSONErrorData = '{"tracking-id":"'.concat(createGuid()).concat(
 		'","start-time-usec":').concat(now).concat(
-		'000').concat(',"operation":"javascriptError",').concat(common);
+		'000').concat(',"operation":"JAVASCRIPT_ERROR",').concat(common);
+		myJSONErrorData = myJSONErrorData.replace("replaceme", timingProperties);
 		errorPath = 'event';
-		//alert(myJSONData);
+		alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(errorPath),
