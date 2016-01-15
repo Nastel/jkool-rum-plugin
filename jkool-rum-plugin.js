@@ -238,6 +238,8 @@ if (('performance' in window) & ('timing' in window.performance)
 			}
 
 		}
+		
+		//EVENT LEVEL
 
 		// Redirect
 		if (redirectStart > 0) {
@@ -248,7 +250,7 @@ if (('performance' in window) & ('timing' in window.performance)
 					.concat(',"operation":"REDIRECT",').concat(common);
 			myJSONData = myJSONData.replace("replaceme", timingProperties);
 			path = 'event';
-			alert(myJSONData);
+			//alert(myJSONData);
 			$.ajax({
 				type : 'POST',
 				url : 'http://localhost:6580/JESL/'.concat(path),
@@ -267,7 +269,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(',"operation":"APPCACHE",').concat(common);
 		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -290,7 +292,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(common);
 		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -309,7 +311,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(',"operation":"TCP",').concat(common);
 		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -327,7 +329,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(',"operation":"REQUEST",').concat(common);
 		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -346,7 +348,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(',"operation":"RESPONSE",').concat(common);
 		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -365,7 +367,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(',"operation":"PROCESSING",').concat(common);
 		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -384,7 +386,7 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(',"operation":"UNLOAD",').concat(common);
 		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -394,18 +396,127 @@ if (('performance' in window) & ('timing' in window.performance)
 				'token' : token
 			},
 		});
-
-		// Navigation Activity
-		timingProperties='{"name": "timingStart","type": "string","value":"navigationStart"},{"name": "timingEnd","type": "string","value":"unloadEventEnd"}';
+		
+		// ACTIVITY LEVEL
+		
+		// First Byte Time
+		timingProperties='{"name": "timingStart","type": "string","value":"navigationStart"},{"name": "timingEnd","type": "string","value":"responseStart"}';
 		myJSONData = '{"tracking-id":"'.concat(activityId).concat(
 				'","status":"END","start-time-usec":').concat(navigationStart)
-				.concat('000,"end-time-usec":').concat(unloadEventEnd).concat(
-						'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"NAVIGATION","source-fqn":"').concat(
+				.concat('000,"end-time-usec":').concat(responseStart).concat(
+						'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"FIRST_BYTE_TIME","source-fqn":"').concat(
 						sourceFqn).concat('","resource":"').concat(url).concat('",').concat(activityProperties).concat(
 						',"user":"').concat(userName).concat('"}');
 		myJSONData = myJSONData.replace("replaceme", timingProperties);
 		path = 'activity';
-		alert(myJSONData);
+		//alert(myJSONData);
+		$.ajax({
+			type : 'POST',
+			url : 'http://localhost:6580/JESL/'.concat(path),
+			data : myJSONData,
+			dataType : 'text',
+			headers : {
+				'token' : token
+			},
+		});
+		
+
+		
+		// Document Ready Time
+		timingProperties='{"name": "timingStart","type": "string","value":"responseStart"},{"name": "timingEnd","type": "string","value":"domComplete"}';
+		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+				'","status":"END","start-time-usec":').concat(responseStart)
+				.concat('000,"end-time-usec":').concat(domComplete).concat(
+						'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"DOCUMENT_READY_TIME","source-fqn":"').concat(
+						sourceFqn).concat('","resource":"').concat(url).concat('",').concat(activityProperties).concat(
+						',"user":"').concat(userName).concat('"}');
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		path = 'activity';
+		//alert(myJSONData);
+		$.ajax({
+			type : 'POST',
+			url : 'http://localhost:6580/JESL/'.concat(path),
+			data : myJSONData,
+			dataType : 'text',
+			headers : {
+				'token' : token
+			},
+		});
+		
+		// Response Available Time
+		timingProperties='{"name": "timingStart","type": "string","value":"requestStart"},{"name": "timingEnd","type": "string","value":"responseStart"}';
+		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+				'","status":"END","start-time-usec":').concat(requestStart)
+				.concat('000,"end-time-usec":').concat(responseStart).concat(
+						'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"RESPONSE_AVAILABLE_TIME","source-fqn":"').concat(
+						sourceFqn).concat('","resource":"').concat(url).concat('",').concat(activityProperties).concat(
+						',"user":"').concat(userName).concat('"}');
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		path = 'activity';
+		//alert(myJSONData);
+		$.ajax({
+			type : 'POST',
+			url : 'http://localhost:6580/JESL/'.concat(path),
+			data : myJSONData,
+			dataType : 'text',
+			headers : {
+				'token' : token
+			},
+		});
+		
+		// Server Connection Time
+		timingProperties='{"name": "timingStart","type": "string","value":"navigationStart"},{"name": "timingEnd","type": "string","value":"requestStart"}';
+		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+				'","status":"END","start-time-usec":').concat(navigationStart)
+				.concat('000,"end-time-usec":').concat(requestStart).concat(
+						'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"SERVER_CONNECTION_TIME","source-fqn":"').concat(
+						sourceFqn).concat('","resource":"').concat(url).concat('",').concat(activityProperties).concat(
+						',"user":"').concat(userName).concat('"}');
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		path = 'activity';
+		//alert(myJSONData);
+		$.ajax({
+			type : 'POST',
+			url : 'http://localhost:6580/JESL/'.concat(path),
+			data : myJSONData,
+			dataType : 'text',
+			headers : {
+				'token' : token
+			},
+		});
+		
+		// Document Download Time
+		timingProperties='{"name": "timingStart","type": "string","value":"responseStart"},{"name": "timingEnd","type": "string","value":"responseEnd"}';
+		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+				'","status":"END","start-time-usec":').concat(responseStart)
+				.concat('000,"end-time-usec":').concat(responseEnd).concat(
+						'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"DOCUMENT_DOWNLOAD_TIME","source-fqn":"').concat(
+						sourceFqn).concat('","resource":"').concat(url).concat('",').concat(activityProperties).concat(
+						',"user":"').concat(userName).concat('"}');
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		path = 'activity';
+		//alert(myJSONData);
+		$.ajax({
+			type : 'POST',
+			url : 'http://localhost:6580/JESL/'.concat(path),
+			data : myJSONData,
+			dataType : 'text',
+			headers : {
+				'token' : token
+			},
+		});
+		
+		// Document Processing Time
+		timingProperties='{"name": "timingStart","type": "string","value":"responseEnd"},{"name": "timingEnd","type": "string","value":"domComplete"}';
+		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+				'","status":"END","start-time-usec":').concat(responseEnd)
+				.concat('000,"end-time-usec":').concat(domComplete).concat(
+						'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"DOCUMENT_PROCESSING_TIME","source-fqn":"').concat(
+						sourceFqn).concat('","resource":"').concat(url).concat('",').concat(activityProperties).concat(
+						',"user":"').concat(userName).concat('"}');
+		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		path = 'activity';
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(path),
@@ -435,11 +546,105 @@ if (('performance' in window) & ('timing' in window.performance)
 				myJSONLoadData = myJSONLoadData.replace("replaceme", timingProperties);
 				loadPath = 'event';
 
-				alert(myJSONLoadData);
+				//alert(myJSONLoadData);
 				$.ajax({
 					type : 'POST',
 					url : 'http://localhost:6580/JESL/'.concat(loadPath),
 					data : myJSONLoadData,
+					dataType : 'text',
+					headers : {
+						'token' : token
+					},
+				});
+				
+				// Page Render Time
+				timingProperties='{"name": "timingStart","type": "string","value":"domComplete"},{"name": "timingEnd","type": "string","value":"loadEventEnd"}';
+				myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+						'","status":"END","start-time-usec":').concat(timings["domComplete"])
+						.concat('000,"end-time-usec":').concat(timings["loadEventEnd"]).concat(
+								'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"PAGE_RENDER_TIME","source-fqn":"').concat(
+								sourceFqn).concat('","resource":"').concat(url).concat('",').concat(activityProperties).concat(
+								',"user":"').concat(userName).concat('"}');
+				myJSONData = myJSONData.replace("replaceme", timingProperties);
+				path = 'activity';
+				//alert(myJSONData);
+				$.ajax({
+					type : 'POST',
+					url : 'http://localhost:6580/JESL/'.concat(path),
+					data : myJSONData,
+					dataType : 'text',
+					headers : {
+						'token' : token
+					},
+				});
+				
+				
+				// Summary
+				timingProperties='{"name": "END_USER_RESPONSE_TIME","type": "string","value":"'.concat(timings["navigationStart"] - timings["loadEventEnd"])
+				      .concat('"},{"name": "FRONT_END_TIME","type": "string","value":"').concat(timings["responseStart"] - timings["loadEventEnd"])
+				      .concat('"},{"name": "PAGE_RENDER_TIME","type": "string","value":"').concat(timings["domComplete"] - timings["loadEventEnd"])
+				      .concat('"},{"name": "DOCUMENT_PROCESSING_TIME","type": "string","value":"').concat(timings["responseEnd"] - timings["domComplete"])
+				      .concat('"},{"name": "DOCUMENT_DOWNLOAD_TIME","type": "string","value":"').concat(timings["responseStart"] - timings["responseEnd"])
+				      .concat('"},{"name": "SERVER_CONNECTION_TIME","type": "string","value":"').concat(timings["navigationStart"] - timings["requestStart"])
+				      .concat('"},{"name": "RESPONSE_AVAILABLE_TIME","type": "string","value":"').concat(timings["requestStart"] - timings["responseStart"])
+				      .concat('"},{"name": "DOCUMENT_READY_TIME","type": "string","value":"').concat(timings["responseStart"] - timings["domComplete"])
+				      .concat('"},{"name": "FIRST_BYTE_TIME","type": "string","value":"').concat(timings["navigationStart"] - timings["responseStart"])
+				      .concat('"}');
+				myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+						'","status":"END","start-time-usec":').concat(timings["navigationStart"])
+						.concat('000,"end-time-usec":').concat(timings["loadEventEnd"]).concat(
+								'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"SUMMARY","source-fqn":"').concat(
+								sourceFqn).concat('","resource":"').concat(url).concat('",').concat(activityProperties).concat(
+								',"user":"').concat(userName).concat('"}');
+				myJSONData = myJSONData.replace("replaceme", timingProperties);
+				path = 'activity';
+				//alert(myJSONData);
+				$.ajax({
+					type : 'POST',
+					url : 'http://localhost:6580/JESL/'.concat(path),
+					data : myJSONData,
+					dataType : 'text',
+					headers : {
+						'token' : token
+					},
+				});
+				
+				// End User Response Time
+				timingProperties='{"name": "timingStart","type": "string","value":"navigationStart"},{"name": "timingEnd","type": "string","value":"loadEventEnd"}';
+				myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+						'","status":"END","start-time-usec":').concat(timings["navigationStart"])
+						.concat('000,"end-time-usec":').concat(timings["loadEventEnd"]).concat(
+								'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"END_USER_RESPONSE_TIME","source-fqn":"').concat(
+								sourceFqn).concat('","resource":"').concat(url).concat('",').concat(activityProperties).concat(
+								',"user":"').concat(userName).concat('"}');
+				myJSONData = myJSONData.replace("replaceme", timingProperties);
+				path = 'activity';
+				//alert(myJSONData);
+				$.ajax({
+					type : 'POST',
+					url : 'http://localhost:6580/JESL/'.concat(path),
+					data : myJSONData,
+					dataType : 'text',
+					headers : {
+						'token' : token
+					},
+				});
+				
+				// Front End Time
+				timingProperties='{"name": "timingStart","type": "string","value":"responseStart"},{"name": "timingEnd","type": "string","value":"loadEventEnd"}';
+				myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
+						'","status":"END","start-time-usec":').concat(timings["responseStart"])
+						.concat('000,"end-time-usec":').concat(timings["loadEventEnd"]).concat(
+								'000').concat(',"time-usec":').concat(now).concat('000').concat(',"operation":"FRONT_END_TIME","source-fqn":"').concat(
+								sourceFqn).concat('","resource":"').concat(url).concat('",').concat(activityProperties).concat(
+								',"user":"').concat(userName).concat('"}');
+				myJSONData = myJSONData.replace("replaceme", timingProperties);
+				path = 'activity';
+				//alert(myJSONData);
+				$.ajax({
+					type : 'POST',
+					url : 'http://localhost:6580/JESL/'.concat(path),
+					data : myJSONData,
 					dataType : 'text',
 					headers : {
 						'token' : token
@@ -466,7 +671,7 @@ if (('performance' in window) & ('timing' in window.performance)
 						.concat('",').concat(common);
 				myJSONAjaxData = myJSONAjaxData.replace("replaceme", timingProperties);
 				var ajaxPath = 'event';
-				alert(myJSONAjaxData);
+				//alert(myJSONAjaxData);
 				$.ajax({
 					type : 'POST',
 					url : 'http://localhost:6580/JESL/'.concat(ajaxPath),
@@ -479,7 +684,7 @@ if (('performance' in window) & ('timing' in window.performance)
 			}
 		}
 
-	}, 0);
+	}, 5000);
 }
 
  window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
@@ -495,7 +700,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		'000').concat(',"operation":"JAVASCRIPT_ERROR",').concat(common);
 		myJSONErrorData = myJSONErrorData.replace("replaceme", timingProperties);
 		errorPath = 'event';
-		alert(myJSONData);
+		//alert(myJSONData);
 		$.ajax({
 			type : 'POST',
 			url : 'http://localhost:6580/JESL/'.concat(errorPath),
