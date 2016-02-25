@@ -8,6 +8,7 @@ In your javascript directory for the web application you wish to monitor, import
 These libraries can be obtained at http://jquery.com/download/
 
 ###Update the User-defined fields in the plugin
+Please note that you will receive your jKool token when you register for jKool.
 ```java
 // User fills in these variables.
 var token = "your jKool token here"; 
@@ -67,3 +68,9 @@ performance.mark("start_<descriptive name>");
 performance.mark("end_<descriptive name>");  
 performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'end_<descriptive name>');
 ```
+
+Your website is now setup to monitor end users. When a user hits a page, data will be posted to your repository in jKool via Restful Webservices.
+
+###Logon to jKool to see you end-user monitoring data	
+Logon to your jKool Dashboard. On the upper-right hand side, you will see a button labeled "EUM". Click on this button to see various
+charts displaying your end user data. You may also create your own viewlet. Please do the Dashboard tutorial to see how to use JKQL to create your own viewlets.
