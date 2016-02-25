@@ -3,9 +3,13 @@
 ###Import the plugin
 In your javascript directory for the web application you wish to monitor, import jkool-rum-plugin.js
 
+
+###Import jquery libraries 
+These libraries can be obtained at http://jquery.com/download/
+
 ###Do the following in the pages you with to monitor
 
-* Import - java.util.UUID
+* Import java.util.UUID
 ```java
 <%@ page ... import="java.util.*  ...%>
 ```
