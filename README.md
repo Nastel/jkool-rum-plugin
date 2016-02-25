@@ -1,6 +1,6 @@
 # jKool End-User Monitoring
 
-jKool is happy to offer you a very simple and easy to use plug-in that you can use to monitor your end-user experience. This plugin will gather performance metrics and stream them to jKool. When you login to you jKool repository you will see these metrics by simply clicking on a ready-made End-User Monitoring Dashboard. You will also have the ability to create your own views of the end user data by creating your own viewlets. Please follow these simple instructions to get setup using the plugin in just a few minutes. If you encounter any difficulty please don't hesitate to contact us at support@jkoolcloud.com.
+jKool is happy to offer you a very simple and easy to use plug-in that you can use to monitor your end-user experience. This plugin will gather performance metrics and stream them to jKool. When you login to your jKool repository you will see these metrics by simply clicking on a ready-made End-User Monitoring Dashboard. You will also have the ability to create your own views of the end user data by creating your own viewlets. Please follow these simple instructions to get setup using the plugin in just a few minutes. If you encounter any difficulty please don't hesitate to contact us at support@jkoolcloud.com.
 
 
 ###Import the plugin
