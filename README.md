@@ -1,6 +1,17 @@
- Import - java.util.UUID
- 
+# jKool End-User Monitoring
+
+###Import the plugin
+In your javascript directory for the web application you wish to monitor, import jkool-rum-plugin.js
+
+###Do the following in the pages you with to monitor
+
+* Import - java.util.UUID
+* Add the plugin 
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
+
+* Add the following scriptlet
+
+```java
 <%
 String id = null;
 if (session.getAttribute("JK_CORR_ID") == null)
@@ -17,12 +28,13 @@ if (ipAddress == null)
   ipAddress = request.getRemoteAddr();  
 String userName=(request.getRemoteUser() == null) ? "unknown-user" : request.getRemoteUser();
 %>
-
+```
+* Add the following hidden fields
 <input type="hidden" name="corrid" id="corrid" value="<%=id%>"/>
 <input type="hidden" name="username" id="username" value="<%=userName%>"/>
 <input type="hidden" name="ipaddress" id="ipaddress" value="<%=ipAddress%>"/>
 
-To mark Ajax, do the following ...
+To get performance metrics on Ajax or javascript functions, do the following ...
 performance.mark("start_<descriptive name>");  
 <javascript code being marked>
 performance.mark("end_<descriptive name>");  

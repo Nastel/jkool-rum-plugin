@@ -70,12 +70,16 @@ if (('performance' in window) & ('timing' in window.performance)
 		& ('navigation' in window.performance)) {
 
 	// User fills in these variables.
-	var token = "775d182c-fb54-4eb1-be58-1153ce2d7865";
+	//var token = "775d182c-fb54-4eb1-be58-1153ce2d7865"; // ibm_57538
+	//var token = "9zdVnx9chMFC7NdI1Myu47xNhcNDj7t9"; // testnodedown31
+	var token = "Dl0PmHIbvGUWnaUHcrGX2LDvQ6iClOWy"; // testnodedown26
 	var appl = "jKoolUI";
 	var server = "jKoolServer";
 	var dataCenter = "NastelHQ";
 
 	// System computed variables
+	var jsErrorMsg = "";
+	var jsErrorLocation = "";
 	var myJSONData = "";
 	var timingProperties = "";
 	var path;
@@ -110,8 +114,17 @@ if (('performance' in window) & ('timing' in window.performance)
 	var userName = document.getElementById("username").value;
 	var ipAddress = document.getElementById("ipaddress").value;
 	var geoAddress = "Melville";
-	var activityId = createGuid();
-
+	var activityIdFirstByteTime = createGuid();
+	var activityIdServerConnectionTime = createGuid();
+	var activityIdEndUserResponseTime = createGuid();
+	var activityIdFrontEndTime = createGuid();
+	var activityIdDocumentReadyTime = createGuid();
+	var activityIdPageRenderTime = createGuid();
+	var activityIdDocumentDownLoadTime = createGuid();
+	var activityIdDocumentProcessingTime = createGuid();
+	var activityIdResponseAvailableTime = createGuid();
+	var activityIdSummary = createGuid();
+	
 	var activityProperties = '"properties": [{"name": "queryString","type": "string","value":"'
 			.concat(queryString).concat(
 					'"},{"name": "platform","type": "string","value":"')
@@ -123,8 +136,8 @@ if (('performance' in window) & ('timing' in window.performance)
 					'"},{"name": "browser","type": "string","value": "')
 			.concat(userAgent).concat(
 					'"},{"name": "browserVersion","type": "string","value": "')
-			.concat(browserVersion).concat('"},replaceme]');
-	var eventProperties = '","properties": [{"name": "JK_CORR_SID","type": "string","value":"'
+			.concat(browserVersion).concat('"},replaceTiming]');
+	var eventProperties = '"],"properties": [{"name": "JK_CORR_SID","type": "string","value":"'
 			.concat(sid).concat(
 					'"},{"name": "JK_CORR_RID","type": "string","value":"')
 			.concat(rid).concat(
@@ -135,21 +148,29 @@ if (('performance' in window) & ('timing' in window.performance)
 					'"},{"name": "browser","type": "string","value": "')
 			.concat(userAgent).concat(
 					'"},{"name": "browserVersion","type": "string","value": "')
-			.concat(browserVersion).concat('"},replaceme]');
+			.concat(browserVersion).concat('"},replaceTiming]');
 	var eventSourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
 			.concat('#NETADDR=').concat(ipAddress).concat('#DATACENTER=')
 			.concat(dataCenter).concat('#GEOADDR=').concat("replacelat,replacelon");
+	
+	var activitySourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
+	.concat('#NETADDR=').concat(ipAddress).concat('#DATACENTER=')
+	.concat(dataCenter).concat('#GEOADDR=').concat(
+			"replacelat,replacelon");
+	
+	var activityCommon = '"source-fqn":"'.concat(activitySourceFqn).concat('","status":"END","parent-id":"replaceParentIds","resource":"').concat(url).concat(
+		'",').concat(activityProperties).concat(',"user":"').concat(userName).concat('","corrid":["').concat(sid).concat(',').concat(rid).concat('"]}');
 
 	var common = '"source-fqn":"'.concat(eventSourceFqn).concat('","msg-tag":"')
 			.concat(rid).concat('","time-usec":').concat(now).concat('000')
 			.concat(',"resource":"').concat(url).concat(
-					'","severity":"SUCCESS","parent-id":"').concat(activityId)
-			.concat('","location":"').concat(ipAddress).concat(
+					'","severity":"SUCCESS","parent-id":"replaceParentIds"')
+			.concat(',"location":"').concat(ipAddress).concat(
 					'","source-ssn":"').concat(appl).concat('","user":"')
-			.concat(userName).concat('","corrid":"').concat(
+			.concat(userName).concat('","corrid":["').concat(
 					document.getElementById('corrid').value).concat(',')
 			.concat(document.getElementById('rcorrid').value).concat(
-					eventProperties).concat('}')
+					eventProperties).concat('}');
 	var errorSourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
 			.concat('#NETADDR=').concat(ipAddress).concat('#DATACENTER=')
 			.concat(dataCenter);
@@ -164,7 +185,10 @@ if (('performance' in window) & ('timing' in window.performance)
 					'"},{"name": "browser","type": "string","value": "')
 			.concat(userAgent).concat(
 					'"},{"name": "browserVersion","type": "string","value": "')
-			.concat(browserVersion).concat('"}]');
+			.concat(browserVersion).concat('"}]').concat(',"user":"')
+			.concat(userName)
+			.concat('","corrid":["').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)				
+			.concat('"]}');
 
 	// Start/End times
 	var navigationStart;
@@ -269,16 +293,13 @@ if (('performance' in window) & ('timing' in window.performance)
 
 			// Error
 			myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-					'","status":"END","start-time-usec":').concat(now)
+					'","start-time-usec":').concat(now)
 					.concat('000,"end-time-usec":').concat(now).concat(
 							'000').concat(',"time-usec":').concat(now)
 					.concat('000').concat(
 							',"operation":"ERROR","source-fqn":"')
 					.concat(errorSourceFqn).concat('","resource":"').concat(url).concat(
-							'",').concat(errorProperties).concat(',"user":"')
-					.concat(userName)
-					.concat('","corrid":"').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)
-					.concat('"}');
+							'",').concat(errorProperties);
 			path = 'activity';
 			//alert(myJSONData);
 			$.ajax({
@@ -293,7 +314,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		}
 	}, 5000);
 
-	// all Activities, onLoad Event, & Ajax
+	// all Activities, onLoad Event, & Measures
 
 	function report(position) {
 		
@@ -305,16 +326,14 @@ if (('performance' in window) & ('timing' in window.performance)
 		// Redirect
 		if (redirectStart > 0) {
 			timingProperties = '{"name": "timingStart","type": "string","value":"redirectStart"},{"name": "timingEnd","type": "string","value":"redirectEnd"}';
-			myJSONData = '{"tracking-id":"'
-					.concat(createGuid()).concat(
-							'","start-time-usec":').concat(
-							redirectStart).concat(
-							'000,"end-time-usec":').concat(
-							redirectEnd).concat('000').concat(
-							',"operation":"REDIRECT",').concat(
-							common);
-			myJSONData = myJSONData.replace("replaceme",
+			myJSONData = '{"start-time-usec":'.concat(redirectStart)
+			.concat('000,"end-time-usec":').concat(redirectEnd).concat('000')
+			.concat(',"operation":"REDIRECT",')
+			.concat(common);
+			myJSONData = myJSONData.replace("replaceTiming",
 					timingProperties);
+			myJSONData = myJSONData.replace(',"parent-id":"replaceParentIds"',
+				'');
 			path = 'event';
 			//alert(myJSONData);
 			$.ajax({
@@ -331,13 +350,13 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// App Cache
 		timingProperties = '{"name": "timingStart","type": "string","value":"fetchStart"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid())
-				.concat('","start-time-usec":').concat(
-						fetchStart).concat('000').concat(
-						',"operation":"APPCACHE",').concat(
-						common);
-		myJSONData = myJSONData.replace("replaceme",
+		myJSONData = '{"start-time-usec":'.concat(fetchStart).concat('000')
+		.concat(',"operation":"APPCACHE",')
+		.concat(common);
+		myJSONData = myJSONData.replace("replaceTiming",
 				timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds",
+				activityIdServerConnectionTime);
 		path = 'event';
 		//alert(myJSONData);
 		$.ajax({
@@ -352,14 +371,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// DNS Lookup
 		timingProperties = '{"name": "timingStart","type": "string","value":"domainLookupStart"},{"name": "timingEnd","type": "string","value":"domainLookupEnd"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid())
-				.concat('","start-time-usec":').concat(
-						domainLookupStart).concat(
-						'000,"end-time-usec":').concat(
-						domainLookupEnd).concat('000').concat(
-						',"operation":"DNS",').concat(common);
-		myJSONData = myJSONData.replace("replaceme",
+		myJSONData = '{"start-time-usec":'.concat(domainLookupStart)
+		.concat('000,"end-time-usec":').concat(domainLookupEnd).concat('000')
+		.concat(',"operation":"DNS",')
+		.concat(common);
+		myJSONData = myJSONData.replace("replaceTiming",
 				timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds",
+				activityIdServerConnectionTime);
 		path = 'event';
 		//alert(myJSONData);
 		$.ajax({
@@ -374,14 +393,15 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// TCP
 		timingProperties = '{"name": "timingStart","type": "string","value":"connectStart"},{"name": "timingEnd","type": "string","value":"connectEnd"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid())
-				.concat('","start-time-usec":').concat(
-						connectStart).concat(
-						'000,"end-time-usec":').concat(
-						connectEnd).concat('000').concat(
-						',"operation":"TCP",').concat(common);
-		myJSONData = myJSONData.replace("replaceme",
+		myJSONData = '{"start-time-usec":'.concat(connectStart)
+		.concat('000,"end-time-usec":')
+		.concat(connectEnd).concat('000')
+		.concat(',"operation":"TCP",')
+		.concat(common);
+		myJSONData = myJSONData.replace("replaceTiming",
 				timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds",
+				activityIdServerConnectionTime);
 		path = 'event';
 		//alert(myJSONData);
 		$.ajax({
@@ -396,13 +416,13 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// Request
 		timingProperties = '{"name": "timingStart","type": "string","value":"requestStart"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid())
-				.concat('","start-time-usec":').concat(
-						requestStart).concat('000').concat(
-						',"operation":"REQUEST",').concat(
-						common);
-		myJSONData = myJSONData.replace("replaceme",
+		myJSONData = '{"start-time-usec":'.concat(requestStart).concat('000')
+		.concat(',"operation":"REQUEST",')
+		.concat(common);
+		myJSONData = myJSONData.replace("replaceTiming",
 				timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds",
+				activityIdResponseAvailableTime);
 		path = 'event';
 		//alert(myJSONData);
 		$.ajax({
@@ -417,15 +437,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// Response
 		timingProperties = '{"name": "timingStart","type": "string","value":"responseStart"},{"name": "timingEnd","type": "string","value":"responseEnd"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid())
-				.concat('","start-time-usec":').concat(
-						responseStart).concat(
-						'000,"end-time-usec":').concat(
-						responseEnd).concat('000').concat(
-						',"operation":"RESPONSE",').concat(
-						common);
-		myJSONData = myJSONData.replace("replaceme",
+		myJSONData = '{"start-time-usec":'.concat(responseStart)
+		.concat('000,"end-time-usec":').concat(responseEnd).concat('000')
+		.concat(',"operation":"RESPONSE",')
+		.concat(common);
+		myJSONData = myJSONData.replace("replaceTiming",
 				timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds",
+				activityIdDocumentDownLoadTime);
 		path = 'event';
 		//alert(myJSONData);
 		$.ajax({
@@ -440,15 +459,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// Processing
 		timingProperties = '{"name": "timingStart","type": "string","value":"domLoading"},{"name": "timingEnd","type": "string","value":"domComplete"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid())
-				.concat('","start-time-usec":').concat(
-						domLoading).concat(
-						'000,"end-time-usec":').concat(
-						domComplete).concat('000').concat(
-						',"operation":"PROCESSING",').concat(
-						common);
-		myJSONData = myJSONData.replace("replaceme",
+		myJSONData = '{"start-time-usec":'.concat(domLoading)
+		.concat('000,"end-time-usec":').concat(domComplete).concat('000')
+		.concat(',"operation":"PROCESSING",')
+		.concat(common);
+		myJSONData = myJSONData.replace("replaceTiming",
 				timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds",
+				activityIdDocumentProcessingTime);
 		path = 'event';
 		//alert(myJSONData);
 		$.ajax({
@@ -463,15 +481,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// unLoad
 		timingProperties = '{"name": "timingStart","type": "string","value":"unloadEventStart"},{"name": "timingEnd","type": "string","value":"unloadEventEnd"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid())
-				.concat('","start-time-usec":').concat(
-						unloadEventStart).concat(
-						'000,"end-time-usec":').concat(
-						unloadEventEnd).concat('000').concat(
-						',"operation":"UNLOAD",')
-				.concat(common);
-		myJSONData = myJSONData.replace("replaceme",
+		myJSONData = '{"start-time-usec":'.concat(unloadEventStart)
+		.concat('000,"end-time-usec":').concat(unloadEventEnd).concat('000')
+		.concat(',"operation":"UNLOAD",')
+		.concat(common);
+		myJSONData = myJSONData.replace("replaceTiming",
 				timingProperties);
+		myJSONData = myJSONData.replace(',"parent-id":"replaceParentIds"',
+		'');
 		path = 'event';
 		//alert(myJSONData);
 		$.ajax({
@@ -487,11 +504,12 @@ if (('performance' in window) & ('timing' in window.performance)
 		// OnLoad Event
 		var timings = window.performance.timing;
 		timingProperties = '{"name": "timingStart","type": "string","value":"loadEventStart"},{"name": "timingEnd","type": "string","value":"loadEventEnd"}';
-		var myJSONLoadData = '{"tracking-id":"'.concat(createGuid()).concat(
-				'","start-time-usec":').concat(timings["loadEventStart"])
-				.concat('000,"end-time-usec":').concat(timings["loadEventEnd"])
-				.concat('000').concat(',"operation":"ONLOAD",').concat(common);
-		myJSONLoadData = myJSONLoadData.replace("replaceme", timingProperties);
+		var myJSONLoadData = '{"start-time-usec":'.concat(timings["loadEventStart"])
+			.concat('000,"end-time-usec":').concat(timings["loadEventEnd"]).concat('000')
+			.concat(',"operation":"ONLOAD",')
+			.concat(common);
+		myJSONLoadData = myJSONLoadData.replace("replaceTiming", timingProperties);
+		myJSONLoadData = myJSONLoadData.replace("replaceParentIds", activityIdPageRenderTime);
 		loadPath = 'event';
 
 		//alert(myJSONLoadData);
@@ -507,26 +525,19 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// ACTIVITY LEVEL
 
-		var activitySourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
-				.concat('#NETADDR=').concat(ipAddress).concat('#DATACENTER=')
-				.concat(dataCenter).concat('#GEOADDR=').concat(
-						position.coords.latitude
-								+ "," + position.coords.longitude);
+		activityCommon = activityCommon.replace("replacelat",position.coords.latitude);
+		activityCommon = activityCommon.replace("replacelon",position.coords.longitude);
 
 		// First Byte Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"navigationStart"},{"name": "timingEnd","type": "string","value":"responseStart"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-				'","status":"END","start-time-usec":').concat(navigationStart)
-				.concat('000,"end-time-usec":').concat(responseStart).concat(
-						'000').concat(',"time-usec":').concat(now)
-				.concat('000').concat(
-						',"operation":"FIRST_BYTE_TIME","source-fqn":"')
-				.concat(activitySourceFqn).concat('","resource":"').concat(url).concat(
-						'",').concat(activityProperties).concat(',"user":"')
-				.concat(userName)
-				.concat('","corrid":"').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)
-				.concat('"}');
-		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		myJSONData = '{"tracking-id":"'.concat(activityIdFirstByteTime)
+		.concat('","start-time-usec":').concat(navigationStart)
+		.concat('000,"end-time-usec":').concat(responseStart).concat('000')
+		.concat(',"time-usec":').concat(now).concat('000')
+		.concat(',"operation":"FIRST_BYTE_TIME",')
+		.concat(activityCommon);
+		myJSONData = myJSONData.replace("replaceTiming", timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds", activityIdEndUserResponseTime);
 		path = 'activity';
 		//alert(myJSONData);
 		$.ajax({
@@ -541,18 +552,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// Document Ready Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"responseStart"},{"name": "timingEnd","type": "string","value":"domComplete"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-				'","status":"END","start-time-usec":').concat(responseStart)
-				.concat('000,"end-time-usec":').concat(domComplete).concat(
-						'000').concat(',"time-usec":').concat(now)
-				.concat('000').concat(
-						',"operation":"DOCUMENT_READY_TIME","source-fqn":"')
-				.concat(activitySourceFqn).concat('","resource":"').concat(url).concat(
-						'",').concat(activityProperties).concat(',"user":"')
-				.concat(userName)
-				.concat('","corrid":"').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)
-				.concat('"}');
-		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		myJSONData = '{"tracking-id":"'.concat(activityIdDocumentReadyTime)
+		.concat('","start-time-usec":').concat(responseStart)
+		.concat('000,"end-time-usec":').concat(domComplete).concat('000')
+		.concat(',"time-usec":').concat(now).concat('000')
+		.concat(',"operation":"DOCUMENT_READY_TIME",')
+		.concat(activityCommon);
+		myJSONData = myJSONData.replace("replaceTiming", timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds", activityIdFrontEndTime);
 		path = 'activity';
 		//alert(myJSONData);
 		$.ajax({
@@ -567,23 +574,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// Response Available Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"requestStart"},{"name": "timingEnd","type": "string","value":"responseStart"}';
-		myJSONData = '{"tracking-id":"'
-				.concat(createGuid())
-				.concat('","status":"END","start-time-usec":')
-				.concat(requestStart)
-				.concat('000,"end-time-usec":')
-				.concat(responseStart)
-				.concat('000')
-				.concat(',"time-usec":')
-				.concat(now)
-				.concat('000')
-				.concat(',"operation":"RESPONSE_AVAILABLE_TIME","source-fqn":"')
-				.concat(activitySourceFqn).concat('","resource":"').concat(url).concat(
-						'",').concat(activityProperties).concat(',"user":"')
-				.concat(userName)
-				.concat('","corrid":"').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)				
-				.concat('"}');
-		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		myJSONData = '{"tracking-id":"'.concat(activityIdResponseAvailableTime)
+		.concat('","start-time-usec":').concat(requestStart)
+		.concat('000,"end-time-usec":').concat(responseStart).concat('000')
+		.concat(',"time-usec":').concat(now).concat('000')
+		.concat(',"operation":"RESPONSE_AVAILABLE_TIME",')
+		.concat(activityCommon);
+		myJSONData = myJSONData.replace("replaceTiming", timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds", activityIdFirstByteTime);
 		path = 'activity';
 		//alert(myJSONData);
 		$.ajax({
@@ -598,18 +596,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// Server Connection Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"navigationStart"},{"name": "timingEnd","type": "string","value":"requestStart"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-				'","status":"END","start-time-usec":').concat(navigationStart)
-				.concat('000,"end-time-usec":').concat(requestStart).concat(
-						'000').concat(',"time-usec":').concat(now)
-				.concat('000').concat(
-						',"operation":"SERVER_CONNECTION_TIME","source-fqn":"')
-				.concat(activitySourceFqn).concat('","resource":"').concat(url).concat(
-						'",').concat(activityProperties).concat(',"user":"')
-				.concat(userName)
-				.concat('","corrid":"').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)				
-				.concat('"}');
-		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		myJSONData = '{"tracking-id":"'.concat(activityIdServerConnectionTime)
+		.concat('","start-time-usec":').concat(navigationStart)
+		.concat('000,"end-time-usec":').concat(requestStart).concat('000')
+		.concat(',"time-usec":').concat(now).concat('000')
+		.concat(',"operation":"SERVER_CONNECTION_TIME",')
+		.concat(activityCommon);
+		myJSONData = myJSONData.replace("replaceTiming", timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds", activityIdFirstByteTime);
 		path = 'activity';
 		//alert(myJSONData);
 		$.ajax({
@@ -624,18 +618,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// Document Download Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"responseStart"},{"name": "timingEnd","type": "string","value":"responseEnd"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-				'","status":"END","start-time-usec":').concat(responseStart)
-				.concat('000,"end-time-usec":').concat(responseEnd).concat(
-						'000').concat(',"time-usec":').concat(now)
-				.concat('000').concat(
-						',"operation":"DOCUMENT_DOWNLOAD_TIME","source-fqn":"')
-				.concat(activitySourceFqn).concat('","resource":"').concat(url).concat(
-						'",').concat(activityProperties).concat(',"user":"')
-				.concat(userName)
-				.concat('","corrid":"').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)				
-				.concat('"}');
-		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		myJSONData = '{"tracking-id":"'.concat(activityIdDocumentDownLoadTime)
+		.concat('","start-time-usec":')
+		.concat(responseStart).concat('000,"end-time-usec":').concat(responseEnd).concat('000')
+		.concat(',"time-usec":').concat(now).concat('000')
+		.concat(',"operation":"DOCUMENT_DOWNLOAD_TIME",')
+		.concat(activityCommon);
+		myJSONData = myJSONData.replace("replaceParentIds", activityIdDocumentReadyTime);
+		myJSONData = myJSONData.replace("replaceTiming", timingProperties);
 		path = 'activity';
 		//alert(myJSONData);
 		$.ajax({
@@ -650,24 +640,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// Document Processing Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"responseEnd"},{"name": "timingEnd","type": "string","value":"domComplete"}';
-		myJSONData = '{"tracking-id":"'
-				.concat(createGuid())
-				.concat('","status":"END","start-time-usec":')
-				.concat(responseEnd)
-				.concat('000,"end-time-usec":')
-				.concat(domComplete)
-				.concat('000')
-				.concat(',"time-usec":')
-				.concat(now)
-				.concat('000')
-				.concat(
-						',"operation":"DOCUMENT_PROCESSING_TIME","source-fqn":"')
-				.concat(activitySourceFqn).concat('","resource":"').concat(url).concat(
-						'",').concat(activityProperties).concat(',"user":"')
-				.concat(userName)
-				.concat('","corrid":"').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)				
-				.concat('"}');
-		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		myJSONData = '{"tracking-id":"'.concat(activityIdDocumentProcessingTime)
+		.concat('","start-time-usec":').concat(responseEnd)
+		.concat('000,"end-time-usec":').concat(domComplete).concat('000')
+		.concat(',"time-usec":').concat(now).concat('000')
+		.concat(',"operation":"DOCUMENT_PROCESSING_TIME",')
+		.concat(activityCommon);
+		myJSONData = myJSONData.replace("replaceTiming", timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds", activityIdDocumentReadyTime);
 		path = 'activity';
 		//alert(myJSONData);
 		$.ajax({
@@ -682,18 +662,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// Page Render Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"domComplete"},{"name": "timingEnd","type": "string","value":"loadEventEnd"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-				'","status":"END","start-time-usec":').concat(
-				timings["domComplete"]).concat('000,"end-time-usec":').concat(
-				timings["loadEventEnd"]).concat('000').concat(',"time-usec":')
-				.concat(now).concat('000').concat(
-						',"operation":"PAGE_RENDER_TIME","source-fqn":"')
-				.concat(activitySourceFqn).concat('","resource":"').concat(url).concat(
-						'",').concat(activityProperties).concat(',"user":"')
-				.concat(userName)
-				.concat('","corrid":"').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)				
-				.concat('"}');
-		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		myJSONData = '{"tracking-id":"'.concat(activityIdPageRenderTime)
+		.concat('","start-time-usec":').concat(timings["domComplete"])
+		.concat('000,"end-time-usec":').concat(timings["loadEventEnd"]).concat('000')
+		.concat(',"time-usec":').concat(now).concat('000')
+		.concat(',"operation":"PAGE_RENDER_TIME",')
+		.concat(activityCommon);
+		myJSONData = myJSONData.replace("replaceTiming", timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds", activityIdFrontEndTime);
 		path = 'activity';
 		//alert(myJSONData);
 		$.ajax({
@@ -707,45 +683,41 @@ if (('performance' in window) & ('timing' in window.performance)
 		});
 
 		// Summary
-		timingProperties = '{"name": "END_USER_RESPONSE_TIME","type": "string","value":"'
+		timingProperties = '{"name": "END_USER_RESPONSE_TIME","type": "int","value":"'
 				.concat(timings["loadEventEnd"] - timings["navigationStart"])
 				.concat(
-						'"},{"name": "FRONT_END_TIME","type": "string","value":"')
+						'"},{"name": "FRONT_END_TIME","type": "int","value":"')
 				.concat(timings["loadEventEnd"] - timings["responseStart"])
 				.concat(
-						'"},{"name": "PAGE_RENDER_TIME","type": "string","value":"')
+						'"},{"name": "PAGE_RENDER_TIME","type": "int","value":"')
 				.concat(timings["loadEventEnd"] - timings["domComplete"])
 				.concat(
-						'"},{"name": "DOCUMENT_PROCESSING_TIME","type": "string","value":"')
+						'"},{"name": "DOCUMENT_PROCESSING_TIME","type": "int","value":"')
 				.concat(timings["domComplete"] - timings["responseEnd"])
 				.concat(
-						'"},{"name": "DOCUMENT_DOWNLOAD_TIME","type": "string","value":"')
+						'"},{"name": "DOCUMENT_DOWNLOAD_TIME","type": "int","value":"')
 				.concat(timings["responseEnd"] - timings["responseStart"])
 				.concat(
-						'"},{"name": "SERVER_CONNECTION_TIME","type": "string","value":"')
+						'"},{"name": "SERVER_CONNECTION_TIME","type": "int","value":"')
 				.concat(timings["requestStart"] - timings["navigationStart"])
 				.concat(
-						'"},{"name": "RESPONSE_AVAILABLE_TIME","type": "string","value":"')
+						'"},{"name": "RESPONSE_AVAILABLE_TIME","type": "int","value":"')
 				.concat(timings["responseStart"] - timings["requestStart"])
 				.concat(
-						'"},{"name": "DOCUMENT_READY_TIME","type": "string","value":"')
+						'"},{"name": "DOCUMENT_READY_TIME","type": "int","value":"')
 				.concat(timings["domComplete"] - timings["responseStart"])
 				.concat(
-						'"},{"name": "FIRST_BYTE_TIME","type": "string","value":"')
+						'"},{"name": "FIRST_BYTE_TIME","type": "int","value":"')
 				.concat(timings["responseStart"] - timings["navigationStart"])
 				.concat('"}');
-		myJSONData = '{"tracking-id":"'.concat(activityId).concat(
-				'","status":"END","start-time-usec":').concat(
-				timings["navigationStart"]).concat('000,"end-time-usec":')
-				.concat(timings["loadEventEnd"]).concat('000').concat(
-						',"time-usec":').concat(now).concat('000').concat(
-						',"operation":"SUMMARY","source-fqn":"').concat(
-						activitySourceFqn).concat('","resource":"').concat(url).concat(
-						'",').concat(activityProperties).concat(',"user":"')
-				.concat(userName)
-				.concat('","corrid":"').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)				
-				.concat('"}');
-		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		myJSONData = '{"tracking-id":"'.concat(activityIdSummary)
+		.concat('","start-time-usec":').concat(timings["navigationStart"]).concat('000,"end-time-usec":').concat(timings["loadEventEnd"]).concat('000')
+		.concat(',"time-usec":').concat(now).concat('000')
+		.concat(',"operation":"EUM_SMRY",')
+		.concat(activityCommon);
+		myJSONData = myJSONData.replace("replaceTiming", timingProperties);
+		myJSONData = myJSONData.replace('"parent-id":"replaceParentIds",','');
+		myJSONData = myJSONData.replace(',' + rid,'');
 		path = 'activity';
 		//alert(myJSONData);
 		$.ajax({
@@ -760,18 +732,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// End User Response Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"navigationStart"},{"name": "timingEnd","type": "string","value":"loadEventEnd"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-				'","status":"END","start-time-usec":').concat(
-				timings["navigationStart"]).concat('000,"end-time-usec":')
-				.concat(timings["loadEventEnd"]).concat('000').concat(
-						',"time-usec":').concat(now).concat('000').concat(
-						',"operation":"END_USER_RESPONSE_TIME","source-fqn":"')
-				.concat(activitySourceFqn).concat('","resource":"').concat(url).concat(
-						'",').concat(activityProperties).concat(',"user":"')
-				.concat(userName)
-				.concat('","corrid":"').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)
-				.concat('"}');
-		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		myJSONData = '{"tracking-id":"'.concat(activityIdEndUserResponseTime)
+		.concat('","start-time-usec":').concat(timings["navigationStart"])
+		.concat('000,"end-time-usec":').concat(timings["loadEventEnd"]).concat('000')
+		.concat(',"time-usec":').concat(now).concat('000')
+		.concat(',"operation":"END_USER_RESPONSE_TIME",')
+		.concat(activityCommon);
+		myJSONData = myJSONData.replace("replaceTiming", timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds", activityIdSummary);
 		path = 'activity';
 		//alert(myJSONData);
 		$.ajax({
@@ -786,18 +754,14 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// Front End Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"responseStart"},{"name": "timingEnd","type": "string","value":"loadEventEnd"}';
-		myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
-				'","status":"END","start-time-usec":').concat(
-				timings["responseStart"]).concat('000,"end-time-usec":')
-				.concat(timings["loadEventEnd"]).concat('000').concat(
-						',"time-usec":').concat(now).concat('000').concat(
-						',"operation":"FRONT_END_TIME","source-fqn":"').concat(
-						activitySourceFqn).concat('","resource":"').concat(url).concat(
-						'",').concat(activityProperties).concat(',"user":"')
-				.concat(userName)
-				.concat('","corrid":"').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)				
-				.concat('"}');
-		myJSONData = myJSONData.replace("replaceme", timingProperties);
+		myJSONData = '{"tracking-id":"'.concat(activityIdFrontEndTime)
+		.concat('","start-time-usec":').concat(timings["responseStart"])
+		.concat('000,"end-time-usec":').concat(timings["loadEventEnd"]).concat('000')
+		.concat(',"time-usec":').concat(now).concat('000')
+		.concat(',"operation":"FRONT_END_TIME",')
+		.concat(activityCommon);
+		myJSONData = myJSONData.replace("replaceTiming", timingProperties);
+		myJSONData = myJSONData.replace("replaceParentIds", activityIdEndUserResponseTime);
 		path = 'activity';
 		//alert(myJSONData);
 		$.ajax({
@@ -817,29 +781,18 @@ if (('performance' in window) & ('timing' in window.performance)
 					.indexOf("_"));
 
 			if (prefix.length > 0 && prefix == "start") {
-				var suffix = perfEntries[i].name.substring(perfEntries[i].name
-						.indexOf("_"), perfEntries[i].name.length);
+				var suffix = perfEntries[i].name.substring(perfEntries[i].name.indexOf("_"), perfEntries[i].name.length);
 				var start = perfEntries[i];
 				var end = window.performance.getEntriesByName('end' + suffix);
-				var measure = window.performance.getEntriesByName('measure'
-						+ suffix);
+				var measure = window.performance.getEntriesByName('measure' + suffix);
 				timingProperties = '{"name": "timingStart","type": "string","value":"markStart"},{"name": "timingEnd","type": "string","value":"markEnd"}';
-				var myJSONAjaxData = '{"tracking-id":"'
-						.concat(createGuid())
-						.concat('","start-time-usec":')
-						.concat(
-								Math
-										.round(((timings["navigationStart"] * 1000) + start.startTime)))
-						.concat(',"end-time-usec":')
-						.concat(
-								Math
-										.round(((timings["navigationStart"] * 1000) + end[0].startTime)))
-						.concat(',"elapsed-time-usec":').concat(
-								Math.round(measure[0].duration)).concat(
-								',"operation":"' + suffix + '",')
-						.concat(common);
-				myJSONAjaxData = myJSONAjaxData.replace("replaceme",
-						timingProperties);
+				var myJSONAjaxData = '{"start-time-usec":'.concat(Math.round(((timings["navigationStart"] * 1000) + start.startTime)))
+				.concat(',"end-time-usec":').concat(Math.round(((timings["navigationStart"] * 1000) + end[0].startTime)))
+				.concat(',"elapsed-time-usec":').concat(Math.round(measure[0].duration))
+				.concat(',"operation":"' + suffix + '",')
+				.concat(common);
+				myJSONAjaxData = myJSONAjaxData.replace("replaceTiming",timingProperties);
+				myJSONAjaxData = myJSONAjaxData.replace(',"parent-id":"replaceParentIds"','');
 				var ajaxPath = 'event';
 				//alert(myJSONAjaxData);
 				$.ajax({
@@ -862,22 +815,41 @@ window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
 	if (errorMsg.indexOf('Script error.') > -1) {
 		return;
 	} else {
-		timingProperties = '{"name": "timingStart","type": "string","value":"errorTimeStart"}';
-		var myJSONErrorData = '{"tracking-id":"'.concat(createGuid()).concat(
-				'","start-time-usec":').concat(now).concat('000').concat(
-				',"operation":"JAVASCRIPT_ERROR",').concat(common);
-		myJSONErrorData = myJSONErrorData
-				.replace("replaceme", timingProperties);
-		errorPath = 'event';
-		//alert(myJSONData);
-		$.ajax({
-			type : 'POST',
-			url : 'http://localhost:6580/JESL/'.concat(errorPath),
-			data : myJSONErrorData,
-			dataType : 'text',
-			headers : {
-				'token' : token
-			},
-		});
+		
+		jsErrorMsg = errorMsg;
+		var start = url.lastIndexOf('/');
+		var end = url.lastIndexOf('?');
+		jsErrorLocation = url.substring(start+1, end).concat(':').concat(lineNumber);
+		navigator.geolocation.getCurrentPosition(reportError);
+		
+		
 	}
 }
+
+
+function reportError(position) {
+	  var data = common.slice(0, common.length);
+	  var replaceResource = data.substring(data.indexOf('"resource"'),data.indexOf(',"severity"'));
+	  data = data.replace("replacelat",position.coords.latitude);
+	  data = data.replace("replacelon",position.coords.longitude);
+	  timingProperties = '{"name": "timingStart","type": "string","value":"errorTimeStart"}';
+	  var myJSONErrorData = '{"tracking-id":"'.concat(createGuid())
+	    .concat('","start-time-usec":').concat(now).concat('000')
+	    .concat(',"msg-text":"').concat(jsErrorMsg).concat('"')
+	    .concat(',"operation":"JAVASCRIPT_ERROR",')
+	    .concat(data);
+	  myJSONErrorData = myJSONErrorData.replace("replaceTiming", timingProperties);
+	  myJSONErrorData = myJSONErrorData.replace(replaceResource,'"resource":"' + jsErrorLocation + '"');
+	  myJSONErrorData = myJSONErrorData.replace(',"parent-id":"replaceParentIds"','');
+	  //alert(myJSONErrorData);
+	  errorPath = 'event';
+	  $.ajax({
+	   type : 'POST',
+	   url : 'http://localhost:6580/JESL/'.concat(errorPath),
+	   data : myJSONErrorData,
+	   dataType : 'text',
+	   headers : {
+	    'token' : token
+	   },
+	  });
+	}
