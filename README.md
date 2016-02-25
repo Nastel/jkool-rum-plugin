@@ -6,8 +6,11 @@ In your javascript directory for the web application you wish to monitor, import
 ###Do the following in the pages you with to monitor
 
 * Import - java.util.UUID
+<%@ page ... import="java.util.*  ...%>
 * Add the plugin 
+```java
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
+```
 
 * Add the following scriptlet
 
@@ -30,12 +33,16 @@ String userName=(request.getRemoteUser() == null) ? "unknown-user" : request.get
 %>
 ```
 * Add the following hidden fields
+```java
 <input type="hidden" name="corrid" id="corrid" value="<%=id%>"/>
 <input type="hidden" name="username" id="username" value="<%=userName%>"/>
 <input type="hidden" name="ipaddress" id="ipaddress" value="<%=ipAddress%>"/>
+```
 
-To get performance metrics on Ajax or javascript functions, do the following ...
+* To get performance metrics on Ajax or javascript functions, do the following ...
+```java
 performance.mark("start_<descriptive name>");  
 <javascript code being marked>
 performance.mark("end_<descriptive name>");  
 performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'end_<descriptive name>');
+```
