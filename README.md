@@ -59,7 +59,7 @@ var dataCenter = "your data center name here";
 <input type="hidden" name="username" id="username" value="<%=usrName%>"/>
 ```
 
-* Add the plugin
+* Add the plugin.  
 Please be sure to add the plugin after the hidden fields. 
  
 ```java
