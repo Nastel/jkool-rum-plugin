@@ -140,6 +140,7 @@ performance.mark("start_<descriptive name>");
 <javascript code being marked>
 performance.mark("end_<descriptive name>");  
 performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'end_<descriptive name>');
+```
 
 Your website is now setup to monitor end users. When a user hits a page, data will be posted to your repository in jKool via Restful Webservices.
 
