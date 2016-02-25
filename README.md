@@ -6,7 +6,10 @@ In your javascript directory for the web application you wish to monitor, import
 ###Do the following in the pages you with to monitor
 
 * Import - java.util.UUID
+```java
 <%@ page ... import="java.util.*  ...%>
+```
+
 * Add the plugin 
 ```java
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
