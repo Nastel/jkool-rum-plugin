@@ -20,7 +20,7 @@ var server = "your server name here";
 var dataCenter = "your data center name here";
 ```
 
-###Do the following in the pages you with to monitor if you have Java running.
+###For web pages running Java.
 
 * Import java.util.UUID
 ```java
@@ -73,7 +73,7 @@ performance.mark("start_<descriptive name>");
 performance.mark("end_<descriptive name>");  
 performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'end_<descriptive name>');
 ```
-###Do the following in the pages you with to monitor if you have PHP running.
+###For web pages running PHP
 
 * Add the following scriptlet
 
@@ -142,7 +142,7 @@ performance.mark("end_<descriptive name>");
 performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'end_<descriptive name>');
 ```
 
-Your website is now setup to monitor end users. When a user hits a page, data will be posted to your repository in jKool via Restful Webservices.
+Your web pages are now setup to monitor end users. When a user hits a page, data will be posted to your repository in jKool via Restful Webservices.
 
 ###Logon to jKool to see you end-user monitoring data	
 Logon to your jKool Dashboard. On the upper-right hand side, you will see a button labeled "EUM". Click on this button to see various
