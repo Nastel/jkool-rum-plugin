@@ -70,12 +70,10 @@ if (('performance' in window) & ('timing' in window.performance)
 		& ('navigation' in window.performance)) {
 
 	// User fills in these variables.
-	//var token = "775d182c-fb54-4eb1-be58-1153ce2d7865"; // ibm_57538
-	//var token = "9zdVnx9chMFC7NdI1Myu47xNhcNDj7t9"; // testnodedown31
-	var token = "Dl0PmHIbvGUWnaUHcrGX2LDvQ6iClOWy"; // testnodedown26
-	var appl = "jKoolUI";
-	var server = "jKoolServer";
-	var dataCenter = "NastelHQ";
+	var token = "your jKool token here"; 
+	var appl = "your application name here";
+	var server = "your server name here";
+	var dataCenter = "your data center name here";
 
 	// System computed variables
 	var jsErrorMsg = "";
@@ -111,7 +109,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	var sid = document.getElementById('corrid').value;
 	var rid = document.getElementById('rcorrid').value;
 	var timings = window.performance.timing;
-	var userName = document.getElementById("username").value;
+	var userName = document.getElementById("usrName").value;
 	var ipAddress = document.getElementById("ipaddress").value;
 	var geoAddress = "Melville";
 	var activityIdFirstByteTime = createGuid();

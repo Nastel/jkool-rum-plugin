@@ -7,6 +7,15 @@ In your javascript directory for the web application you wish to monitor, import
 ###Import jquery libraries 
 These libraries can be obtained at http://jquery.com/download/
 
+###Update the User-defined fields in the plugin
+```java
+// User fills in these variables.
+var token = "your jKool token here"; 
+var appl = "your application name here";
+var server = "your server name here";
+var dataCenter = "your data center name here";
+```
+
 ###Do the following in the pages you with to monitor
 
 * Import java.util.UUID
@@ -22,28 +31,33 @@ These libraries can be obtained at http://jquery.com/download/
 * Add the following scriptlet
 
 ```java
-<%
-String id = null;
-if (session.getAttribute("JK_CORR_ID") == null)
-{
-		id = UUID.randomUUID().toString();
-     	session.setAttribute("JK_CORR_ID", id);
-}
-else
-{
-    id = (String)session.getAttribute("JK_CORR_ID");
-}
-String ipAddress = request.getHeader("X-FORWARDED-FOR");  
-if (ipAddress == null)
-  ipAddress = request.getRemoteAddr();  
-String userName=(request.getRemoteUser() == null) ? "unknown-user" : request.getRemoteUser();
+ <%  
+	  String id = null;
+	  if ((String)session.getAttribute("JK_CORR_SID") == null)
+	  {
+	  		id = UUID.randomUUID().toString();
+	       	session.setAttribute("JK_CORR_SID", id);
+	  }
+	  else
+	  {
+	      id = (String)session.getAttribute("JK_CORR_SID");
+	  }
+	  String rid = null;
+      rid = UUID.randomUUID().toString();
+      session.setAttribute("JK_CORR_RID", rid);
+
+	  String usrName=(session.getAttribute("userName") == null) ? "unknown" : session.getAttribute("userName");
+	  String ipAddress = request.getHeader("X-FORWARDED-FOR");  
+	  if (ipAddress == null)
+	     ipAddress = request.getRemoteAddr();  
 %>
 ```
 * Add the following hidden fields
 ```java
 <input type="hidden" name="corrid" id="corrid" value="<%=id%>"/>
-<input type="hidden" name="username" id="username" value="<%=userName%>"/>
+<input type="hidden" name="rcorrid" id="rcorrid" value="<%=rid%>"/>
 <input type="hidden" name="ipaddress" id="ipaddress" value="<%=ipAddress%>"/>
+<input type="hidden" name="username" id="username" value="<%=usrName%>"/>
 ```
 
 * To get performance metrics on Ajax or javascript functions, do the following ...
