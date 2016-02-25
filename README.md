@@ -20,7 +20,7 @@ var server = "your server name here";
 var dataCenter = "your data center name here";
 ```
 
-###Do the following in the pages you with to monitor
+###Do the following in the pages you with to monitor if you have Java running.
 
 * Import java.util.UUID
 ```java
@@ -73,6 +73,73 @@ performance.mark("start_<descriptive name>");
 performance.mark("end_<descriptive name>");  
 performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'end_<descriptive name>');
 ```
+###Do the following in the pages you with to monitor if you have PHP running.
+
+* Add the following scriptlet
+
+```java
+<?php
+
+function createGuid(){
+    if (function_exists('com_create_guid')){
+        return com_create_guid();
+    }
+    else {
+        mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+        $charid = strtoupper(md5(uniqid(rand(), true)));
+        $hyphen = chr(45);// "-"
+        $uuid = chr(123)// "{"
+            .substr($charid, 0, 8).$hyphen
+            .substr($charid, 8, 4).$hyphen
+            .substr($charid,12, 4).$hyphen
+            .substr($charid,16, 4).$hyphen
+            .substr($charid,20,12)
+            .chr(125);// "}"
+        return $uuid;
+    }
+}
+
+$id = NULL;    
+if ($_SESSION["JK_CORR_SID"] == null)
+	{
+		$id = createGuid();
+		$_SESSION["JK_CORR_SID"] = $id;
+	}
+	else
+	{
+		$id =  $_SESSION["JK_CORR_SID"];
+	}
+$rid = null;
+$rid = createGuid();
+$_SESSION["JK_CORR_RID"] = $rid;
+$ipAddress = $_SERVER["X-FORWARDED-FOR"] ;
+$usrName=($_SERVER["X-FORWARDED-FOR"] == null) ? "unknown" : $_SERVER["X-FORWARDED-FOR"];
+if($ipAddress == NULL) {
+	$ipAddress = $_SERVER["REMOTE_ADDR"] ; 
+}
+?>
+```
+* Add the following hidden fields
+```java
+<input type="hidden" name="corrid" id="corrid" value="<?=$id?>"/>
+<input type="hidden" name="rcorrid" id="rcorrid" value="<?=$rid?>"/>
+<input type="hidden" name="ipaddress" id="ipaddress" value="<?=$ipAddress?>"/>
+<input type="hidden" name="username" id="username" value="<?=$usrName?>"/>
+```
+
+* Add the plugin.  
+Please be sure to add the plugin after the hidden fields. 
+ 
+```java
+<script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
+```
+
+* To get performance metrics on Ajax or javascript functions, do the following ...
+```java
+performance.mark("start_<descriptive name>");  
+<javascript code being marked>
+performance.mark("end_<descriptive name>");  
+performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'end_<descriptive name>');
 
 Your website is now setup to monitor end users. When a user hits a page, data will be posted to your repository in jKool via Restful Webservices.
 
