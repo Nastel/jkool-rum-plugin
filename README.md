@@ -27,11 +27,6 @@ var dataCenter = "your data center name here";
 <%@ page ... import="java.util.*  ...%>
 ```
 
-* Add the plugin 
-```java
-<script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
-```
-
 * Add the following scriptlet
 
 ```java
@@ -62,6 +57,13 @@ var dataCenter = "your data center name here";
 <input type="hidden" name="rcorrid" id="rcorrid" value="<%=rid%>"/>
 <input type="hidden" name="ipaddress" id="ipaddress" value="<%=ipAddress%>"/>
 <input type="hidden" name="username" id="username" value="<%=usrName%>"/>
+```
+
+* Add the plugin
+Please be sure to add the plugin after the hidden fields. 
+ 
+```java
+<script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
 ```
 
 * To get performance metrics on Ajax or javascript functions, do the following ...
