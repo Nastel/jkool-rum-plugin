@@ -139,13 +139,14 @@ performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'e
 In addition to the performance marks above, call the following plugin function ...
 ```java
 afterLoadMeasure(<name>, <custom properties>, <custom message>, <descriptive name>, <SUCCESS or ERROR>)
-```
 
-* <name> - the name of the custom event of type string
-* <custom properties> - your custom fields you would like to report on. Each field should be in the following format and be of type string: {"name": "<name value>","type": <type value>,"value":"<value value>"},...
-* <custom message> - a custom message for your event of type string
-* <descriptive name> - the name of the mark/measure (from above)
-* <ERROR> if you are reporting an error event, <SUCCESS> otherwise.
+Where:
+<name> - the name of the custom event of type string
+<custom properties> - your custom fields you would like to report on. Each field should be in the following format and be of type string: {"name": "<name value>","type": <type value>,"value":"<value value>"},...
+<custom message> - a custom message for your event of type string
+<descriptive name> - the name of the mark/measure (from above)
+<ERROR> if you are reporting an error event, <SUCCESS> otherwise.
+```
 
 Here is an example:
 
