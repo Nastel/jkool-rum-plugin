@@ -20,7 +20,7 @@ var server = "your server name here";
 var dataCenter = "your data center name here";
 ```
 
-###Do the following in the pages you with to monitor if you have Java running.
+###For web pages running Java.
 
 * Import java.util.UUID
 ```java
@@ -66,8 +66,7 @@ Please be sure to add the plugin after the hidden fields.
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
 ```
 
-###Do the following in the pages you with to monitor if you have PHP running.
-
+###For web pages running PHP
 * Add the following scriptlet
 
 ```java
