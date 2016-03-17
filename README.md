@@ -66,13 +66,6 @@ Please be sure to add the plugin after the hidden fields.
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
 ```
 
-* To get performance metrics on Ajax or javascript functions, do the following ...
-```java
-performance.mark("start_<descriptive name>");  
-<javascript code being marked>
-performance.mark("end_<descriptive name>");  
-performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'end_<descriptive name>');
-```
 ###Do the following in the pages you with to monitor if you have PHP running.
 
 * Add the following scriptlet
@@ -134,14 +127,43 @@ Please be sure to add the plugin after the hidden fields.
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
 ```
 
-* To get performance metrics on Ajax or javascript functions, do the following ...
+###To get performance metrics on javascript functions
+
+* Add the following code before and after the javascript you wish to measure.
 ```java
 performance.mark("start_<descriptive name>");  
 <javascript code being marked>
 performance.mark("end_<descriptive name>");  
 performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'end_<descriptive name>');
 ```
+###If obtaining these metrics "after" the completion of the page load (i.e. Ajax)
+In addition to the performance marks above, call the following plugin function ...
+```java
+afterLoadMeasure(<name>, <custom properties>, <custom message>, <descriptive name>, <SUCCESS or ERROR>)
+```
+<name> = the name of the custom event of type string
+<custom properties> = your custom fields you would like to report on. 
+Each field should be in the following format and be of type string:
+{"name": "<name value>","type": <type value>,"value":"<value value>"},...
+<custom message> = a custom message for your event of type string
+<descriptive name> = the name of the mark/measure (from above)
+<ERROR> if you are reporting an error event, <SUCCESS> otherwise.
 
+Here is an example:
+
+```java
+function FunctionABC()
+{
+	performance.mark("start_processJavascriptFunctionABC");
+	...
+	performance.mark("end_processJavascriptFunctionABC);  
+	performance.measure('measure_processJavascriptFunctionABC, 'start_processJavascriptFunctionABC, 'end_processJavascriptFunctionABC);	
+	var properties = '{"name": "ABCProperty1","type": "string","value":"hello"},{"name": "ABCPropery2","type": "integer","value":"10"}';	
+	// Only if reporting after page load.
+	afterLoadMeasure('FunctionABCEvent', properties, 'Function ABC Message', 'processJavascriptFunctionABC, 'SUCCESS'); 
+}
+```
+		
 Your website is now setup to monitor end users. When a user hits a page, data will be posted to your repository in jKool via Restful Webservices.
 
 ###Logon to jKool to see you end-user monitoring data	
