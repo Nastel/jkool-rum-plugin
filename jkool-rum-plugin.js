@@ -162,7 +162,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	var common = '"source-fqn":"'.concat(eventSourceFqn).concat('","msg-tag":"')
 			.concat(rid).concat('","time-usec":').concat(now).concat('000')
 			.concat(',"resource":"').concat(url).concat(
-					'","severity":"SUCCESS","parent-id":"replaceParentIds"')
+					'","severity":"INFO","parent-id":"replaceParentIds"')
 			.concat(',"location":"').concat(ipAddress).concat(
 					'","source-ssn":"').concat(appl).concat('","user":"')
 			.concat(userName).concat('","corrid":["').concat(
@@ -875,7 +875,7 @@ function afterLoadMeasure(name, properties, message, suffix, severity)
 	myJSONAjaxData = myJSONAjaxData.replace("replaceTiming",properties);
 	myJSONAjaxData = myJSONAjaxData.replace('replaceParentIds',activityIdEndUserResponseTime);
 	myJSONAjaxData = myJSONAjaxData.replace("#GEOADDR=replacelat,replacelon","");
-	myJSONAjaxData = myJSONAjaxData.replace('"severity":"SUCCESS"','"severity":"' + severity + '"');
+	myJSONAjaxData = myJSONAjaxData.replace('"severity":"INFO"','"severity":"' + severity + '"');
 	var ajaxPath = 'event';
 	//alert(myJSONAjaxData);
 	$.ajax({
