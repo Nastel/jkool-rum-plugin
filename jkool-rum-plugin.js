@@ -114,7 +114,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	var geoAddress = "Melville";
 	var activityIdFirstByteTime = createGuid();
 	var activityIdServerConnectionTime = createGuid();
-	var activityIdEndUserResponseTime = createGuid();
+	var activityIdEndUserResponseTime = createGuid(); 
 	var activityIdFrontEndTime = createGuid();
 	var activityIdDocumentReadyTime = createGuid();
 	var activityIdPageRenderTime = createGuid();
