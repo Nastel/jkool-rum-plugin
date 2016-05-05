@@ -10,7 +10,7 @@ In your javascript directory for the web application you wish to monitor, import
 ###Import jquery libraries 
 These libraries can be obtained at http://jquery.com/download/
 
-###Update the User-defined fields in the plugin
+###Update the User-defined fields in the plugin (jkool-rum-plugin.js)
 Please note that you will receive your jKool token when you register for jKool.
 ```java
 // User fills in these variables.
