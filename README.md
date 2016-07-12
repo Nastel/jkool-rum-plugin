@@ -3,8 +3,8 @@
 jKool is happy to offer you a very simple and easy to use plug-in that you can use to monitor your end-user experience for web apps. This plugin will gather performance metrics and stream them to jKool. When you login to your jKool repository you will see these metrics by simply clicking on a ready-made End-User Monitoring Dashboard. You will also have the ability to create your own views of the end user data by creating your own viewlets. Please follow these simple instructions to get setup using the plugin in just a few minutes. If you encounter any difficulty please don't hesitate to contact us at support@jkoolcloud.com.
 
 
-###Import the plugin
-In your javascript directory for the web application you wish to monitor, import jkool-rum-plugin.js
+###Import the plugins
+In your javascript and jsp directories for the web application you wish to monitor, import jkool-rum-plugin.js and jkool-rum-plugin.jsp
 
 
 ###Import jquery libraries 
@@ -22,17 +22,13 @@ var dataCenter = "your data center name here";
 
 ###For web pages running Javascript.
 
-* Import java.util.UUID
-```java
-<%@ page ... import="java.util.UUID  ...%>
-```
 * Add the following jsp file to every page you wish to track
 ```java
 <%@ include file="jkool-rum-plugin.jsp" %>
 ```
 
-* Add the plugin.  
-Please be sure to add the plugin after the jsp file. 
+* Add the javascript file to every page you wish to track.  
+Please be sure to add the javascript file after the jsp file. 
  
 ```java
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
