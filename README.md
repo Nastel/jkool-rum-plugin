@@ -24,7 +24,7 @@ var dataCenter = "your data center name here";
 
 * Import java.util.UUID
 ```java
-<%@ page ... import="java.util.*  ...%>
+<%@ page ... import="java.util.UUID  ...%>
 ```
 * Add the following jsp file to every page you wish to track
 ```java
