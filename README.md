@@ -20,7 +20,7 @@ var server = "your server name here";
 var dataCenter = "your data center name here";
 ```
 
-###For web pages running Javascript.
+###For web pages running JavaScript
 
 * Add the following jsp file to every page you wish to track
 ```java
@@ -133,6 +133,6 @@ function FunctionABC()
 		
 Your website is now setup to monitor end users. When a user hits a page, data will be posted to your repository in jKool via Restful Webservices.
 
-###Logon to jKool to see you end-user monitoring data	
+###View End-User Analytics	
 Logon to your jKool Dashboard. On the upper-right hand side, you will see a button labeled "EUM". Click on this button to see various
-charts displaying your end user data. You may also create your own viewlet. Please do the Dashboard tutorial to see how to use JKQL to create your own viewlets.
+charts displaying your end user data. You may also create your own viewlets. Click on the Tutorial and learn to create your own viewlets.
