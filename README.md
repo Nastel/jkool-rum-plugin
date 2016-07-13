@@ -20,7 +20,7 @@ var dataCenter = "your data center name here";
 
 ###For web pages running JavaScript
 
-* In your jsp directory for the web application you wish to monitor, import jkool-rum-plugin.jsp and include it on every page you wish to track within the <form> tag.
+* In your jsp directory for the web application you wish to monitor, import jkool-rum-plugin.jsp and include it on every page you wish to track within the form tag.
 ```java
 <%@ include file="jkool-rum-plugin.jsp" %>
 ```
@@ -92,7 +92,7 @@ Please be sure to add the plugin after the hidden fields.
 
 ###To get performance metrics on javascript functions
 
-Including the plugins will meaure your overall site performance (i.e. page load time, redirect time, connect time, domain lookup time, request and response time, etc.). If you wish to measure more fine-grained monitoring of javascript functions that are happening during a page load or you wish to measure javascript functions after a page load, please do the following:
+Including the plugins will meaure your overall site performance (i.e. page load time, redirect time, connect time, domain lookup time, request and response time, etc.). If you wish more fine-grained measuring of javascript functions, please do the following:
 
 * Add the following code before and after the javascript you wish to measure.
 ```java
