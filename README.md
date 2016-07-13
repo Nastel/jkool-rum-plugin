@@ -3,9 +3,8 @@
 jKool is happy to offer you a very simple and easy to use plug-in that you can use to monitor your end-user experience for web apps. This plugin will gather performance metrics and stream them to jKool. When you login to your jKool repository you will see these metrics by simply clicking on a ready-made End-User Monitoring Dashboard. You will also have the ability to create your own views of the end user data by creating your own viewlets. Please follow these simple instructions to get setup using the plugin in just a few minutes. If you encounter any difficulty please don't hesitate to contact us at support@jkoolcloud.com.
 
 
-###Import the plugins
-In your javascript and jsp directories for the web application you wish to monitor, import jkool-rum-plugin.js and jkool-rum-plugin.jsp
-
+###Import the plugin
+In your javascript directory for the web application you wish to monitor, import jkool-rum-plugin.js
 
 ###Import jquery libraries 
 These libraries can be obtained at http://jquery.com/download/
@@ -21,14 +20,12 @@ var dataCenter = "your data center name here";
 
 ###For web pages running JavaScript
 
-* Add the following jsp file to every page you wish to track
+* In your jsp directory for the web application you wish to monitor, import jkool-rum-plugin.jsp and include it on every page you wish to track within the <form> tag.
 ```java
 <%@ include file="jkool-rum-plugin.jsp" %>
 ```
 
-* Add the javascript file to every page you wish to track.  
-Please be sure to add the javascript file after the jsp file. 
- 
+* Also include the javascript plugin to every page you wish to track.  
 ```java
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
 ```
@@ -95,6 +92,8 @@ Please be sure to add the plugin after the hidden fields.
 
 ###To get performance metrics on javascript functions
 
+Including the plugins will meaure your overall site performance (i.e. page load time, redirect time, connect time, domain lookup time, request and response time, etc.). If you wish to measure more fine-grained monitoring of javascript functions that are happening during a page load or you wish to measure javascript functions after a page load, please do the following:
+
 * Add the following code before and after the javascript you wish to measure.
 ```java
 performance.mark("start_<descriptive name>");  
@@ -129,9 +128,16 @@ function FunctionABC()
 	afterLoadMeasure('FunctionABCEvent', properties, 'Function ABC Message', 'processJavascriptFunctionABC, 'SUCCESS'); 
 }
 ```
+
+###Obfuscate
+
+Because your access token is embedded in the javascript EUM plugin, we recommend that you obfuscate this file prior to releasing it into a production environment. A good obfuscation tool can be found here:
+
+http://yui.github.io/yuicompressor/
+
+###View End-User Analytics	
 		
 Your website is now setup to monitor end users. When a user hits a page, data will be posted to your repository in jKool via Restful Webservices.
 
-###View End-User Analytics	
 Logon to your jKool Dashboard. On the upper-right hand side, you will see a button labeled "EUM". Click on this button to see various
 charts displaying your end user data. You may also create your own viewlets. Click on the Tutorial and learn to create your own viewlets.
