@@ -72,7 +72,6 @@ if (('performance' in window) & ('timing' in window.performance)
 	// User fills in these variables.
 	var token = "your jKool token here"; 
 	var appl = "your application name here";
-	var server = "your server name here";
 	var dataCenter = "your data center name here";
 
 	// System computed variables
@@ -111,6 +110,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	var timings = window.performance.timing;
 	var userName = document.getElementById("username").value;
 	var ipAddress = document.getElementById("ipaddress").value;
+	var server = ipAddress;
 	var geoAddress = "Melville";
 	var activityIdFirstByteTime = createGuid();
 	var activityIdServerConnectionTime = createGuid();
