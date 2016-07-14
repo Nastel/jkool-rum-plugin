@@ -1,15 +1,14 @@
 # jKool Real-User Monitoring & Tracking for Web Apps
 
-jKool is happy to offer you a very simple and easy to use plug-in that you can use to monitor your end-user experience for web apps. This plugin will gather performance metrics and stream them to jKool. When you login to your jKool repository you will see these metrics by simply clicking on a ready-made End-User Monitoring Dashboard. You will also have the ability to create your own views of the end user data by creating your own viewlets. Please follow these simple instructions to get setup using the plugin in just a few minutes. If you encounter any difficulty please don't hesitate to contact us at support@jkoolcloud.com.
-
+jKool is happy to offer you a very simple and easy to use plug-in that you can use to monitor your end-user experience & engagement for web apps. This plugin will gather performance metrics, usability and stream them to jKool. When you login to your jKool repository you will see these metrics by simply clicking on a ready-made End-User Monitoring Dashboard. You will also have the ability to create your own views of the end user data by creating your own viewlets. Please follow these simple instructions to get setup using the plugin in just a few minutes. If you encounter any difficulty please don't hesitate to contact us at support@jkoolcloud.com.
 
 ###Import the plugins.
-Into the web application you wish to monitor, import jkool-rum-plugin.js and either jkool-rum-plugin.jsp (if using javascript) or jkool-rum-plugin (if using php).
+Into the web application you wish to monitor, import `jkool-rum-plugin.js` and either `jkool-rum-plugin.jsp` (if using javascript) or `jkool-rum-plugin.php` (if using php).
 
 ###Import jquery libraries 
 These libraries can be obtained at http://jquery.com/download/
 
-###Update the User-defined fields in the javascript plugin (jkool-rum-plugin.js)
+###Update the User-defined fields in the javascript plugin (`jkool-rum-plugin.js`)
 Please note that you will receive your jKool token when you register for jKool.
 ```java
 // User fills in these variables.
@@ -70,7 +69,7 @@ function FunctionABC()
 
 ###Obfuscate
 
-Because your access token is embedded in the javascript EUM plugin, we recommend that you obfuscate this file prior to releasing it into a production environment. A good obfuscation tool can be found here:
+We stringly recommend that you obfuscate this file prior to releasing it into a production environment, because your jKool API access token is embedded in the javascript RUM plugin. A good obfuscation tool can be found here:
 
 http://yui.github.io/yuicompressor/
 
