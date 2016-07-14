@@ -4,7 +4,7 @@ jKool is happy to offer you a very simple and easy to use plug-in that you can u
 
 
 ###Import the plugins.
-In your javascript directory for the web application you wish to monitor, import jkool-rum-plugin.js. In your jsp directory for the web application you wish to monitor, import either jkool-rum-plugin.jsp (if using javascript) or jkool-rum-plugin (if using php).
+Into the web application you wish to monitor, import jkool-rum-plugin.js and either jkool-rum-plugin.jsp (if using javascript) or jkool-rum-plugin (if using php).
 
 ###Import jquery libraries 
 These libraries can be obtained at http://jquery.com/download/
