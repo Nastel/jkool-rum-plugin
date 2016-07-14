@@ -309,7 +309,7 @@ if (('performance' in window) & ('timing' in window.performance)
 			report("n/a");
 		}
 		else if (timings["loadEventEnd"] != null && timings["loadEventEnd"] >= 0)
-			navigator.geolocation.getCurrentPosition(report);
+			navigator.geolocation.getCurrentPosition(report, declined);
 		else
 		{
 
@@ -338,6 +338,11 @@ if (('performance' in window) & ('timing' in window.performance)
 	}, 5000);
 
 	// all Activities, onLoad Event, & Measures
+	
+	function declined(error) {
+	    if (error.code == error.PERMISSION_DENIED) {
+	        report("n/a");
+	    }}
 
 	function report(position) {
 		  
