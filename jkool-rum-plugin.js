@@ -769,4 +769,4 @@ function afterLoadMeasure(name, properties, message, suffix, severity)
 	performance.clearMarks('start_' + suffix);
 	performance.clearMarks('end_' + suffix);
 	performance.clearMeasures('measure_' + suffix);
-}
+}}
