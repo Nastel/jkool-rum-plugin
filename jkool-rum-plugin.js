@@ -312,7 +312,7 @@ if (('performance' in window) & ('timing' in window.performance)
 			navigator.geolocation.getCurrentPosition(report, declined);
 		else
 		{
-
+ 
 
 			// Error
 			myJSONData = '{"tracking-id":"'.concat(createGuid()).concat(
