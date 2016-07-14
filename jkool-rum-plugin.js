@@ -319,7 +319,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	// all Activities, onLoad Event, & Measures
 
 	function report(position) {
-		
+		  
 		// EVENT LEVEL
 		if (position == "n/a")
 		{
