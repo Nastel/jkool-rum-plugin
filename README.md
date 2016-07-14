@@ -69,7 +69,7 @@ function FunctionABC()
 
 ###Obfuscate
 
-We stringly recommend that you obfuscate this file prior to releasing it into a production environment, because your jKool API access token is embedded in the javascript RUM plugin. A good obfuscation tool can be found here:
+We strongly recommend that you obfuscate this file prior to releasing it into a production environment, because your jKool API access token is embedded in the javascript RUM plugin. A good obfuscation tool can be found here:
 
 http://yui.github.io/yuicompressor/
 
