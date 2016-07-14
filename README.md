@@ -33,7 +33,7 @@ var dataCenter = "your data center name here";
 ```
 ###To get performance metrics on javascript functions
 
-Including the plugins will meaure your overall site performance (i.e. page load time, redirect time, connect time, domain lookup time, request and response time, etc.). If you wish more fine-grained measuring of javascript functions, please do the following:
+Including the plugins will measure your overall site performance (i.e. page load time, redirect time, connect time, domain lookup time, request and response time, etc.). If you wish more fine-grained measuring of javascript functions, please do the following:
 
 * Add the following code before and after the javascript you wish to measure.
 ```java
