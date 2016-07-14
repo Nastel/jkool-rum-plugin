@@ -911,7 +911,7 @@ function reportError(position) {
 	    'token' : token
 	   },
 	  });
-	}} 
+	}}  
 
 function afterLoadMeasure(name, properties, message, suffix, severity)
 {
