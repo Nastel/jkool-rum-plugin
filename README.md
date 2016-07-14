@@ -23,7 +23,6 @@ var dataCenter = "your data center name here";
 ```java
 <%@ include file="jkool-rum-plugin.jsp" %>
 ```
-   or
 ```java
 <?php include "/inc/jkool-rum-plugin.php"; ?>
 ```
