@@ -3,8 +3,8 @@
 jKool is happy to offer you a very simple and easy to use plug-in that you can use to monitor your end-user experience for web apps. This plugin will gather performance metrics and stream them to jKool. When you login to your jKool repository you will see these metrics by simply clicking on a ready-made End-User Monitoring Dashboard. You will also have the ability to create your own views of the end user data by creating your own viewlets. Please follow these simple instructions to get setup using the plugin in just a few minutes. If you encounter any difficulty please don't hesitate to contact us at support@jkoolcloud.com.
 
 
-###Import the plugin
-In your javascript directory for the web application you wish to monitor, import jkool-rum-plugin.js
+###Import the plugins.
+In your javascript directory for the web application you wish to monitor, import jkool-rum-plugin.js. In your jsp directory for the web application you wish to monitor, import either jkool-rum-plugin.jsp (if using javascript) or jkool-rum-plugin (if using php).
 
 ###Import jquery libraries 
 These libraries can be obtained at http://jquery.com/download/
@@ -18,9 +18,9 @@ var appl = "your application name here";
 var dataCenter = "your data center name here";
 ```
 
-###For web pages running JavaScript
+###Include the plugins in your project
 
-* In your jsp directory for the web application you wish to monitor, import jkool-rum-plugin.jsp and include it on every page you wish to track within the form tag.
+* Include the jsp or php plugin on every page you wish to track within the form tag.
 ```java
 <%@ include file="jkool-rum-plugin.jsp" %>
 ```
@@ -29,67 +29,6 @@ var dataCenter = "your data center name here";
 ```java
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
 ```
-
-###For web pages running PHP
-* Add the following scriptlet
-
-```java
-<?php
-
-function createGuid(){
-    if (function_exists('com_create_guid')){
-        return com_create_guid();
-    }
-    else {
-        mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
-        $charid = strtoupper(md5(uniqid(rand(), true)));
-        $hyphen = chr(45);// "-"
-        $uuid = chr(123)// "{"
-            .substr($charid, 0, 8).$hyphen
-            .substr($charid, 8, 4).$hyphen
-            .substr($charid,12, 4).$hyphen
-            .substr($charid,16, 4).$hyphen
-            .substr($charid,20,12)
-            .chr(125);// "}"
-        return $uuid;
-    }
-}
-
-$id = NULL;    
-if ($_SESSION["JK_CORR_SID"] == null)
-	{
-		$id = createGuid();
-		$_SESSION["JK_CORR_SID"] = $id;
-	}
-	else
-	{
-		$id =  $_SESSION["JK_CORR_SID"];
-	}
-$rid = null;
-$rid = createGuid();
-$_SESSION["JK_CORR_RID"] = $rid;
-$ipAddress = $_SERVER["X-FORWARDED-FOR"] ;
-$usrName=($_SERVER["X-FORWARDED-FOR"] == null) ? "unknown" : $_SERVER["X-FORWARDED-FOR"];
-if($ipAddress == NULL) {
-	$ipAddress = $_SERVER["REMOTE_ADDR"] ; 
-}
-?>
-```
-* Add the following hidden fields
-```java
-<input type="hidden" name="corrid" id="corrid" value="<?=$id?>"/>
-<input type="hidden" name="rcorrid" id="rcorrid" value="<?=$rid?>"/>
-<input type="hidden" name="ipaddress" id="ipaddress" value="<?=$ipAddress?>"/>
-<input type="hidden" name="username" id="username" value="<?=$usrName?>"/>
-```
-
-* Add the plugin.  
-Please be sure to add the plugin after the hidden fields. 
- 
-```java
-<script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
-```
-
 ###To get performance metrics on javascript functions
 
 Including the plugins will meaure your overall site performance (i.e. page load time, redirect time, connect time, domain lookup time, request and response time, etc.). If you wish more fine-grained measuring of javascript functions, please do the following:
