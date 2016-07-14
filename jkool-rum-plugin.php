@@ -44,4 +44,4 @@ if($jk_ipAddress == NULL) {
 <input type="hidden" name="rcorrid" id="rcorrid" value="<?=$jk_rid?>"/>
 <input type="hidden" name="ipaddress" id="ipaddress" value="<?=$jk_ipAddress?>"/>
 <input type="hidden" name="username" id="username" value="<?=$jk_usrName?>"/>
- <input type="hidden" name="pid" id="pid" value="<?=$jk_pid?>"/> 
+<input type="hidden" name="pid" id="pid" value="<?=$jk_pid?>"/> 
