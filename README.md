@@ -23,6 +23,9 @@ var dataCenter = "your data center name here";
 ```java
 <%@ include file="jkool-rum-plugin.jsp" %>
 ```
+```java
+<?php include "/inc/jkool-rum-plugin.php"; ?>
+```
 
 * Also include the javascript plugin to every page you wish to track.  
 ```java
