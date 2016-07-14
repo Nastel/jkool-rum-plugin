@@ -1,3 +1,8 @@
+// User fills in these variables.
+var token = "your jKool token here"; 
+var appl = "your application name here";
+var dataCenter = "your data center name here";
+
 function createGuid() {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 		var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -68,11 +73,6 @@ function get_browser_info() {
 
 if (('performance' in window) & ('timing' in window.performance)
 		& ('navigation' in window.performance)) {
-
-	// User fills in these variables.
-	var token = "your jKool token here"; 
-	var appl = "your application name here";
-	var dataCenter = "your data center name here";
 
 	// System computed variables
 	var jsErrorMsg = "";
@@ -283,7 +283,11 @@ if (('performance' in window) & ('timing' in window.performance)
 	// function)
 	setTimeout(function() {
 		var timings = window.performance.timing;
-		if (timings["loadEventEnd"] != null && timings["loadEventEnd"] >= 0)
+		if (url.substring(0,5) != "https")
+		{
+			report("n/a");
+		}
+		else if (timings["loadEventEnd"] != null && timings["loadEventEnd"] >= 0)
 			navigator.geolocation.getCurrentPosition(report);
 		else
 		{
@@ -317,10 +321,16 @@ if (('performance' in window) & ('timing' in window.performance)
 	function report(position) {
 		
 		// EVENT LEVEL
-
-		common = common.replace("replacelat",position.coords.latitude);
-		common = common.replace("replacelon",position.coords.longitude);
-		
+		if (position == "n/a")
+		{
+			common = common.replace("replacelat",0);
+			common = common.replace("replacelon",0);
+		}
+		else
+		{
+			common = common.replace("replacelat",position.coords.latitude);
+			common = common.replace("replacelon",position.coords.longitude);
+		}
 		// Redirect
 		if (redirectStart > 0) {
 			timingProperties = '{"name": "timingStart","type": "string","value":"redirectStart"},{"name": "timingEnd","type": "string","value":"redirectEnd"}';
@@ -523,8 +533,16 @@ if (('performance' in window) & ('timing' in window.performance)
 
 		// ACTIVITY LEVEL
 
-		activityCommon = activityCommon.replace("replacelat",position.coords.latitude);
-		activityCommon = activityCommon.replace("replacelon",position.coords.longitude);
+		if (position == "n/a")
+		{
+			activityCommon = activityCommon.replace("replacelat",0);
+			activityCommon = activityCommon.replace("replacelon",0);
+		}
+		else
+		{
+			activityCommon = activityCommon.replace("replacelat",position.coords.latitude);
+			activityCommon = activityCommon.replace("replacelon",position.coords.longitude);
+		}
 
 		// First Byte Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"navigationStart"},{"name": "timingEnd","type": "string","value":"responseStart"}';
@@ -837,8 +855,16 @@ window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
 function reportError(position) {
 	  var data = common.slice(0, common.length);
 	  var replaceResource = data.substring(data.indexOf('"resource"'),data.indexOf(',"severity"'));
-	  data = data.replace("replacelat",position.coords.latitude);
-	  data = data.replace("replacelon",position.coords.longitude);
+	  if (position == "n/a")
+	  {
+		data = data.replace("replacelat",0);
+		data = data.replace("replacelon",0);
+	  }
+	  else
+	  {
+	  	data = data.replace("replacelat",position.coords.latitude);
+	  	data = data.replace("replacelon",position.coords.longitude);
+	  }
 	  timingProperties = '{"name": "timingStart","type": "string","value":"errorTimeStart"}';
 	  var myJSONErrorData = '{"tracking-id":"'.concat(createGuid())
 	    .concat('","start-time-usec":').concat(now).concat('000')
