@@ -325,9 +325,9 @@ if (('performance' in window) & ('timing' in window.performance)
 							'",').concat(errorProperties);
 			path = 'activity';
 			//alert(myJSONData);
-			$.ajax({
+			jQuery.ajax({
 				type : 'POST',
-				url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+				url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 				data : myJSONData,
 				dataType : 'text',
 				headers : {
@@ -370,9 +370,9 @@ if (('performance' in window) & ('timing' in window.performance)
 				'');
 			path = 'event';
 			//alert(myJSONData);
-			$.ajax({
+			jQuery.ajax({
 				type : 'POST',
-				url : 'http://data.jkoolcloud.com:6580/JESL/'
+				url : 'https://data.jkoolcloud.com:6585/JESL/'
 						.concat(path),
 				data : myJSONData,
 				dataType : 'text',
@@ -393,9 +393,9 @@ if (('performance' in window) & ('timing' in window.performance)
 				activityIdServerConnectionTime);
 		path = 'event';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -415,9 +415,9 @@ if (('performance' in window) & ('timing' in window.performance)
 				activityIdServerConnectionTime);
 		path = 'event';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -438,9 +438,9 @@ if (('performance' in window) & ('timing' in window.performance)
 				activityIdServerConnectionTime);
 		path = 'event';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -459,9 +459,9 @@ if (('performance' in window) & ('timing' in window.performance)
 				activityIdResponseAvailableTime);
 		path = 'event';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -481,9 +481,9 @@ if (('performance' in window) & ('timing' in window.performance)
 				activityIdDocumentDownLoadTime);
 		path = 'event';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -503,9 +503,9 @@ if (('performance' in window) & ('timing' in window.performance)
 				activityIdDocumentProcessingTime);
 		path = 'event';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -525,9 +525,9 @@ if (('performance' in window) & ('timing' in window.performance)
 		'');
 		path = 'event';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -547,9 +547,9 @@ if (('performance' in window) & ('timing' in window.performance)
 		loadPath = 'event';
 
 		//alert(myJSONLoadData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(loadPath),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(loadPath),
 			data : myJSONLoadData,
 			dataType : 'text',
 			headers : {
@@ -582,9 +582,9 @@ if (('performance' in window) & ('timing' in window.performance)
 		myJSONData = myJSONData.replace("replaceParentIds", activityIdEndUserResponseTime);
 		path = 'activity';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -604,9 +604,9 @@ if (('performance' in window) & ('timing' in window.performance)
 		myJSONData = myJSONData.replace("replaceParentIds", activityIdFrontEndTime);
 		path = 'activity';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -626,9 +626,9 @@ if (('performance' in window) & ('timing' in window.performance)
 		myJSONData = myJSONData.replace("replaceParentIds", activityIdFirstByteTime);
 		path = 'activity';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -648,9 +648,9 @@ if (('performance' in window) & ('timing' in window.performance)
 		myJSONData = myJSONData.replace("replaceParentIds", activityIdFirstByteTime);
 		path = 'activity';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -670,9 +670,9 @@ if (('performance' in window) & ('timing' in window.performance)
 		myJSONData = myJSONData.replace("replaceTiming", timingProperties);
 		path = 'activity';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -692,9 +692,9 @@ if (('performance' in window) & ('timing' in window.performance)
 		myJSONData = myJSONData.replace("replaceParentIds", activityIdDocumentReadyTime);
 		path = 'activity';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -714,9 +714,9 @@ if (('performance' in window) & ('timing' in window.performance)
 		myJSONData = myJSONData.replace("replaceParentIds", activityIdFrontEndTime);
 		path = 'activity';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -762,9 +762,9 @@ if (('performance' in window) & ('timing' in window.performance)
 		myJSONData = myJSONData.replace(',' + rid,'');
 		path = 'activity';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -784,9 +784,9 @@ if (('performance' in window) & ('timing' in window.performance)
 		myJSONData = myJSONData.replace("replaceParentIds", activityIdSummary);
 		path = 'activity';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -806,9 +806,9 @@ if (('performance' in window) & ('timing' in window.performance)
 		myJSONData = myJSONData.replace("replaceParentIds", activityIdEndUserResponseTime);
 		path = 'activity';
 		//alert(myJSONData);
-		$.ajax({
+		jQuery.ajax({
 			type : 'POST',
-			url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(path),
+			url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
 			data : myJSONData,
 			dataType : 'text',
 			headers : {
@@ -842,9 +842,9 @@ if (('performance' in window) & ('timing' in window.performance)
 						myJSONAjaxData = myJSONAjaxData.replace(',"parent-id":"replaceParentIds"','');
 						var ajaxPath = 'event';
 						//alert(myJSONAjaxData);
-						$.ajax({
+						jQuery.ajax({
 							type : 'POST',
-							url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(ajaxPath),
+							url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(ajaxPath),
 							data : myJSONAjaxData,
 							dataType : 'text',
 							headers : {
@@ -902,9 +902,9 @@ function reportError(position) {
 	  myJSONErrorData = myJSONErrorData.replace(',"parent-id":"replaceParentIds"','');
 	  //alert(myJSONErrorData);
 	  errorPath = 'event';
-	  $.ajax({
+	  jQuery.ajax({
 	   type : 'POST',
-	   url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(errorPath),
+	   url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(errorPath),
 	   data : myJSONErrorData,
 	   dataType : 'text',
 	   headers : {
@@ -930,9 +930,9 @@ function afterLoadMeasure(name, properties, message, suffix, severity)
 	myJSONAjaxData = myJSONAjaxData.replace('"severity":"INFO"','"severity":"' + severity + '"');
 	var ajaxPath = 'event';
 	//alert(myJSONAjaxData);
-	$.ajax({
+	jQuery.ajax({
 		type : 'POST',
-		url : 'http://data.jkoolcloud.com:6580/JESL/'.concat(ajaxPath),
+		url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(ajaxPath),
 		data : myJSONAjaxData,
 		dataType : 'text',
 		headers : {
