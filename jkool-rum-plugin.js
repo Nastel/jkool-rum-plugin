@@ -327,7 +327,7 @@ if (('performance' in window) & ('timing' in window.performance)
 			//alert(myJSONData);
 			jQuery.ajax({
 				type : 'POST',
-				url : 'https://data.jkoolcloud.com:6585/JESL/'.concat(path),
+				url : 'https://data.jkoolcloud.com/JESL/'.concat(path),
 				data : myJSONData,
 				dataType : 'text',
 				headers : {
