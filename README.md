@@ -8,7 +8,7 @@ Into the web application you wish to monitor, import `jkool-rum-plugin.js` and e
 ###Import jquery libraries 
 These libraries can be obtained at http://jquery.com/download/
 
-###Please put the following code in to the head section of the web pages you wish to monitor
+###Add the following code in to the head section of the web pages you wish to monitor
 Please note that you will receive your jKool token when you register for jKool.
 ```java
 <script>
