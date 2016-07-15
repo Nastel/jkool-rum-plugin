@@ -8,13 +8,14 @@ Into the web application you wish to monitor, import `jkool-rum-plugin.js` and e
 ###Import jquery libraries 
 These libraries can be obtained at http://jquery.com/download/
 
-###Update the User-defined fields in the javascript plugin (`jkool-rum-plugin.js`)
+###Please put the following code in to the head section of the web pages you wish to monitor
 Please note that you will receive your jKool token when you register for jKool.
 ```java
-// User fills in these variables.
-var token = "your jKool token here"; 
-var appl = "your application name here";
-var dataCenter = "your data center name here";
+<script>
+window["token"] = "Your Token";
+window["appl"] = "Your Application Name";
+window["dataCenter"] = "Your Data Center Name"
+</script>
 ```
 
 ###Include the plugins in your project
