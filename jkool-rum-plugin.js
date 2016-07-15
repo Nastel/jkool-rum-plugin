@@ -57,7 +57,7 @@ function get_browser_info() {
 	// In Safari, the true version is after "Safari" or after "Version"
 	else if ((verOffset = nAgt.indexOf("Safari")) != -1) {
 		browserName = "Safari";
-		fullVersion = nAgt.substring(verOffset + 7);
+		fullVersion = nAgt.substring(verOffset + 7); 
 		if ((verOffset = nAgt.indexOf("Version")) != -1)
 			fullVersion = nAgt.substring(verOffset + 8);
 	}
