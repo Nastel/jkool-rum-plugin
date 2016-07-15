@@ -18,8 +18,6 @@
  */
 
 
-
-// User fills in these variables.
 var token = window.token; 
 var appl = window.appl;
 var dataCenter = window.dataCenter;
