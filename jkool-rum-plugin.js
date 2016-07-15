@@ -20,9 +20,9 @@
 
 
 // User fills in these variables.
-var token = "your jKool token here"; 
-var appl = "your application name here";
-var dataCenter = "your data center name here";
+var token = window.token; 
+var appl = window.appl;
+var dataCenter = window.dataCenter;
 
 function createGuid() {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
