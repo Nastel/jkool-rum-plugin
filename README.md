@@ -1,6 +1,6 @@
 # jKool Real-User Monitoring & Tracking for Web Apps
 
-jKool is happy to offer you a very simple and easy to use plug-in that you can use to monitor your end-user experience & engagement for web apps. This plugin will gather performance metrics, usability and stream them to jKool. When you login to your jKool repository you will see these metrics by simply clicking on a ready-made End-User Monitoring Dashboard. You will also have the ability to create your own views of the end user data by creating your own viewlets. Please follow these simple instructions to get setup using the plugin in just a few minutes. If you encounter any difficulty please don't hesitate to contact us at support@jkoolcloud.com.
+jKool is happy to offer a simple and easy to use plug-in that you can use to monitor end-user experience & engagement for your web apps. This plugin gathers performance, usability, errors, clicks and stream them to your jKool account. When you register and login to your jKool repository (https://www.jkoolcloud.com) you will see end-user analytics by simply clicking on End-User Monitoring Dashboard. You will also have the ability to create your own views of the end user data by creating your own viewlets. Please follow instructions below to setup jKool RUM, which should only take a few minutes. If you encounter any difficulty please don't hesitate to contact us at support@jkoolcloud.com.
 
 ###Import the plugins.
 Into the web application you wish to monitor, import `jkool-rum-plugin.js` and either `jkool-rum-plugin.jsp` (if using javascript) or `jkool-rum-plugin.php` (if using php).
@@ -46,14 +46,14 @@ performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'e
 ###If obtaining these metrics "after" the completion of the page load (i.e. Ajax)
 In addition to the performance marks above, call the following plugin function ...
 ```java
-afterLoadMeasure(<name>, <custom properties>, <custom message>, <descriptive name>, <SUCCESS or ERROR>)
+afterLoadMeasure(<name>, <custom properties>, <custom message>, <descriptive name>, <INFO or ERROR>)
 
 Where:
 <name> - the name of the custom event of type string
 <custom properties> - your custom fields you would like to report on. Each field should be in the following format and be of type string: {"name": "<name value>","type": <type value>,"value":"<value value>"},...
 <custom message> - a custom message for your event of type string
 <descriptive name> - the name of the mark/measure (from above)
-<ERROR> if you are reporting an error event, <SUCCESS> otherwise.
+<ERROR> if you are reporting an error event, <INFO> otherwise.
 ```
 
 Here is an example:
@@ -73,13 +73,12 @@ function FunctionABC()
 
 ###Obfuscate
 
-We strongly recommend that you obfuscate this file prior to releasing it into a production environment, because your jKool API access token is embedded in the javascript RUM plugin. A good obfuscation tool can be found here:
+We strongly recommend that you obfuscate `jkool-rum-plugin.js` prior to releasing it into a production environment. A good obfuscation tool can be found here:
 
 http://yui.github.io/yuicompressor/
 
 ###View End-User Analytics	
 		
-Your website is now setup to monitor end users. When a user hits a page, data will be posted to your repository in jKool via Restful Webservices.
+Your web application is now setup to monitor end users. When a user hits a page, data will be posted to your jKool repository via Restful.
 
-Logon to your jKool Dashboard. On the upper-right hand side, you will see a button labeled "EUM". Click on this button to see various
-charts displaying your end user data. You may also create your own viewlets. Click on the Tutorial and learn to create your own viewlets.
+Logon to your jKool Dashboard (https://www.jkoolcloud.com), click on "Dashboard". Once logged in, you will see a button labeled "EUM" on the upper-right hand side. Click on this button to see various charts displaying your end user data. You may also create your own viewlets. Click on the Tutorial and learn to create your own viewlets.
