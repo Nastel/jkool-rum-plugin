@@ -124,11 +124,11 @@ if (('performance' in window) & ('timing' in window.performance)
 															// activity
 	var d = new Date();
 	var now = d.getTime();
-	var sid = document.getElementById('corrid').value;
-	var rid = document.getElementById('rcorrid').value;
+	var sid = document.getElementById('corrid');
+	var rid = document.getElementById('rcorrid');
 	var timings = window.performance.timing;
-	var userName = document.getElementById("username").value;
-	var ipAddress = document.getElementById("ipaddress").value;
+	var userName = document.getElementById("username");
+	var ipAddress = document.getElementById("ipaddress");
 	var server = ipAddress;
 	var geoAddress = "Melville";
 	var activityIdFirstByteTime = createGuid();
@@ -185,8 +185,8 @@ if (('performance' in window) & ('timing' in window.performance)
 			.concat(',"location":"').concat(ipAddress).concat(
 					'","source-ssn":"').concat(appl).concat('","user":"')
 			.concat(userName).concat('","corrid":["').concat(
-					document.getElementById('corrid').value).concat(',')
-			.concat(document.getElementById('rcorrid').value).concat(
+					document.getElementById('corrid')).concat(',')
+			.concat(document.getElementById('rcorrid')).concat(
 					eventProperties).concat('}');
 	var errorSourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
 			.concat('#NETADDR=').concat(ipAddress).concat('#DATACENTER=')
@@ -204,7 +204,7 @@ if (('performance' in window) & ('timing' in window.performance)
 					'"},{"name": "browserVersion","type": "string","value": "')
 			.concat(browserVersion).concat('"}]').concat(',"user":"')
 			.concat(userName)
-			.concat('","corrid":["').concat(document.getElementById('corrid').value).concat(',').concat(document.getElementById('rcorrid').value)				
+			.concat('","corrid":["').concat(document.getElementById('corrid')).concat(',').concat(document.getElementById('rcorrid'))				
 			.concat('"]}');
 
 	// Start/End times
