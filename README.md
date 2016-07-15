@@ -28,7 +28,7 @@ window["dataCenter"] = "Your Data Center Name"
 <?php include "/inc/jkool-rum-plugin.php"; ?>
 ```
 
-* Also include the javascript plugin to every page you wish to track.  
+* Also include the javascript plugin to every page you wish to track.  It needs to be included after the jsp plugin.
 ```java
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
 ```
