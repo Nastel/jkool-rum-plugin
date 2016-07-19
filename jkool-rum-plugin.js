@@ -128,9 +128,10 @@ if (('performance' in window) & ('timing' in window.performance)
 	var rid = document.getElementById('rcorrid').value;
 	var timings = window.performance.timing;
 	var userName = document.getElementById("username").value;
-	var ipAddress = document.getElementById("ipaddress").value;
-	var server = ipAddress;
-	var geoAddress = "Melville";
+	var ipAddressXForwarded = document.getElementById("ipAddressXForwarded").value;
+	var ipAddressRemote = document.getElementById("ipAddressRemote").value;
+	var ipAddress;
+	var server;
 	var activityIdFirstByteTime = createGuid();
 	var activityIdServerConnectionTime = createGuid();
 	var activityIdEndUserResponseTime = createGuid(); 
@@ -166,12 +167,12 @@ if (('performance' in window) & ('timing' in window.performance)
 			.concat(userAgent).concat(
 					'"},{"name": "browserVersion","type": "string","value": "')
 			.concat(browserVersion).concat('"},replaceTiming]');
-	var eventSourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
-			.concat('#NETADDR=').concat(ipAddress).concat('#DATACENTER=')
+	var eventSourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat("replaceserver")
+			.concat('#NETADDR=').concat("replaceipaddress").concat('#DATACENTER=')
 			.concat(dataCenter).concat('#GEOADDR=').concat("replacelat,replacelon");
 	
-	var activitySourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
-	.concat('#NETADDR=').concat(ipAddress).concat('#DATACENTER=')
+	var activitySourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat("replaceserver")
+	.concat('#NETADDR=').concat("replaceipaddress").concat('#DATACENTER=')
 	.concat(dataCenter).concat('#GEOADDR=').concat(
 			"replacelat,replacelon");
 	
@@ -182,13 +183,13 @@ if (('performance' in window) & ('timing' in window.performance)
 			.concat(rid).concat('","time-usec":').concat(now).concat('000')
 			.concat(',"resource":"').concat(url).concat(
 					'","severity":"INFO","parent-id":"replaceParentIds"')
-			.concat(',"location":"').concat(ipAddress).concat(
+			.concat(',"location":"').concat("replaceipaddress").concat(
 					'","source-ssn":"').concat(appl).concat('","user":"')
 			.concat(userName).concat('","corrid":["').concat(
 					document.getElementById('corrid').value).concat(',')
 			.concat(document.getElementById('rcorrid').value).concat(
 					eventProperties).concat('}');
-	var errorSourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat(server)
+	var errorSourceFqn = "APPL=".concat(appl).concat('#SERVER=').concat("replaceserver")
 			.concat('#NETADDR=').concat(ipAddress).concat('#DATACENTER=')
 			.concat(dataCenter);
 	var errorProperties = '"properties": [{"name": "queryString","type": "string","value":"'
@@ -288,13 +289,7 @@ if (('performance' in window) & ('timing' in window.performance)
 							}
 
 						}
-
-
-
 					}
-					
-
-
 			)
 			
 	// To report location
@@ -302,12 +297,8 @@ if (('performance' in window) & ('timing' in window.performance)
 	// function)
 	setTimeout(function() {
 		var timings = window.performance.timing;
-		if (url.substring(0,5) != "https")
-		{
-			report("n/a");
-		}
-		else if (timings["loadEventEnd"] != null && timings["loadEventEnd"] >= 0)
-			navigator.geolocation.getCurrentPosition(report, declined);
+		if (timings["loadEventEnd"] != null && timings["loadEventEnd"] >= 0)
+			myIP();
 		else
 		{
  
@@ -326,6 +317,60 @@ if (('performance' in window) & ('timing' in window.performance)
 			stream (path, myJSONData);
 		}
 	}, 5000);
+	
+
+	function myIP() {
+		$.ajax({
+	        url: '//freegeoip.net/json/',
+	        type: 'POST',
+	        timeout:1000,
+	        dataType: 'jsonp',
+	        success: function(location) {
+	            ipAddress = location.ip;
+				activityCommon = activityCommon.replace("replaceserver",ipAddress);
+				activityCommon = activityCommon.replace("replaceipaddress",ipAddress);
+				common = common.replace("replaceserver",ipAddress);
+				common = common.replace("replaceipaddress",ipAddress);
+				common = common.replace("replaceipaddress",ipAddress);
+				if (url.substring(0,5) != "https")
+				{
+					report("n/a");
+				}
+				else 
+				{
+					navigator.geolocation.getCurrentPosition(report, declined);
+				}
+	        },
+			error: function() {
+				if (ipAddressXForwarded != null)
+				{
+					ipAddress = ipAddressXForwarded;
+				}
+				else
+				{
+					ipAddress = ipAddressRemote;				
+				}
+				activityCommon = activityCommon.replace("replaceserver",ipAddress);
+				activityCommon = activityCommon.replace("replaceipaddress",ipAddress);
+				common = common.replace("replaceserver",ipAddress);
+				common = common.replace("replaceipaddress",ipAddress);
+				common = common.replace("replaceipaddress",ipAddress);
+				if (url.substring(0,5) != "https")
+				{
+					report("n/a");
+				}
+				else
+				{
+					navigator.geolocation.getCurrentPosition(report, declined);
+				}
+			}
+	    });
+	}
+	
+	function declined(error) {
+	    if (error.code == error.PERMISSION_DENIED) {
+	        report("n/a");
+	    }}
 
 	// all Activities, onLoad Event, & Measures
 	
@@ -341,18 +386,14 @@ if (('performance' in window) & ('timing' in window.performance)
 		})
 	}
 	
-	function declined(error) {
-	    if (error.code == error.PERMISSION_DENIED) {
-	        report("n/a");
-	    }}
 
 	function report(position) {
 		  
 		// EVENT LEVEL
 		if (position == "n/a")
 		{
-			common = common.replace("replacelat",0);
-			common = common.replace("replacelon",0);
+			common = common.replace("replacelat","");
+			common = common.replace("replacelon","");
 		}
 		else
 		{
