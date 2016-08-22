@@ -32,6 +32,29 @@ window["dataCenter"] = "Your Data Center Name"
 ```java
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
 ```
+
+### Apache Automatic Injection
+If you don't wish to instrument every page of your webapp, you can have apache automatically inject the code for you. Simply do the following:
+* Add the following to httpd.conf:
+ ```java
+LoadModule substitute_module modules/mod_substitute.so
+LoadModule filter_module modules/mod_filter.so
+```
+* Create a file called jkool-plugin.conf as follows:
+```
+<Location />
+AddOutputFilterByType SUBSTITUTE text/html
+Substitute "s|<head>|<head>
+<script type="text/javascript" src="../../js/jquery.min.1.7.2.js"></script><script>window["token"] = "<your-token>";window["appl"] = "<your-application-name>";window["dataCenter"] = "<your-data-center>"</script>|in"
+Substitute "s|</form>|<%@ include file="jkool-rum-plugin.jsp" %></form><script src="../../js/jkool-rum-plugin.js" type="text/javascript"></script>|in"
+</Location
+```
+* Add the location of this file to httpd.conf by adding the following:
+```
+Include [absolutePathTo]/jkool-plugin.conf
+```
+* Restart Apache
+
 ###To get performance metrics on javascript functions
 
 Including the plugins will measure your overall site performance (i.e. page load time, redirect time, connect time, domain lookup time, request and response time, etc.). If you wish more fine-grained measuring of javascript functions, please do the following:
