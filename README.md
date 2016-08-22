@@ -59,7 +59,7 @@ SetOutputFilter INFLATE;SUBSTITUTE;DEFLATE
 Include [absolutePathTo]/jkool-plugin.conf
 ```
 * Restart Apache
-* 
+
 ### Automatic Injection for IIS
 If you don't wish to instrument every page of your webapp, you can have IIS automatically inject the code for you. Simply do the following:
 * Install URL Rewrite from here http://www.iis.net/download/urlrewrite
