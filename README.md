@@ -65,12 +65,12 @@ If you don't wish to instrument every page of your webapp, you can have IIS auto
 * Install URL Rewrite from here http://www.iis.net/download/urlrewrite
 * Open IIS Manager, click on your site and then open the URL Rewrite feature
 * In the Outbound Rule section click View Preconditions and the Add to add a new condition called IsHTML. The condition need check {RESPONSE_CONTENT_TYPE} matches the pattern “^text/html”. This is so that we only insert our JavaScript code into HTML and not into any other content type.
-* Add an Outbound rule called 'jKoolPlugin'. This Outbound rule should check for our Precondition “IsHTML”, and then Match on a pattern “<head>” using an “Exact Match”. In the Action section we have a rewrite action which then rewrites “<head>” as:
+* Add an Outbound rule called 'jKoolPlugin1'. This Outbound rule should check for our Precondition “IsHTML”, and then Match on a pattern '<head>' using an “Exact Match”. In the Action section we have a rewrite action which then rewrites '<head>' as:
 ``` java 
 <head>
 <script type="text/javascript" src="../../js/jquery.min.1.7.2.js"></script><script>window["token"] = "<your-token>";window["appl"] = "<your-application-name>";window["dataCenter"] = "<your-data-center>"</script>
 ```
-* Add another Outbound in the same way this time the rule should check for our Precondition “IsHTML”, and then Match on a pattern “</body>” using an “Exact Match”. In the Action section we have a rewrite action which then rewrites “</form>” as:
+* Add another Outbound called jKoolPlugin2. The rule should check for our Precondition “IsHTML”, and then Match on a pattern '</form>' using an “Exact Match”. In the Action section we have a rewrite action which then rewrites '</form>' as:
 ``` java
 <%@ include file="jkool-rum-plugin.jsp" %></form><script src="../../js/jkool-rum-plugin.js" type="text/javascript"></script>
 ``` 
