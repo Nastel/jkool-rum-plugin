@@ -47,7 +47,7 @@ AddOutputFilterByType SUBSTITUTE text/html
 Substitute "s|<head>|<head>
 <script type="text/javascript" src="../../js/jquery.min.1.7.2.js"></script><script>window["token"] = "<your-token>";window["appl"] = "<your-application-name>";window["dataCenter"] = "<your-data-center>"</script>|in"
 Substitute "s|</form>|<%@ include file="jkool-rum-plugin.jsp" %></form><script src="../../js/jkool-rum-plugin.js" type="text/javascript"></script>|in"
-</Location
+</Location>
 ```
 The above is for Apache 2.4. If running Apache 2.2, you will need to also add this line of code:
 ```
