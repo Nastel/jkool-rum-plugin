@@ -132,7 +132,6 @@ We strongly recommend that you obfuscate `jkool-rum-plugin.js` prior to releasin
 http://yui.github.io/yuicompressor/
 
 ###View End-User Analytics	
-		
-Your web application is now setup to monitor end users. When a user hits a page, data will be posted to your jKool repository via Restful.
+Your web application is now setup for real user monitoring. 
 
 Logon to your jKool Dashboard (https://www.jkoolcloud.com), click on "Dashboard". Once logged in, you will see a button labeled "EUM" on the upper-right hand side. Click on this button to see various charts displaying your end user data. You may also create your own viewlets. Click on the Tutorial and learn to create your own viewlets.
