@@ -74,6 +74,7 @@ If you don't wish to instrument every page of your webapp, you can have IIS auto
 <%@ include file="jkool-rum-plugin.jsp" %></form><script src="../../js/jkool-rum-plugin.js" type="text/javascript"></script>
 ``` 
 ### Automatic Injection for Ngnix
+If you don't wish to instrument every page of your webapp, you can have Ngnix automatically inject the code for you. Simply do the following:
 * Install the ngx_htt_sub_module module http://nginx.org/en/docs/http/ngx_http_sub_module.html.
 * Enable it with -- --with-http_sub_module
 * The configuration for jKool Rum Plugin is as follows:
