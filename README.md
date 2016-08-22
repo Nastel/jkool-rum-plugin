@@ -49,6 +49,11 @@ Substitute "s|<head>|<head>
 Substitute "s|</form>|<%@ include file="jkool-rum-plugin.jsp" %></form><script src="../../js/jkool-rum-plugin.js" type="text/javascript"></script>|in"
 </Location
 ```
+The above is for Apache 2.4. If running Apache 2.2, you will need to also add this line of code:
+```
+SetOutputFilter INFLATE;SUBSTITUTE;DEFLATE 
+```
+
 * Add the location of this file to httpd.conf by adding the following:
 ```
 Include [absolutePathTo]/jkool-plugin.conf
