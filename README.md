@@ -33,7 +33,7 @@ window["dataCenter"] = "Your Data Center Name"
 <script src="js/lib/jkool-rum-plugin.js" type="text/javascript"></script>
 ```
 
-### Apache Automatic Injection
+### Automatic Injection for Apache Web Server
 If you don't wish to instrument every page of your webapp, you can have Apache automatically inject the code for you. Simply do the following:
 * Add the following to httpd.conf:
 ```
