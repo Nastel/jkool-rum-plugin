@@ -67,8 +67,7 @@ If you don't wish to instrument every page of your webapp, you can have IIS auto
 * In the Outbound Rule section click View Preconditions and the Add to add a new condition called IsHTML. The condition need check {RESPONSE_CONTENT_TYPE} matches the pattern “^text/html”. This is so that we only insert our JavaScript code into HTML and not into any other content type.
 * Add an Outbound rule called 'jKoolPlugin1'. This Outbound rule should check for our Precondition “IsHTML”, and then Match on a pattern ```<head>``` using an “Exact Match”. In the Action section we have a rewrite action which then rewrites ```<head>``` as:
 ``` java 
-<head>
-<script type="text/javascript" src="../../js/jquery.min.1.7.2.js"></script><script>window["token"] = "<your-token>";window["appl"] = "<your-application-name>";window["dataCenter"] = "<your-data-center>"</script>
+<head><script type="text/javascript" src="../../js/jquery.min.1.7.2.js"></script><script>window["token"] = "<your-token>";window["appl"] = "<your-application-name>";window["dataCenter"] = "<your-data-center>"</script>
 ```
 * Add another Outbound called jKoolPlugin2. The rule should check for our Precondition “IsHTML”, and then Match on a pattern ```</form>``` using an “Exact Match”. In the Action section we have a rewrite action which then rewrites ```</form>``` as:
 ``` java
