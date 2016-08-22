@@ -42,7 +42,7 @@ LoadModule filter_module modules/mod_filter.so
 ```
 * Create a file called jkool-plugin.conf as follows:
 ```
-<Location/>
+<Location />
 AddOutputFilterByType SUBSTITUTE text/html
 Substitute "s|<head>|<head>
 <script type="text/javascript" src="/js/jquery.min.1.7.2.js"></script><script>window["token"] = "<your-token>";window["appl"] = "<your-application-name>";window["dataCenter"] = "<your-data-center>"</script>|in"
