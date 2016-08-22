@@ -73,6 +73,17 @@ If you don't wish to instrument every page of your webapp, you can have IIS auto
 ``` java
 <%@ include file="jkool-rum-plugin.jsp" %></form><script src="../../js/jkool-rum-plugin.js" type="text/javascript"></script>
 ``` 
+### Automatic Injection for Ngnix
+* Install the ngx_htt_sub_module module http://nginx.org/en/docs/http/ngx_http_sub_module.html.
+* Enable it with -- --with-http_sub_module
+* The configuration for jKool Rum Plugin is as follows:
+``` java
+location / {
+    sub_filter '<head>' '<head><script type="text/javascript" src="../../js/jquery.min.1.7.2.js"></script><script>window["token"] = "<your-token>";window["appl"] = "<your-application-name>";window["dataCenter"] = "<your-data-center>"</script>';
+    sub_filter '</form>' '<%@ include file="jkool-rum-plugin.jsp" %></form><script src="../../js/jkool-rum-plugin.js" type="text/javascript"></script>';
+    sub_filter_once on;
+}
+```
 
 ###To get performance metrics on javascript functions
 
