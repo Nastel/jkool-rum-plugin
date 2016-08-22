@@ -34,9 +34,9 @@ window["dataCenter"] = "Your Data Center Name"
 ```
 
 ### Apache Automatic Injection
-If you don't wish to instrument every page of your webapp, you can have apache automatically inject the code for you. Simply do the following:
+If you don't wish to instrument every page of your webapp, you can have Apache automatically inject the code for you. Simply do the following:
 * Add the following to httpd.conf:
- ```java
+ ```
 LoadModule substitute_module modules/mod_substitute.so
 LoadModule filter_module modules/mod_filter.so
 ```
