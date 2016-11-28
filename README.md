@@ -116,7 +116,8 @@ Here is an example:
   function testAjaxFunction() {
        performance.mark("start_processJavascriptFunctionABC");
        $.get('http://localhost:8080/demo/async', function(data) {
-   		performance.mark("end_processJavascriptFunctionABC");  
+   		    ... your code ...
+            performance.mark("end_processJavascriptFunctionABC");  
     		performance.measure('measure_processJavascriptFunctionABC', 'start_processJavascriptFunctionABC', 'end_processJavascriptFunctionABC'); 
     		var properties = '{"name": "ABCProperty1","type": "string","value":"hello"},{"name": "ABCPropery2","type": "integer","value":"10"}';    
     		afterLoadMeasure('FunctionABCEvent', properties, 'Function ABC Message', 'processJavascriptFunctionABC', 'INFO'); 
