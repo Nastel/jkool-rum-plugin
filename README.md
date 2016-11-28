@@ -113,16 +113,15 @@ Where:
 Here is an example:
 
 ```java
-function FunctionABC()
-{
-	performance.mark("start_processJavascriptFunctionABC");
-	...
-	performance.mark("end_processJavascriptFunctionABC);  
-	performance.measure('measure_processJavascriptFunctionABC, 'start_processJavascriptFunctionABC, 'end_processJavascriptFunctionABC);	
-	var properties = '{"name": "ABCProperty1","type": "string","value":"hello"},{"name": "ABCPropery2","type": "integer","value":"10"}';	
-	// Only if reporting after page load.
-	afterLoadMeasure('FunctionABCEvent', properties, 'Function ABC Message', 'processJavascriptFunctionABC, 'INFO'); 
-}
+  function testAjaxFunction() {
+       performance.mark("start_processJavascriptFunctionABC");
+       $.get('http://localhost:8080/demo/async', function(data) {
+   		performance.mark("end_processJavascriptFunctionABC");  
+    		performance.measure('measure_processJavascriptFunctionABC', 'start_processJavascriptFunctionABC', 'end_processJavascriptFunctionABC'); 
+    		var properties = '{"name": "ABCProperty1","type": "string","value":"hello"},{"name": "ABCPropery2","type": "integer","value":"10"}';    
+    		afterLoadMeasure('FunctionABCEvent', properties, 'Function ABC Message', 'processJavascriptFunctionABC', 'INFO'); 
+    	});
+   }
 ```
 
 ###Obfuscate
