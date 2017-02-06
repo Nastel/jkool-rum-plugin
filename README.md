@@ -93,9 +93,9 @@ Including the plugins will measure your overall site performance (i.e. page load
 
 * Set the window parameter "mark" equal to "all" in order to automatically obtain javascript function performance automatically. This will measure every javascript function within you site.
 
-* If measuring every javascript function proves to be too much data for you, you can instead ste the window paramter "mark" equal to a list of javascript functions you wish to measure. This will cause the plugin only to report on those javascript functions specified.
+* If measuring every javascript function proves to be too much data for you, you can instead set the window paramter "mark" equal to a list of javascript functions you wish to measure. This will cause the plugin only to report on those javascript functions specified.
 
-* If you wish to report additional data than than the plugin does automatically (i.e. - you wish to specify message text or properties) on functions that are invoked after a page load (i.e. - Ajax), you can set the performance measures manually by doing the following:
+* If you wish to report custom data (i.e. - you wish to specify message text or properties) on functions that are invoked after a page load (i.e. - Ajax), you can set the performance measures manually by doing the following:
 
 * Add the following code before and after the javascript you wish to measure.
 ```java
