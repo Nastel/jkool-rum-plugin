@@ -21,6 +21,45 @@
 var token = window.token; 
 var appl = window.appl;
 var dataCenter = window.dataCenter;
+var mark = window.mark;
+
+function augment(beforeMarks, afterMarks) {
+    var name, fn, loc;
+    for (name in window) {
+        fn = window[name];
+		loc = window.location.href;
+        if (typeof fn === 'function') {
+			if ((mark == "all" && fn.toString().indexOf("native") == -1  && name != "$" && name != "jQuery" && name != "afterLoadMeasure"  && name != "createGuid"  && name != "get_browser_info"  && name != "myIP"  && name != "declined"  && name != "stream"  && name != "report"  && name != "reportError"  && name != "afterLoadMeasure") ||
+			     mark.indexOf(name) != -1)
+            window[name] = (function(name, fn) {
+                var args = arguments; 
+                return function() {
+                    beforeMarks.apply(this, args); 
+                    var x = fn.apply(this, arguments);
+					afterMarks.apply(this, args);
+					return x;
+                }
+            })(name, fn);
+        }
+    }
+}
+
+function markFunctions ()
+{
+	if (mark == "none")
+	{
+		return;
+	}
+	augment(function(name, fn) {
+		performance.mark("start_" + name);   
+		},function(name, fn) {
+		performance.mark("end_" + name);
+		performance.measure('measure_' + name, 'start_' + name, 'end_' + name);
+		var properties = '{"markedFunction":"true"}';    
+		afterLoadMeasure('measure_' + name, properties, '', name, 'INFO'); 
+}	
+);
+}
 
 function createGuid() {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -298,7 +337,11 @@ if (('performance' in window) & ('timing' in window.performance)
 	setTimeout(function() {
 		var timings = window.performance.timing;
 		if (timings["loadEventEnd"] != null && timings["loadEventEnd"] >= 0)
+		{
+
+			markFunctions ();
 			myIP();
+		}
 		else
 		{
  
@@ -320,7 +363,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	
 
 	function myIP() {
-		$.ajax({
+		jQuery.ajax({
 	        url: '//freegeoip.net/json/',
 	        type: 'POST',
 	        timeout:1000,
