@@ -15,6 +15,7 @@ Please note that you will receive your jKool token when you register for jKool.
 window["token"] = "Your Token";
 window["appl"] = "Your Application Name";
 window["dataCenter"] = "Your Data Center Name"
+window["mark"] = "all|none|list of functions you wish to measure"
 </script>
 ```
 
