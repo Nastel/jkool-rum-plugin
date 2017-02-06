@@ -97,7 +97,7 @@ Including the plugins will measure your overall site performance (i.e. page load
 
 * If you wish to report custom data (i.e. - you wish to specify message text or properties) on functions that are invoked after a page load (i.e. - Ajax), you can set the performance measures manually by doing the following:
 
-* Add the following code before and after the javascript you wish to measure.
+Add the following code before and after the javascript you wish to measure.
 ```java
 performance.mark("start_<descriptive name>");  
 <javascript code being marked>
