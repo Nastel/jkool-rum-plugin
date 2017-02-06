@@ -91,17 +91,22 @@ location / {
 
 Including the plugins will measure your overall site performance (i.e. page load time, redirect time, connect time, domain lookup time, request and response time, etc.). If you wish more fine-grained measuring of javascript functions, please do the following:
 
+* Set the window parameter "mark" equal to "all" in order to automatically obtain javascript function performance automatically. This will measure every javascript function within you site.
+
+* If measuring every javascript function proves to be too much data for you, you can instead ste the window paramter "mark" equal to a list of javascript functions you wish to measure. This will cause the plugin only to report on those javascript functions specified.
+
+* If you wish to report additional data than than the plugin does automatically (i.e. - you wish to specify message text or properties) on functions that are invoked after a page load (i.e. - Ajax), you can set the performance measures manually by doing the following:
+
 * Add the following code before and after the javascript you wish to measure.
 ```java
 performance.mark("start_<descriptive name>");  
 <javascript code being marked>
 performance.mark("end_<descriptive name>");  
 performance.measure('measure_<descriptive name>', 'start_<descriptive name>', 'end_<descriptive name>');
-```
-###If obtaining these metrics "after" the completion of the page load (i.e. Ajax)
-In addition to the performance marks above, call the following plugin function ...
-```java
 afterLoadMeasure(<name>, <custom properties>, <custom message>, <descriptive name>, <INFO or ERROR>)
+```
+
+```java
 
 Where:
 <name> - the name of the custom event of type string
