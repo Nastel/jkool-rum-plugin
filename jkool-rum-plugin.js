@@ -173,7 +173,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	else
 		ipAddressXForwarded = "not.available"
 	var ipAddressRemote; 
-	if (= document.getElementById("ipAddressRemote") != null)
+	if (document.getElementById("ipAddressRemote") != null)
 		ipAddressRemote = document.getElementById("ipAddressRemote").value;
 	else
 		ipAddressRemote = "not.available"
@@ -223,12 +223,12 @@ if (('performance' in window) & ('timing' in window.performance)
 	.concat(dataCenter).concat('#GEOADDR=').concat(
 			"replacelat,replacelon");
 	
-	var activityCommon = '"source-fqn":"'.concat(activitySourceFqn).concat('","status":"END","parent-id":"replaceParentIds","resource":SERVICE="').concat(url).concat(
+	var activityCommon = '"source-fqn":"'.concat(activitySourceFqn).concat('","status":"END","parent-id":"replaceParentIds","resource":"SERVICE=').concat(url).concat(
 		'",').concat(activityProperties).concat(',"user":"').concat(userName).concat('","corrid":["').concat(sid).concat(',').concat(rid).concat('"]}');
 
 	var common = '"source-fqn":"'.concat(eventSourceFqn).concat('","msg-tag":"')
 			.concat(rid).concat('","time-usec":').concat(now).concat('000')
-			.concat(',"resource":SERVICE="').concat(url).concat(
+			.concat(',"resource":"SERVICE=').concat(url).concat(
 					'","severity":"INFO","parent-id":"replaceParentIds"')
 			.concat(',"location":"').concat("replaceipaddress").concat(
 					'","source-ssn":"').concat(appl).concat('","user":"')
@@ -359,7 +359,7 @@ if (('performance' in window) & ('timing' in window.performance)
 							'000').concat(',"time-usec":').concat(now)
 					.concat('000').concat(
 							',"operation":"ERROR","source-fqn":"')
-					.concat(errorSourceFqn).concat('","resource":SERVICE="').concat(url).concat(
+					.concat(errorSourceFqn).concat('","resource":"SERVICE=').concat(url).concat(
 							'",').concat(errorProperties);
 			path = 'activity';
 			//alert(myJSONData);
@@ -834,9 +834,10 @@ function reportError(position) {
 	    .concat(',"operation":"JAVASCRIPT_ERROR",')
 	    .concat(data);
 	  myJSONErrorData = myJSONErrorData.replace("replaceTiming", timingProperties);
-	  myJSONErrorData = myJSONErrorData.replace(replaceResource,'"resource":SERVICE="' + jsErrorLocation + '"');
+	  myJSONErrorData = myJSONErrorData.replace(replaceResource,'"resource":"SERVICE=' + jsErrorLocation + '"');
 	  myJSONErrorData = myJSONErrorData.replace(',"parent-id":"replaceParentIds"','');
-	  myJSONErrorData = myJSONErrorData.replace(',"severity:INFO":"severity:ERROR"','');
+	  myJSONErrorData = myJSONErrorData.replace('"severity":"INFO"','"severity":"ERROR"');
+
 
 	  //alert(myJSONErrorData);
 	  errorPath = 'event';
