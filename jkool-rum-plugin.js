@@ -794,7 +794,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	}
 	performance.clearMarks();
 	performance.clearMeasures();
-} 
+} }  // End
   
 window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
 
@@ -837,12 +837,15 @@ function reportError(position) {
 	  myJSONErrorData = myJSONErrorData.replace(replaceResource,'"resource":"SERVICE=' + jsErrorLocation + '"');
 	  myJSONErrorData = myJSONErrorData.replace(',"parent-id":"replaceParentIds"','');
 	  myJSONErrorData = myJSONErrorData.replace('"severity":"INFO"','"severity":"ERROR"');
+	  myJSONErrorData = myJSONErrorData.replace('replaceipaddress','not.available');
+	  myJSONErrorData = myJSONErrorData.replace('replaceipaddress','not.available');
+	                                              
 
 
 	  //alert(myJSONErrorData);
 	  errorPath = 'event';
 	  stream(errorPath,myJSONErrorData);
-	}}  // End
+	}
 
 function afterLoadMeasure(name, properties, message, suffix, severity)
 {
