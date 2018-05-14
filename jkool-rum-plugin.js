@@ -167,8 +167,16 @@ if (('performance' in window) & ('timing' in window.performance)
 	var rid = document.getElementById('rcorrid').value;
 	var timings = window.performance.timing;
 	var userName = document.getElementById("username").value;
-	var ipAddressXForwarded = document.getElementById("ipAddressXForwarded").value;
-	var ipAddressRemote = document.getElementById("ipAddressRemote").value;
+	var ipAddressXForwarded; 
+	if (document.getElementById("ipAddressXForwarded") != null)
+		ipAddressXForwarded = document.getElementById("ipAddressXForwarded").value;
+	else
+		ipAddressXForwarded = "not.available"
+	var ipAddressRemote; 
+	if (= document.getElementById("ipAddressRemote") != null)
+		ipAddressRemote = document.getElementById("ipAddressRemote").value;
+	else
+		ipAddressRemote = "not.available"
 	var ipAddress;
 	var server;
 	var activityIdFirstByteTime = createGuid();
@@ -215,12 +223,12 @@ if (('performance' in window) & ('timing' in window.performance)
 	.concat(dataCenter).concat('#GEOADDR=').concat(
 			"replacelat,replacelon");
 	
-	var activityCommon = '"source-fqn":"'.concat(activitySourceFqn).concat('","status":"END","parent-id":"replaceParentIds","resource":"').concat(url).concat(
+	var activityCommon = '"source-fqn":"'.concat(activitySourceFqn).concat('","status":"END","parent-id":"replaceParentIds","resource":SERVICE="').concat(url).concat(
 		'",').concat(activityProperties).concat(',"user":"').concat(userName).concat('","corrid":["').concat(sid).concat(',').concat(rid).concat('"]}');
 
 	var common = '"source-fqn":"'.concat(eventSourceFqn).concat('","msg-tag":"')
 			.concat(rid).concat('","time-usec":').concat(now).concat('000')
-			.concat(',"resource":"').concat(url).concat(
+			.concat(',"resource":SERVICE="').concat(url).concat(
 					'","severity":"INFO","parent-id":"replaceParentIds"')
 			.concat(',"location":"').concat("replaceipaddress").concat(
 					'","source-ssn":"').concat(appl).concat('","user":"')
@@ -282,47 +290,45 @@ if (('performance' in window) & ('timing' in window.performance)
 						// Obtain start/end times
 						for ( var timing in timings) {
 							if (timing == "navigationStart")
-								navigationStart = timings[timing]
+								navigationStart = timings[timing];
 							else if (timing == "redirectStart")
-								redirectStart = timings[timing]
+								redirectStart = timings[timing];
 							else if (timing == "redirectEnd")
-								redirectEnd = timings[timing]
+								redirectEnd = timings[timing];
 							else if (timing == "responseStart")
-								responseStart = timings[timing]
+								responseStart = timings[timing];
 							else if (timing == "responseEnd")
-								responseEnd = timings[timing]
+								responseEnd = timings[timing];
 							else if (timing == "connectStart")
-								connectStart = timings[timing]
+								connectStart = timings[timing];
 							else if (timing == "connectEnd")
-								connectEnd = timings[timing]
+								connectEnd = timings[timing];
 							else if (timing == "domainLookupStart")
-								domainLookupStart = timings[timing]
+								domainLookupStart = timings[timing];
 							else if (timing == "domainLookupEnd")
-								domainLookupEnd = timings[timing]
+								domainLookupEnd = timings[timing];
+							else if (timing == "loadEventStart")
+								loadEventStart = timings[timing];
+							else if (timing == "loadEventEnd")
+								loadEventEnd = timings[timing];
+							else if (timing == "unloadEventStart")
+								unloadEventStart = timings[timing];
 							else if (timing == "unloadEventEnd")
 								unloadEventEnd = timings[timing];
+							else if (timing == "domContentLoadedEventStart")
+								domContentLoadedEventStart = timings[timing];
+							else if (timing == "domContentLoadedEventEnd")
+								domContentLoadedEventEnd = timings[timing];
 							else if (timing == "fetchStart")
 								fetchStart = timings[timing];
 							else if (timing == "requestStart")
 								requestStart = timings[timing];
 							else if (timing == "domLoading")
-								domLoading = timings[timing]
+								domLoading = timings[timing];
 							else if (timing == "domInteractive")
-								domInteractive = timings[timing]
-							else if (timing == "domContentLoadedEventStart")
-								domContentLoadedEventStart = timings[timing];
-							else if (timing == "domContentLoadedEventEnd")
-								domContentLoadedEventEnd = timings[timing];
+								domInteractive = timings[timing];
 							else if (timing == "domComplete")
 								domComplete = timings[timing];
-							else if (timing == "loadEventStart")
-								loadEventStart = timings[timing]
-							else if (timing == "unloadEventStart")
-								unloadEventStart = timings[timing];
-							else if (timing == "unloadEventEnd")
-								unloadEventEnd = timings[timing];
-							else if (timing == "loadEventEnd")
-								loadEventEnd = timings[timing];
 							else {
 								//
 							}
@@ -353,7 +359,7 @@ if (('performance' in window) & ('timing' in window.performance)
 							'000').concat(',"time-usec":').concat(now)
 					.concat('000').concat(
 							',"operation":"ERROR","source-fqn":"')
-					.concat(errorSourceFqn).concat('","resource":"').concat(url).concat(
+					.concat(errorSourceFqn).concat('","resource":SERVICE="').concat(url).concat(
 							'",').concat(errorProperties);
 			path = 'activity';
 			//alert(myJSONData);
@@ -375,14 +381,15 @@ if (('performance' in window) & ('timing' in window.performance)
 				common = common.replace("replaceserver",ipAddress);
 				common = common.replace("replaceipaddress",ipAddress);
 				common = common.replace("replaceipaddress",ipAddress);
-				if (url.substring(0,5) != "https")
-				{
-					report("n/a");
-				}
-				else 
-				{
-					navigator.geolocation.getCurrentPosition(report, declined);
-				}
+//				if (url.substring(0,5) != "https")
+//				{
+//					report("n/a");
+//				}
+//				else 
+//				{
+//					navigator.geolocation.getCurrentPosition(report, declined);
+//				}
+				report("n/a");
 	        },
 			error: function() {
 				if (ipAddressXForwarded != null)
@@ -398,14 +405,15 @@ if (('performance' in window) & ('timing' in window.performance)
 				common = common.replace("replaceserver",ipAddress);
 				common = common.replace("replaceipaddress",ipAddress);
 				common = common.replace("replaceipaddress",ipAddress);
-				if (url.substring(0,5) != "https")
-				{
-					report("n/a");
-				}
-				else
-				{
-					navigator.geolocation.getCurrentPosition(report, declined);
-				}
+//				if (url.substring(0,5) != "https")
+//				{
+//					report("n/a");
+//				}
+//				else
+//				{
+//					navigator.geolocation.getCurrentPosition(report, declined);
+//				}
+				report("n/a");
 			}
 	    });
 	}
@@ -430,7 +438,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	}
 	
 
-	function report(position) {
+	function report(position) { // Begin
 		  
 		// EVENT LEVEL
 		if (position == "n/a")
@@ -460,17 +468,19 @@ if (('performance' in window) & ('timing' in window.performance)
 		}
 
 		// App Cache
-		timingProperties = '{"name": "timingStart","type": "string","value":"fetchStart"}';
-		myJSONData = '{"start-time-usec":'.concat(fetchStart).concat('000')
-		.concat(',"operation":"APPCACHE",')
-		.concat(common);
-		myJSONData = myJSONData.replace("replaceTiming",
-				timingProperties);
-		myJSONData = myJSONData.replace("replaceParentIds",
-				activityIdServerConnectionTime);
-		path = 'event';
-		//alert(myJSONData);
-		stream (path, myJSONData);
+		if (fetchStart > 0) {
+			timingProperties = '{"name": "timingStart","type": "string","value":"fetchStart"}';
+			myJSONData = '{"start-time-usec":'.concat(fetchStart).concat('000')
+			.concat(',"operation":"APPCACHE",')
+			.concat(common);
+			myJSONData = myJSONData.replace("replaceTiming",
+					timingProperties);
+			myJSONData = myJSONData.replace("replaceParentIds",
+					activityIdServerConnectionTime);
+			path = 'event';
+			//alert(myJSONData);
+			stream (path, myJSONData);
+		}
 
 		// DNS Lookup
 		timingProperties = '{"name": "timingStart","type": "string","value":"domainLookupStart"},{"name": "timingEnd","type": "string","value":"domainLookupEnd"}';
@@ -784,7 +794,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	}
 	performance.clearMarks();
 	performance.clearMeasures();
-}
+} 
   
 window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
 
@@ -796,7 +806,8 @@ window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
 		var start = url.lastIndexOf('/');
 		var end = url.lastIndexOf('?');
 		jsErrorLocation = url.substring(start+1, end).concat(':').concat(lineNumber);
-		navigator.geolocation.getCurrentPosition(reportError);
+		//navigator.geolocation.getCurrentPosition(reportError);
+		reportError("n/a")
 		
 		
 	}
@@ -823,12 +834,14 @@ function reportError(position) {
 	    .concat(',"operation":"JAVASCRIPT_ERROR",')
 	    .concat(data);
 	  myJSONErrorData = myJSONErrorData.replace("replaceTiming", timingProperties);
-	  myJSONErrorData = myJSONErrorData.replace(replaceResource,'"resource":"' + jsErrorLocation + '"');
+	  myJSONErrorData = myJSONErrorData.replace(replaceResource,'"resource":SERVICE="' + jsErrorLocation + '"');
 	  myJSONErrorData = myJSONErrorData.replace(',"parent-id":"replaceParentIds"','');
+	  myJSONErrorData = myJSONErrorData.replace(',"severity:INFO":"severity:ERROR"','');
+
 	  //alert(myJSONErrorData);
 	  errorPath = 'event';
 	  stream(errorPath,myJSONErrorData);
-	}}  
+	}}  // End
 
 function afterLoadMeasure(name, properties, message, suffix, severity)
 {
