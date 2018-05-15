@@ -807,7 +807,7 @@ window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
 		var end = url.lastIndexOf('?');
 		jsErrorLocation = url.substring(start+1, end).concat(':').concat(lineNumber);
 		//navigator.geolocation.getCurrentPosition(reportError);
-		reportError("n/a")
+		reportError("n/a");
 		
 		
 	}

@@ -39,10 +39,11 @@
       String ipAddressXForwarded = request.getHeader("X-FORWARDED-FOR");
 	  String ipAddressRemote = request.getRemoteAddr();
     %>
-    
+    <form method="post" id="jkrumform" name="jkrumform">
       <input type="hidden" name="corrid" id="corrid" value="<%=id%>"/>
       <input type="hidden" name="rcorrid" id="rcorrid" value="<%=rid%>"/>
       <input type="hidden" name="username" id="username" value="${sessionScope.username}"/>
       <input type="hidden" name="ipAddressRemote" id="ipAddressRemote" value="<%=ipAddressRemote%>"/>
       <input type="hidden" name="ipAddressXForwarded" id="ipAddressXForwarded" value="<%=ipAddressXForwarded%>"/>
       <input type="hidden" name="pid" id="pid" value="<%=pid%>"/>    
+    </form>
