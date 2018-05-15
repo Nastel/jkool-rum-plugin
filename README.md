@@ -21,7 +21,7 @@ window["mark"] = "all|none|list of functions you wish to measure"
 
 ###Include the plugins in your project
 
-* Include the jsp or php plugin on every page you wish to track within the form tag.
+* Include the jsp or php plugin on every page you wish to track inside the body tag.
 ```java
 <%@ include file="jkool-rum-plugin.jsp" %>
 ```
@@ -140,4 +140,4 @@ http://yui.github.io/yuicompressor/
 ###View End-User Analytics	
 Your web application is now setup for real user monitoring. 
 
-Logon to your jKool Dashboard (https://www.jkoolcloud.com), click on "Dashboard". Once logged in, you will see a button labeled "EUM" on the upper-right hand side. Click on this button to see various charts displaying your end user data. You may also create your own viewlets. Click on the Tutorial and learn to create your own viewlets.
+Logon to your jKool Dashboard (https://jkool.jkoolcloud.com), click on "Dashboard". Once logged in, you will see a button labeled "EUM" on the upper-right hand side. Click on this button to see various charts displaying your end user data. You may also create your own viewlets. Click on the Tutorial and learn to create your own viewlets.
