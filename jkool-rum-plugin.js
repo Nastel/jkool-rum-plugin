@@ -72,7 +72,7 @@ function createGuid() {
 function createMyJSONData(trackingId, startTime, endTime, operation, timingProperties, replaceParentId, common) {
 	if ((startTime != undefined && startTime > 0) && (endTime != undefined && endTime > 0))
 		jsonData = '{"start-time-usec":'.concat(startTime*1000).concat(',"end-time-usec":').concat(endTime*1000).concat(',"msg-tag":"').concat(rid).concat('"');
-	else if ((startTime != undefined && startTime > 0) && ((endTime == undefined || endTime == 0) && operation != "REDIRECT" && operation != "APPCACHE"))
+	else if ((startTime != undefined && startTime > 0) && ((endTime == undefined || endTime == 0) && operation != "REQUEST" && operation != "APPCACHE"))
 		jsonData = '{"start-time-usec":'.concat(startTime*1000).concat(',"msg-tag":["NoEndTime","').concat(rid).concat('"]');
 	else if ((startTime != undefined && startTime > 0) && (endTime == undefined || endTime == 0))
 		jsonData = '{"start-time-usec":'.concat(startTime*1000).concat(',"msg-tag":"').concat(rid).concat('"');
@@ -522,7 +522,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		// unLoad
 		timingProperties = '{"name": "timingStart","type": "string","value":"unloadEventStart"},{"name": "timingEnd","type": "string","value":"unloadEventEnd"}';
 		path = 'event';
-		myJSONData = createMyJSONData("", unloadEventStart, unloadEventEnd, "UNLOAD", timingProperties, "", common) 
+		myJSONData = createMyJSONData("", timings["loadEventStart"], timings["loadEventEnd"], "UNLOAD", timingProperties, "", common) 
 		stream (path, myJSONData);
 
 		// OnLoad Event
