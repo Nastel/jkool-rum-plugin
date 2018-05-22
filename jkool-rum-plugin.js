@@ -522,13 +522,13 @@ if (('performance' in window) & ('timing' in window.performance)
 		// unLoad
 		timingProperties = '{"name": "timingStart","type": "string","value":"unloadEventStart"},{"name": "timingEnd","type": "string","value":"unloadEventEnd"}';
 		path = 'event';
-		myJSONData = createMyJSONData("", timings["loadEventStart"], timings["loadEventEnd"], "UNLOAD", timingProperties, "", common) 
+		myJSONData = createMyJSONData("", unloadEventStart, unloadEventEnd, "UNLOAD", timingProperties, "", common) 
 		stream (path, myJSONData);
 
 		// OnLoad Event
 		timingProperties = '{"name": "timingStart","type": "string","value":"loadEventStart"},{"name": "timingEnd","type": "string","value":"loadEventEnd"}';
 		loadPath = 'event';
-		myJSONData = createMyJSONData("", loadEventStart, loadEventEnd, "ONLOAD", timingProperties, activityIdPageRenderTime, common) 
+		myJSONData = createMyJSONData("", timings["loadEventStart"], timings["loadEventEnd"], "ONLOAD", timingProperties, activityIdPageRenderTime, common) 
 		stream (path, myJSONData);
 
 		// ACTIVITY LEVEL
@@ -583,7 +583,7 @@ if (('performance' in window) & ('timing' in window.performance)
 		// Page Render Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"domComplete"},{"name": "timingEnd","type": "string","value":"loadEventEnd"}';
 		path = 'activity';
-		myJSONData = createMyJSONData(activityIdPageRenderTime, domComplete, loadEventEnd, "PAGE_RENDER_TIME", timingProperties, activityIdFrontEndTime, activityCommon);
+		myJSONData = createMyJSONData(activityIdPageRenderTime, timings["domComplete"], timings["loadEventEnd"], "PAGE_RENDER_TIME", timingProperties, activityIdFrontEndTime, activityCommon);
 		stream (path, myJSONData);
 
 		// Summary
@@ -615,20 +615,20 @@ if (('performance' in window) & ('timing' in window.performance)
 				.concat(timings["responseStart"] - timings["navigationStart"])
 				.concat('"}');
 		path = 'activity';
-		myJSONData = createMyJSONData(activityIdSummary, navigationStart, loadEventEnd, "EUM_SMRY", timingProperties, "", activityCommon);
+		myJSONData = createMyJSONData(activityIdSummary, timings["navigationStart"], timings["loadEventEnd"], "EUM_SMRY", timingProperties, "", activityCommon);
 		myJSONData = myJSONData.replace(',' + rid,'');
 		stream (path, myJSONData);
 
 		// End User Response Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"navigationStart"},{"name": "timingEnd","type": "string","value":"loadEventEnd"}';
 		path = 'activity';
-		myJSONData = createMyJSONData(activityIdEndUserResponseTime, navigationStart, loadEventEnd, "END_USER_RESPONSE_TIME", timingProperties, activityIdSummary, activityCommon);
+		myJSONData = createMyJSONData(activityIdEndUserResponseTime, timings["navigationStart"], timings["loadEventEnd"], "END_USER_RESPONSE_TIME", timingProperties, activityIdSummary, activityCommon);
 		stream (path, myJSONData);
 
 		// Front End Time
 		timingProperties = '{"name": "timingStart","type": "string","value":"responseStart"},{"name": "timingEnd","type": "string","value":"loadEventEnd"}';
 		path = 'activity';
-		myJSONData = createMyJSONData(activityIdFrontEndTime, responseStart, loadEventEnd, "FRONT_END_TIME", timingProperties, activityIdEndUserResponseTime, activityCommon);
+		myJSONData = createMyJSONData(activityIdFrontEndTime, timings["responseStart"], timings["loadEventEnd"], "FRONT_END_TIME", timingProperties, activityIdEndUserResponseTime, activityCommon);
 		stream (path, myJSONData);
 
 		var perfEntries = window.performance.getEntriesByType("mark");
