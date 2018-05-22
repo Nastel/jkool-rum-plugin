@@ -71,15 +71,15 @@ function createGuid() {
 
 function createMyJSONData(trackingId, startTime, endTime, operation, timingProperties, replaceParentId, common) {
 	if ((startTime != undefined && startTime > 0) && (endTime != undefined && endTime > 0))
-		jsonData = '{"start-time-usec":'.concat(startTime*1000).concat(',"end-time-usec":').concat(endTime*1000);
+		jsonData = '{"start-time-usec":'.concat(startTime*1000).concat(',"end-time-usec":').concat(endTime*1000).concat(',"msg-tag":"').concat(rid).concat('"');
 	else if ((startTime != undefined && startTime > 0) && ((endTime == undefined || endTime == 0) && operation != "REDIRECT" && operation != "APPCACHE"))
-		jsonData = '{"start-time-usec":'.concat(startTime*1000).concat(',"msg-tag":["NoEndTime"]');
+		jsonData = '{"start-time-usec":'.concat(startTime*1000).concat(',"msg-tag":["NoEndTime","').concat(rid).concat('"]');
 	else if ((startTime != undefined && startTime > 0) && (endTime == undefined || endTime == 0))
-		jsonData = '{"start-time-usec":'.concat(startTime*1000);
+		jsonData = '{"start-time-usec":'.concat(startTime*1000).concat(',"msg-tag":"').concat(rid).concat('"');
 	else if ((startTime == undefined || startTime == 0) && (endTime != undefined && endTime > 0))
-		jsonData = '{"end-time-usec":'.concat(endTime*1000).concat('"msg-tag":["NoStartTime"]');
+		jsonData = '{"end-time-usec":'.concat(endTime*1000).concat('"msg-tag":["NoStartTime","').concat(rid).concat('"]');
 	else if ((startTime == undefined || startTime == 0) && (endTime == undefined || endTime == 0))
-		jsonData = '{"msg-tag":["NoStartTime","NoEndTime"]';
+		jsonData = '{"msg-tag":["NoStartTime","NoEndTime","'.concat(rid).concat('"]');
 	if (trackingId.length > 1)
 		jsonData = jsonData.concat(',"tracking-id":"').concat(trackingId).concat('"')
 	jsonData = jsonData.concat(',"operation":"').concat(operation).concat('",').concat(common);
@@ -251,8 +251,7 @@ if (('performance' in window) & ('timing' in window.performance)
 	var activityCommon = '"source-fqn":"'.concat(activitySourceFqn).concat('","status":"END","parent-id":"replaceParentIds","resource":"SERVICE=').concat(url).concat(
 		'",').concat(activityProperties).concat(',"user":"').concat(userName).concat('","corrid":["').concat(sid).concat(',').concat(rid).concat('"]}');
 
-	var common = '"source-fqn":"'.concat(eventSourceFqn).concat('","msg-tag":"')
-			.concat(rid).concat('","time-usec":').concat(now * 1000)
+	var common = '"source-fqn":"'.concat(eventSourceFqn).concat('","time-usec":').concat(now * 1000)
 			.concat(',"resource":"SERVICE=').concat(url).concat(
 					'","severity":"INFO","parent-id":"replaceParentIds"')
 			.concat(',"location":"').concat("replaceipaddress").concat(
