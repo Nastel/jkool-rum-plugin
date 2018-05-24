@@ -188,6 +188,7 @@ if (('performance' in window) & ('timing' in window.performance)
 															// activity
 	var d = new Date();
 	var now = d.getTime();
+	var referrer = document.referrer;
 	var sid = document.getElementById('corrid').value;
 	var rid = document.getElementById('rcorrid').value;
 	var timings = window.performance.timing;
@@ -235,6 +236,8 @@ if (('performance' in window) & ('timing' in window.performance)
 			.concat(queryString).concat(
 					'"},{"name": "platform","type": "string","value":"')
 			.concat(platform).concat(
+					'"},{"name": "referrer","type": "string","value": "')
+			.concat(referrer).concat(
 					'"},{"name": "browser","type": "string","value": "')
 			.concat(userAgent).concat(
 					'"},{"name": "browserVersion","type": "string","value": "')
