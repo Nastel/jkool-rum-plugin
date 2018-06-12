@@ -701,7 +701,7 @@ function reportError(position) {
 	  timingProperties = '{"name": "timingStart","type": "string","value":"errorTimeStart"}';
 	  var myJSONErrorData = '{"tracking-id":"'.concat(createGuid())
 	    .concat('","start-time-usec":').concat(now * 1000)
-	    .concat(',"msg-text":"').concat(jsErrorMsg).concat('"')
+	    .concat(',"msg-text":"').concat(jsErrorMsg.replace(/\"/g,'\\"')).concat('"')
 	    .concat(',"operation":"JAVASCRIPT_ERROR",')
 	    .concat(data);
 	  myJSONErrorData = myJSONErrorData.replace("replaceTiming", timingProperties);
